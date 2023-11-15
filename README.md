@@ -5,12 +5,13 @@
 
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
-[TD 5 - Intégrales à paramètre](td5/td5.md)
+[TP - Équations de la chaleur](heat/heat.ipynb)
+([notes de cours](heat/heat.pdf))
 
-[Exam CC 1](exam-cc1/exam-cc1.md)
+Exam CC 1
 
 # Bibliographie[^1]
-[Tao, T. A quick review of measure and integration theory](https://terrytao.wordpress.com/2009/01/01/245b-notes-0-a-quick-review-of-measure-and-integration-theory)
+Allaire, G. Analyse numérique et optimisation. Éditions de l'École Polytechnique, 2005.
 
 # Évaluation
 2 exams CC (tous coeff. 1)
@@ -21,5 +22,5 @@
 
 # Intervenants
 - [V. Dolean](mailto:victorita.dolean@univ-cotedazur.fr) (CM et TD)
+- [A. Habbal](mailto:abderrahmane.habbal@univ-cotedazur.fr) (TD)
 - [J.-B. Caillau](mailto:jean-baptiste.caillau@univ-cotedazur.fr) (CM et TD)
-- [L. Sacchelli](mailto:ludovic.sacchelli@inria.fr) (TD)
