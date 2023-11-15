@@ -11,7 +11,8 @@
 Exam CC 1
 
 # Bibliographie
-[Allaire, G. Analyse numérique et optimisation. École Polytechnique, 2019](https://hal.science/cel-02168288/document)
+[Allaire, G. Approximation numérique et optimisation. Une introduction à la modélisation mathématique et à la simulation numérique. École d’ingénieur. France. 2019. cel-02168288](
+ et optimisation. École Polytechnique, 2019](https://hal.science/cel-02168288/document)
 
 # Évaluation
 2 exams CC (tous coeff. 1)
