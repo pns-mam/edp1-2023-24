@@ -10,8 +10,8 @@
 
 Exam CC 1
 
-# Bibliographie[^1]
-Allaire, G. Analyse numérique et optimisation. Éditions de l'École Polytechnique, 2005.
+# Bibliographie
+[Allaire, G. Analyse numérique et optimisation. École Polytechnique, 2019](https://hal.science/cel-02168288/document)
 
 # Évaluation
 2 exams CC (tous coeff. 1)
