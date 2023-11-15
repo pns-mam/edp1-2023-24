@@ -8,7 +8,8 @@
 [TP - Équations de la chaleur](heat/heat.ipynb)
 ([notes de cours](heat/heat.pdf))
 
-Exam CC 1
+[Exam CC 1](exam-cc1/exam-cc1.pdf)
+([corrigé](exam-cc1/exam-cc1-corr.pdf))
 
 # Bibliographie
 [Allaire, G. Approximation numérique et optimisation. École Polytechnique, 2019. cel-02168288](https://hal.science/cel-02168288/document)
