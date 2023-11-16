@@ -5,7 +5,9 @@
 
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
-[TP - Équations de la chaleur](heat/heat.ipynb)
+[TP - Advection](advection/advection.ipynb)
+
+[TP - Équation de la chaleur](heat/heat.ipynb)
 ([notes de cours](heat/heat.pdf))
 
 [Exam CC 1](exam-cc1/exam-cc1.pdf)
