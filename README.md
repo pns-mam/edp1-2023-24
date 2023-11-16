@@ -1,7 +1,9 @@
 ![PNS](logo-pns.png)
 ## MAM4 - EDP1
-# Équations aux dérivées parrtielles 1
+# Équations aux dérivées partielles 1
 # 2023-24
+
+![](heat.gif)
 
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
