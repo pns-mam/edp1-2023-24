@@ -7,6 +7,8 @@
 
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
+[TD 7 - Stockes et compagnie](td7/td7.pdf)
+
 [TP - Advection](advection/advection.ipynb)
 ([corrigé](advection/advection-corr.ipynb))
 
