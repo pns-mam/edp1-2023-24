@@ -1,0 +1,156 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill 2023-24 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 7}\end{center}
+
+\bigskip
+
+\noindent On rappellera la d\'efinition des principaux op\'erateurs
+diff\'erentiels (ici $u$ est un champ scalaire et $\mathbf{w} =
+(w_x,w_y,w_z)$ un champ vectoriel). Par convention, on notera en caract\`ere gras les champs vectoriels et en
+caract\`ere simple les champs scalaires. On supposera toutes les fonctions suffisamment r\'eguli\`eres afin de
+  pouvoir effectuer les op\'erations d'int\'egration indiqu\'ees, au sens classique.
+$$
+\begin{array}{lcl}
+\nabla u &=& \displaystyle\left(\frac{\partial u}{\partial
+    x},\frac{\partial u}{\partial y }, \frac{\partial u}{\partial
+    z}\right)^T \, (\mbox{Gradient}), \\[2ex]
+\Delta u &=& \displaystyle \frac{\partial^2 u}{\partial
+    x^2}+\frac{\partial^2 u}{\partial y^2 }+\frac{\partial^2 u}{\partial
+    z^2} \, (\mbox{Laplacien}), \\[2ex]
+\nabla\cdot \mathbf{w} &=&  \displaystyle\frac{\partial w_x}{\partial x} +
+\frac{\partial w_y}{\partial y} +\frac{\partial w_z}{\partial z}\,  (\mbox{Divergence}),\\[2ex]
+ \nabla\times \mathbf{w} &=&  \displaystyle\left(\frac{\partial w_z}{\partial y}
+   -\frac{\partial w_y}{\partial z},\frac{\partial w_x}{\partial z}
+   -\frac{\partial w_z}{\partial x}, \frac{\partial w_y}{\partial x}
+   -\frac{\partial w_x}{\partial y}  \right)^T \, (\mbox{Rotationnel}).
+\end{array}
+$$
+\'Etant donn\'e un domaine (volume) $\Omega$, on admettra par la
+suite la formule de Green
+$$
+\int_{\Omega} \frac{\partial u}{\partial x_i} d\mathbf{x}
+= \int_{\partial\Omega}u n_i \, d\sigma.
+$$
+o\`u $\partial\Omega$ repr\'esente la fronti\`ere de $\Omega$ et
+$\mathbf{n}$ est la normale ext\'erieure à cette fronti\`ere, $n_i$
+la $i$-\`eme composante de cette normale et $x_i$ la $i$-\`eme
+coordonn\'ee de $\mathbf{x}$.\\
+
+\noindent On cherchera \`a prouver une s\'erie de relations utiles
+\begin{enumerate}
+\item Pour les champs $u$ et $\mathbf{v}$ v\'erifier formellement les relations
+$$
+\begin{array}{c}
+\displaystyle \nabla\cdot (\nabla u )\, = \, \Delta u,\quad \nabla\cdot (u\mathbf{v}) = u (\nabla\cdot \mathbf{v})+ \mathbf{v}
+\cdot\nabla u,\quad \nabla\times (u\mathbf{v}) = u(\nabla\times \mathbf{v})+ \nabla u
+ \times \mathbf{v}.
+\end{array}
+$$
+En d\'eduire que pour deux fonctions $u$ et ${\phi}$ on a :
+$$
+\nabla\cdot\, (u\nabla \phi) \, = \, u \, \Delta \phi \, + \, \nabla u \cdot \nabla \phi
+$$
+\item Montrer que si $u$ et $v$ sont des champs scalaires d\'efinis
+  sur $\displaystyle \mathbb{R}^n$, alors on a la formule suivante
+  d'integration par parties :
+$$
+\int_\Omega \Delta u  \, v \, d\mathbf{x}= \, - \, \int_\Omega \nabla
+u \, \cdot \, \nabla v \,d\mathbf{x}+ \, \int_{\partial \Omega}
+\frac{\partial u}{\partial \mathbf{n}}  \, v \, d\sigma.
+$$
+o\`u la {\sl d\'eriv\'ee normale} est d\'efinie par $\displaystyle
+\frac{\partial u}{\partial \mathbf{n}}= \nabla u \cdot \mathbf{n}$. On
+montrera d'abord que
+$$
+\int_\Omega \frac{\partial u}{\partial x_i}  \, v \, d\mathbf{x}= \, - \, \int_\Omega 
+u \frac{\partial v}{\partial x_i}\,d\mathbf{x}+ \, \int_{\partial \Omega}
+u v n_i \, d\sigma.
+$$
+qui est une consequence directe de la formule de Green.
+\item A partir de la formule de Green, montrer la formule de Stokes:
+$$
+\int_{\Omega} (\nabla\cdot \mathbf{w} )\phi\, d\mathbf{x} = -\int_{\Omega}
+\mathbf{w}\cdot \nabla \phi \,d\mathbf{x} + \int_{\partial\Omega} (\mathbf{w}\cdot
+\mathbf{n}) \phi \,d\sigma.
+$$ 
+et en d\'eduire la formule de la divergence ou la formule de Gauss:
+$$
+\int_{\Omega}\nabla\cdot \mathbf{w}\, d\mathbf{x} =
+\int_{\partial\Omega} \mathbf{w} \cdot \mathbf{n}\, d\sigma.
+$$
+\item A partir de la formule de Green, montrer la formule
+$$
+\int_{\Omega} (\nabla\times \mathbf{w})\, \phi d\mathbf{x} = \int_{\Omega}
+\mathbf{w}\times \nabla \phi \,d\mathbf{x} - \int_{\partial\Omega} (\mathbf{w}\times
+\mathbf{n})\phi\, d\sigma.
+$$ 
+et en d\'eduire la formule du rotationnel:
+$$
+\int_{\Omega}\nabla\times \mathbf{w}\, d\mathbf{x} =-
+\int_{\partial\Omega} \mathbf{w} \times \mathbf{n}\, d\sigma.
+$$
+\item Si $f$ est une fonction continue sur $[0; 1]$, montrer que le
+  probl\`eme de Laplace en une dimension d'espace a une
+solution unique dans $C^2([0; 1])$  donn\'ee par la formule
+$$
+u(x) = x\int_0^1f(s)(1-s)ds - \int_0^x f(s)(x-s)ds, x\in[0,1].
+$$
+\item 
+Montrer que le Laplacien en deux dimensions d'espace peut s'\'ecrire
+en coordonn\'ees polaires de la fa\c{c}on suivante:
+$$
+\Delta u =\frac{\partial^2 u}{\partial r^2}
+        +\frac{1}{r}\frac{\partial u}{\partial
+          r}+\frac{1}{r^2}\frac{\partial^2 u}{\partial \theta^2}
+$$
+On rappelle que la relation entre les coordonn\'ees polaires $(r,\theta)$ et
+cartesiennes $(x,y)$ est
+$$
+x=r\cos(\theta),\, y=r\sin(\theta).
+$$
+\end{enumerate}
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+\end{document}
