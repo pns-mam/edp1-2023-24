@@ -11,6 +11,8 @@
 
 [TD 7 - Formule de Green](td7/td7.pdf)
 
+[TD 8 - Formulation variationnelle](td8/td8.pdf)
+
 [TP - Advection](advection/advection.ipynb)
 ([corrigé](advection/advection-corr.ipynb))
 
