@@ -8,8 +8,10 @@
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
 [TD 6 - Équation des ondes](td6/td6.pdf)
+([corrigé](td6/td6-corr.pdf))
 
 [TD 7 - Formule de Green et applications](td7/td7.pdf)
+([corrigé](td7/td7-corr.pdf))
 
 [TD 8 - Formulation variationnelle](td8/td8.pdf)
 

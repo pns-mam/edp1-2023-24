@@ -34,39 +34,13 @@
 \begin{center} {\bf TD 8 -- Formulation variationnelle} \end{center}
 
 \bigskip
+
 \begin{enumerate}
-\item On consid\`ere le probl\`eme aux limites de Neumann suivant:
-\begin{equation}\label{NeuGen}
-\begin{cases}
--\Delta u = f,\,\text{dans }\Omega\\
-\frac{\partial u}{\partial n} = g,\,\text{sur }\partial\Omega.
-\end{cases}
-\end{equation}
-o\`u $f$ et $g$ sont continues sur $\bar\Omega$ et $\Omega$ est un ouvert born\'e r\'egulier et connexe.\\
-{\bf a}. Trouver une formulation variationnelle (V) de ce probl\`eme sur l'espace $X=H^1(\Omega)$ et montrer qu'une fonction $u\in{\cal C}^2(\bar\Omega)$ est solution de (\ref{NeuGen}) ssi est solution de (V).\\
-{\bf b}. Montrer qu'une condition n\'ecessaire d'existence de solution
-de (\ref{NeuGen}) portant sur $f$ et $g$ (condition dite de
-compatibilit\'e) est la suivante:
-$$
-\int_{\Omega}f(x)dx+ \int_{\partial\Omega} g(x)d\sigma= 0.
-$$
-{\bf c}. Montrer que $u$ est solution de (V) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
-{\bf d}. Montrer que la solution n'est pas unique à une constante pr\`es. 
-%de la solution de (\ref{NeuGen}) dans ${\cal C}^2(\bar\Omega)$ si elle existe.
 
-\item On consid\`ere le probl\`eme des plaques suivant:
-\begin{equation}\label{Plaque}
-\begin{cases}
-\Delta(\Delta u) = f,\,\text{dans }\Omega\\
-u = \frac{\partial u}{\partial n} = 0,\,\text{sur }\partial\Omega.
-\end{cases}
-\end{equation}
-o\`u $f$ est continue sur $\bar\Omega$.\\
-{\bf a}. Trouver une formulation variationnelle (V) de ce probl\`eme sur l'espace $X=\{v\in H^2(\Omega),\, v=\frac{\partial v}{\partial n}=0,\, \partial\Omega\}$. Montrer qu'une fonction $u\in{\cal C}^4(\bar\Omega)$ est solution de (\ref{Plaque}) ssi elle est solution de (V).\\
-{\bf b}. Montrer que $u$ est solution de (V) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
-%{\bf c}. En d\'eduire l'unicit\'e de la solution de (\ref{Plaque}) dans ${\cal C}^4(\bar\Omega)$ si elle existe.
-
-\item On suppose que $\Omega$ est un ouvert borné régulier de classe ${\cal C}^1$. A l'aide de l'approche variationnelle démontrer l'existence et unicité de la solution du problème aux limites
+% Exo 1
+\item On suppose que $\Omega$ est un ouvert borné régulier de classe ${\cal C}^1$.
+A l'aide de l'approche variationnelle démontrer l'existence et unicité de solution faible
+du problème aux limites suivant (conditions de Robin)~:
 
 \begin{equation}\label{Robin}
 \begin{cases}
@@ -79,6 +53,21 @@ $$
 \|v\|_{L^2(\Omega)} \le C (\|v\|_{L^2(\partial\Omega)} +\| \nabla v\|_{L^2(\Omega)} ),\, \forall v \in H^1(\Omega).
 $$
 
+% Exo 2
+\item On consid\`ere le probl\`eme des plaques suivant:
+\begin{equation}\label{Plaque}
+\begin{cases}
+\Delta(\Delta u) = f,\,\text{dans }\Omega\\
+u = \frac{\partial u}{\partial n} = 0,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+o\`u $f$ est continue sur $\bar\Omega$.\\
+{\bf a}. Trouver une formulation variationnelle de ce probl\`eme sur l'espace
+$H=\{v\in H^2(\Omega),\, v=\frac{\partial v}{\partial n}=0,\, \partial\Omega\}$.\\
+%onction $u\in{\cal C}^4(\bar\Omega)$ est solution de (\ref{Plaque}) ssi elle est solution de (V).\\
+{\bf b}. Montrer que $u$ est solution faible si et seulement si elle minimise sur $H$
+une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
+%{\bf c}. En d\'eduire l'unicit\'e de la solution de (\ref{Plaque}) dans ${\cal C}^4(\bar\Omega)$ si elle existe.
 
 \item Soit $\Omega$ un ouvert r\'egulier. On consid\`ere l'\'equation 
 \begin{equation}\label{ConvDiff}
@@ -88,13 +77,11 @@ u = 0,\,\text{sur }\partial\Omega.
 \end{cases}
 \end{equation}
 o\`u $V$ est un champ de divergence nulle. \\
-{\bf a.} Reprendre la premi\`ere question de l'exercice $1$. \\
+{\bf a.} Proposer une formulation variationnelle. \\
 {\bf b.} Peut-on associer à ce probl\`eme un probl\`eme de
-minimisation comme nous l'avons fait à l'exercice $1$? \\
+minimisation ? \\
 {\bf c.} Montrer que (\ref{ConvDiff}) admet au plus une solution. \\
-{\bf d.} Aurait-on obtenu un r\'esultat identique si la divergence de
-$V$ prenait des valeurs strictement positives?
-
+%{\bf d.} Aurait-on obtenu un r\'esultat identique si la divergence de $V$ prenait des valeurs strictement positives?
 
 %\item Soit $\Omega$ un ouvert de $\mathbb{R}^N$ et $(\Omega_1,\Omega_2)$ une
 %  partition de $\Omega$ et $A(x)=k_iId,\,\forall
@@ -120,6 +107,27 @@ $V$ prenait des valeurs strictement positives?
 %u=0,\,\text{sur }\partial\Omega.
 %\end{cases}
 %$$
+
+% Exo 4
+\item On consid\`ere le probl\`eme aux limites de Neumann suivant:
+\begin{equation}\label{NeuGen}
+\begin{cases}
+-\Delta u = f,\,\text{dans }\Omega\\
+\frac{\partial u}{\partial n} = g,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+o\`u $f$ et $g$ sont continues sur $\bar\Omega$ et $\Omega$ est un ouvert born\'e r\'egulier et connexe.\\
+{\bf a}. Trouver une formulation variationnelle (V) de ce probl\`eme sur l'espace $X=H^1(\Omega)$ et montrer qu'une fonction $u\in{\cal C}^2(\bar\Omega)$ est solution de (\ref{NeuGen}) ssi est solution de (V).\\
+{\bf b}. Montrer qu'une condition n\'ecessaire d'existence de solution
+de (\ref{NeuGen}) portant sur $f$ et $g$ (condition dite de
+compatibilit\'e) est la suivante:
+$$
+\int_{\Omega}f(x)dx+ \int_{\partial\Omega} g(x)d\sigma= 0.
+$$
+{\bf c}. Montrer que $u$ est solution de (V) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
+{\bf d}. Montrer qu'on n'a pas unicité de solution.
+%de la solution de (\ref{NeuGen}) dans ${\cal C}^2(\bar\Omega)$ si elle existe.
+
 \end{enumerate}
 
 %\bigskip
