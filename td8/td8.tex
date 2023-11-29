@@ -44,8 +44,8 @@ du problème aux limites suivant (conditions de Robin)~:
 
 \begin{equation}\label{Robin}
 \begin{cases}
--\Delta u = f,\,\text{dans }\Omega\\
-\frac{\partial u}{\partial n} + u = g,\,\text{sur }\partial\Omega.
+-\Delta u = f \text{ dans }\Omega\\
+\frac{\partial u}{\partial n} + u = g \text{ sur }\partial\Omega.
 \end{cases}
 \end{equation}
 où $f\in L^2(\Omega)$. On admettra l'inégalité suivante (qui généralise l'inégalité de Poincaré):
@@ -57,8 +57,8 @@ $$
 \item On consid\`ere le probl\`eme des plaques suivant:
 \begin{equation}\label{Plaque}
 \begin{cases}
-\Delta(\Delta u) = f,\,\text{dans }\Omega\\
-u = \frac{\partial u}{\partial n} = 0,\,\text{sur }\partial\Omega.
+\Delta(\Delta u) = f \text{ dans }\Omega\\
+u = \frac{\partial u}{\partial n} = 0 \text{ sur }\partial\Omega.
 \end{cases}
 \end{equation}
 o\`u $f$ est continue sur $\bar\Omega$.\\
@@ -72,8 +72,8 @@ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
 \item Soit $\Omega$ un ouvert r\'egulier. On consid\`ere l'\'equation 
 \begin{equation}\label{ConvDiff}
 \begin{cases}
--\Delta u +V\cdot\nabla u = f,\,\text{dans }\Omega\\
-u = 0,\,\text{sur }\partial\Omega.
+-\Delta u +V\cdot\nabla u = f \text{ dans }\Omega\\
+u = 0 \text{ sur }\partial\Omega.
 \end{cases}
 \end{equation}
 o\`u $V$ est un champ de divergence nulle. \\
@@ -112,8 +112,8 @@ minimisation ? \\
 \item On consid\`ere le probl\`eme aux limites de Neumann suivant:
 \begin{equation}\label{NeuGen}
 \begin{cases}
--\Delta u = f,\,\text{dans }\Omega\\
-\frac{\partial u}{\partial n} = g,\,\text{sur }\partial\Omega.
+-\Delta u = f \text{ dans }\Omega\\
+\frac{\partial u}{\partial n} = g \text{ sur }\partial\Omega.
 \end{cases}
 \end{equation}
 o\`u $f$ et $g$ sont continues sur $\bar\Omega$ et $\Omega$ est un ouvert born\'e r\'egulier et connexe.\\
@@ -125,7 +125,7 @@ compatibilit\'e) est la suivante:
 $$
 \int_{\Omega}f(x)dx+ \int_{\partial\Omega} g(x)d\sigma= 0.
 $$
-{\bf c}. Montrer que $u$ est solution faible si et seulement si elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
+{\bf c}. Montrer que $u$ est solution faible si et seulement si elle minimise sur $H^1(\Omega)$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
 {\bf d}. Montrer qu'on n'a pas unicité de solution.
 %de la solution de (\ref{NeuGen}) dans ${\cal C}^2(\bar\Omega)$ si elle existe.
 

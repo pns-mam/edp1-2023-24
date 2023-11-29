@@ -16,10 +16,8 @@
 [TD 8 - Formulation variationnelle](td8/td8.pdf)
 
 [TP - Advection](advection/advection.ipynb)
-([corrigé](advection/advection-corr.ipynb))
 
 [TP - Équation de la chaleur](heat/heat.ipynb)
-([corrigé](heat/heat-corr.ipynb))
 ([notes de cours](heat/heat.pdf))
 
 [Exam CC 1](exam-cc1/exam-cc1.pdf)
