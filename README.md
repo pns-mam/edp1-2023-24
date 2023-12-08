@@ -14,16 +14,20 @@
 ([corrigé](td7/td7-corr.pdf))
 
 [TD 8 - Formulation variationnelle](td8/td8.pdf)
+([corrigé](td8/td8-corr.pdf))
 
 [TP - Advection](advection/advection.ipynb)
+([corrigé](advection/advection-corr.ipynb))
 
 [TP - Équation de la chaleur](heat/heat.ipynb)
 ([notes de cours](heat/heat.pdf))
+([corrigé](heat/heat-corr.ipynb))
 
 [Exam CC 1](exam-cc1/exam-cc1.pdf)
 ([corrigé](exam-cc1/exam-cc1-corr.pdf))
 
 [Exam CC 2 2022-23](exam-cc2-old/exam-cc2.pdf)
+([corrigé](exam-cc2-old/exam-cc2-corr.pdf))
 
 # Bibliographie
 [Allaire, G. Approximation numérique et optimisation. École Polytechnique, 2019. cel-02168288](https://hal.science/cel-02168288/document)
