@@ -26,6 +26,8 @@
 [Exam CC 1](exam-cc1/exam-cc1.pdf)
 ([corrigé](exam-cc1/exam-cc1-corr.pdf))
 
+[Exam CC 2](exam-cc2/exam-cc2.md)
+
 [Exam CC 2 2022-23](exam-cc2-old/exam-cc2.pdf)
 ([corrigé](exam-cc2-old/exam-cc2-corr.pdf))
 
@@ -33,7 +35,7 @@
 [Allaire, G. Approximation numérique et optimisation. École Polytechnique, 2019. cel-02168288](https://hal.science/cel-02168288/document)
 
 # Évaluation
-2 exams CC (tous coeff. 1)
+2 exams CC (tous coeff. 1) et une note de TP
 
 # Organisation
 - 12 séances de CM
