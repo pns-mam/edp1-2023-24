@@ -16,7 +16,6 @@ $$ \int_\Omega \nabla \cdot w\ \mathrm{d}x = \int_\Gamma w \cdot n\ \mathrm{d}\s
 
 où $\nabla = (\partial/\partial x_1,\dots,\partial/\partial x_n)$ et où $n$ désigne la normale extérieure au bord $\Gamma$.
 
-
 ### 1.2
 On considère l'équation des ondes en dimension un d'espace avec conditions aux limites périodiques :
 
