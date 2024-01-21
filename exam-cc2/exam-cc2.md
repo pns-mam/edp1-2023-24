@@ -33,7 +33,7 @@ et
 
 $$ \frac{\partial u}{\partial t}(x+1,t) = \frac{\partial u}{\partial t}(x,t). $$
 
-En déduire que *l'énergie* ci-dessous est conservée au cours du temps :
+En déduire que, pour toute solution suffisamment régulière, *l'énergie* ci-dessous est conservée au cours du temps :
 
 $$ E(t) := \frac{1}{2} \int_0^1 \left( \frac{\partial u}{\partial x} \right)^2 + \left( \frac{\partial u}{\partial t} \right)^2 \ \mathrm{d}x. $$
 
