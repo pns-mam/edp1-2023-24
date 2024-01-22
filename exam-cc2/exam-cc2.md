@@ -81,11 +81,11 @@ Montrer que $a$ est continue et coercive.
 
 **Réponse.** Pour $u$ et $v$ dans $H$ on a
 
-$$ |a(u,v)| \leq (1+\gamma) ||u||_{H^1} \|v\| {H^1} $$
+$$ |a(u,v)| \leq (1+\gamma) ||u||_{H^1} ||v||_{H^1} $$
 
 d'où la continuité, et
 
-$$ a(u,u) \geq \min(1,\gamma) \|u\|^2_{H^1} $$
+$$ a(u,u) \geq \min(1,\gamma) ||u||^2_{H^1} $$
 
 d'où la coercivité.
 
@@ -96,9 +96,9 @@ Montrer que $\varphi$ est continue.
 
 **Réponse.** Par Cauchy-Schwarz
 
-$$ |\varphi(v)| \leq \|f\|_{L^2} \|v\|_{L^2} + \|g\|_{L^2} \|v_{|\Gamma}\|_{L^2}, $$
+$$ |\varphi(v)| \leq ||f||_{L^2} ||v||_{L^2} + ||g||_{L^2} ||v_{|\Gamma}||_{L^2}, $$
 
-et, par continuité de la trace, il existe une constante $C$ telle que $\|v_{|\Gamma}\|_{L^2} \leq C \|v\|_{H^1}$, d'où la continuité de $\varphi$.
+et, par continuité de la trace, il existe une constante $C$ telle que $||v_{|\Gamma}||_{L^2} \leq C ||v||_{H^1}$, d'où la continuité de $\varphi$.
 
 ### 2.4
 En déduire l'existence et l'unicité de solution faible, et montrer que cette solution faible est également solution d'un problème variationnel que l'on précisera.
@@ -114,7 +114,7 @@ On suppose que la solution faible est de classe $\mathscr{C}^2$ sur $\overline{\
 
 $$ \int_\Omega \nabla u \cdot \nabla v\ \mathrm{d}x = \int_\Gamma \frac{\partial u}{\partial n} v\ \mathrm{d}\sigma - \int_\Omega \Delta u v\ \mathrm{d}x, $$
 
-et montrer que
+et déduire que
 
 $$ \int_\Omega (-\Delta u + \gamma u - f) v\ \mathrm{d}x + \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0. $$
 
