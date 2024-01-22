@@ -16,6 +16,8 @@ $$ \int_\Omega \nabla \cdot w\ \mathrm{d}x = \int_\Gamma w \cdot n\ \mathrm{d}\s
 
 où $\nabla = (\partial/\partial x_1,\dots,\partial/\partial x_n)$ et où $n$ désigne la normale extérieure au bord $\Gamma$.
 
+**Réponse.**
+
 ### 1.2
 On considère l'équation des ondes en dimension un d'espace avec conditions aux limites périodiques :
 
@@ -37,6 +39,8 @@ En déduire que, pour toute solution suffisamment régulière, *l'énergie* ci-d
 
 $$ E(t) := \frac{1}{2} \int_0^1 \left( \frac{\partial u}{\partial x} \right)^2 + \left( \frac{\partial u}{\partial t} \right)^2 \ \mathrm{d}x. $$
 
+**Réponse.**
+
 ## Exercice 2 (8 points)
 On considère le problème aux limites à condition de Neumann hétérogène sur $\Omega$, ouvert borné connexe à bord $\Gamma := \partial\Omega$ régulier de $\mathbf{R}^n$ : trouver $u$ dans $\mathscr{C}^2(\overline{\Omega})$ telle que (*solution forte*)
 
@@ -53,19 +57,29 @@ $$ a(u,v) = \varphi \cdot v,\quad v \in H, $$
 
 où $a$ et $\varphi$ sont des formes bilinéaire et linéaire, respectivement, que l'on précisera.
 
+**Réponse.**
+
 ### 2.2
 Montrer que $a$ est continue et coercive.
+
+**Réponse.**
 
 ### 2.3
 Montrer que $\varphi$ est continue.
 
 **Nota bene**. On rappelle que l'opérateur de trace $v \mapsto v_{|\Gamma}$ de $\mathscr{C}^1(\overline{\Omega})$ dans $L^2(\Gamma)$, qui associe à une fonction sa restriction sur le bord, se prolonge continûment sur tout $H^1(\Omega)$. 
 
+**Réponse.**
+
 ### 2.4
 En déduire l'existence et l'unicité de solution faible, et montrer que cette solution faible est également solution d'un problème variationnel que l'on précisera.
 
+**Réponse.**
+
 ### 2.5
 On suppose que la solution faible est de classe $\mathscr{C}^2$ sur $\overline{\Omega}$. Montrer qu'elle est aussi solution forte.
+
+**Réponse.**
 
 ## Exercice 3 (7 points)
 
@@ -86,11 +100,17 @@ $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^n-u_{j-1}^n}{\De
 
 Montrer que ce schéma est consistant et préciser les ordres d'approximation en espace et en temps.
 
+**Réponse.**
+
 ### 3.2
 Montrer que ce schéma est inconditionnellement instable au sens $L^2$.
 
+**Réponse.**
+
 ### 3.3
 Quel schéma obtient-on si on utilise l'équation équivalente pour améliorer le schéma précédent ?
+
+**Réponse.**
 
 ### 3.4
 Dans le code ci-dessous, quel schéma numérique a-t-on implémenté ?
@@ -111,5 +131,9 @@ for n ∈ 1:Nt
 end
 ```
 
+**Réponse.**
+
 ### 3.5
 Toujours dans ce même code, expliquer le rôle de la ligne `u = F\w`. En particulier, que désigne `F` ? Comment peut-on améliorer la performance de  la boucle `for n...`  ?
+
+**Réponse.**
