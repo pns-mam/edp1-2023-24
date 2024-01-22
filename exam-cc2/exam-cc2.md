@@ -81,7 +81,7 @@ Montrer que $a$ est continue et coercive.
 
 **Réponse.** Pour $u$ et $v$ dans $H$ on a
 
-$$ |a(u,v)| \leq (1+\gamma) \|u\|\_{H^1} \|v\|\_{H^1} $$
+$$ |a(u,v)| \leq (1+\gamma) ||u||_{H^1} \|v\| {H^1} $$
 
 d'où la continuité, et
 
