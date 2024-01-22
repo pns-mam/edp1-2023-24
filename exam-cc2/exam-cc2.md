@@ -85,7 +85,7 @@ $$ |a(u,v)| \leq (1+\gamma) ||u||\_{H^1} ||v||\_{H^1} $$
 
 d'où la continuité, et
 
-$$ a(u,u) \geq \min(1,\gamma) ||u||^2\_{H^1} $$
+$$ a(u,u) \geq \underbrace{\min(1,\gamma)}_{>0} ||u||^2\_{H^1} $$
 
 d'où la coercivité.
 
