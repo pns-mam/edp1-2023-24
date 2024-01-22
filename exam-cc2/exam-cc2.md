@@ -96,9 +96,9 @@ Montrer que $\varphi$ est continue.
 
 **Réponse.** Par Cauchy-Schwarz
 
-$$ |\varphi(v)| \leq ||f||_{L^2} ||v||_{L^2} + ||g||_{L^2} ||v_{|\Gamma}||_{L^2}, $$
+$$ |\varphi(v)| \leq ||f||\_{L^2} ||v||\_{L^2} + ||g||\_{L^2} ||v_{|\Gamma}||\_{L^2}, $$
 
-et, par continuité de la trace, il existe une constante $C$ telle que $||v_{|\Gamma}||_{L^2} \leq C ||v||_{H^1}$, d'où la continuité de $\varphi$.
+et, par continuité de la trace, il existe une constante $C$ telle que $||v_{|\Gamma}||\_{L^2} \leq C ||v||\_{H^1}$, d'où la continuité de $\varphi$.
 
 ### 2.4
 En déduire l'existence et l'unicité de solution faible, et montrer que cette solution faible est également solution d'un problème variationnel que l'on précisera.
