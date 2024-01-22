@@ -122,7 +122,7 @@ En prenant $v$ nulle au bord et en utilisant le fait que $H^1_0$ est dense dans 
 
 $$ \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0, $$
 
-d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ (densité de l'image de l'application trace dans $L^2(\Gamma)$).
+d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ par densité de l'image de l'application trace dans $L^2(\Gamma)$.
 
 ## Exercice 3 (7 points)
 
@@ -150,7 +150,7 @@ $$ E_j^n = \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t + O(\D
 ### 3.2
 Montrer que ce schéma est inconditionnellement instable au sens $L^2$.
 
-**Réponse.** On injecte le mode $u = A^n(k) e^{2i\pi kj\Delta x}$ dans le schéma pour obtenir, après simplification ($\sigma := V\Delta t/\Delta x$)),
+**Réponse.** On injecte le mode $u = A^n(k) e^{2i\pi kj\Delta x}$ dans le schéma pour obtenir, après simplification ($\sigma := V\Delta t/\Delta x$),
 
 $$ |A(k)|^2 = 1 + \sigma^2\sin^2(2\pi k\Delta x) \geq 1. $$
 
