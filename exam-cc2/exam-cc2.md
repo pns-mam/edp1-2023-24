@@ -48,7 +48,7 @@ $$ E'(t) = \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t
 
 puis intégrer par parties selon
 
-$$ \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x} = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1 - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\ \mathrm{d}x. $$
+$$ \int_0^1 \left\( \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x} = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1 - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\right\) \ \mathrm{d}x. $$
 
 En utilisant les relations précédentes, on voit que le terme intégré est nul, et les termes restant s'annulent parce que $u$ est solution.
 
