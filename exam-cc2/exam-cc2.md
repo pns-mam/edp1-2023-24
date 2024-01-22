@@ -48,9 +48,7 @@ $$ E'(t) = \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t
 
 puis intégrer par parties selon
 
-$$ \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x}
- = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1
- - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\ \mathrm{d}x. $$
+$$ \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x} = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1 - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\ \mathrm{d}x. $$
 
 En utilisant les relations précédentes, on voit que le terme intégré est nul, et les termes restant s'annulent parce que $u$ est solution.
 
@@ -116,8 +114,7 @@ $$ \int_\Omega \nabla u \cdot \nabla v\ \mathrm{d}x = \int_\Gamma \frac{\partial
 
 et montrer que
 
-$$ \int_\Omega (-\Delta u + \gamma u - f) v\ \mathrm{d}x
- + \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0. $$
+$$ \int_\Omega (-\Delta u + \gamma u - f) v\ \mathrm{d}x + \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0. $$
 
 En prenant $v$ nulle au bord et en utilisant le fait que $H^1_0$ est dense dans $L^2$, on obtient $-\Delta u + \gamma u = f$ dans $\Omega$ (partout, $u$ étant $\mathscr{C}^2$). Par conséquent, pour tout $v$ dans $H$,
 
@@ -146,8 +143,7 @@ Montrer que ce schéma est consistant et préciser les ordres d'approximation en
 
 **Réponse.** On fait un DL en $(x_j,t_n)$ d'une solution $u$ suffisamment régulière, à l'ordre deux en temps et trois en espace pour obtenir que le schéma est consistant d'ordre un en temps et deux en espace :
 
-$$ E_j^n = \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t + O(\Delta t^2)
- + \frac{V}{6}\frac{\partial^3 u}{\partial x^3}(x_j,t_n) \Delta x^2 + O(\Delta x^3). $$
+$$ E_j^n = \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t + O(\Delta t^2) + \frac{V}{6}\frac{\partial^3 u}{\partial x^3}(x_j,t_n) \Delta x^2 + O(\Delta x^3). $$
 
 ### 3.2
 Montrer que ce schéma est inconditionnellement instable au sens $L^2$.
@@ -165,8 +161,7 @@ $$ frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t = \frac{V^2}{2}
 
 on obtient le schéma de Lax-Wendroff explicite
 
-$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^n-u_{j-1}^n}{\Delta x}
- - \frac{V^2 \Delta t}{2}\frac{u_{j+1}^n-2u_j^n+u_{j-1}^n}{\Delta x^2} = 0. $$
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^n-u_{j-1}^n}{\Delta x} - \frac{V^2 \Delta t}{2}\frac{u_{j+1}^n-2u_j^n+u_{j-1}^n}{\Delta x^2} = 0. $$
 
 ### 3.4
 Dans le code ci-dessous, quel schéma numérique a-t-on implémenté ?
