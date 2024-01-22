@@ -122,7 +122,7 @@ En prenant $v$ nulle au bord et en utilisant le fait que $H^1_0$ est dense dans 
 
 $$ \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0, $$
 
-d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ (densité de l'image de l'application trace dans $L^2$).
+d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ (densité de l'image de l'application trace dans $L^2(\Gamma)$).
 
 ## Exercice 3 (7 points)
 
@@ -143,7 +143,7 @@ $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^n-u_{j-1}^n}{\De
 
 Montrer que ce schéma est consistant et préciser les ordres d'approximation en espace et en temps.
 
-**Réponse.** On fait un DL en $(x_j,t_n)$ d'une solution $u$ suffisamment régulière, à l'ordre deux en temps et trois en espace pour obtenir que le schéma est consistant d'ordre un en temps et deux en espace :
+**Réponse.** On fait un DL en $(x_j,t_n)$ d'une solution $u$ suffisamment régulière à l'ordre deux en temps et trois en espace pour obtenir que le schéma est consistant d'ordre un en temps et deux en espace :
 
 $$ E_j^n = \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t + O(\Delta t^2) + \frac{V}{6}\frac{\partial^3 u}{\partial x^3}(x_j,t_n) \Delta x^2 + O(\Delta x^3). $$
 
@@ -159,7 +159,7 @@ Quel schéma obtient-on si on utilise l'équation équivalente pour améliorer l
 
 **Réponse.** En retrenchant le terme principal (d'ordre un) de l'erreur,
 
-$$ frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t = \frac{V^2}{2}\frac{\partial^2 u}{\partial x^2}(x_j,t_n) \Delta t \simeq \frac{V^2 \Delta t}{2}\frac{u(x_{j+1},t_n)-2u(x_j,t_n)+u(x_{j-1},t_n}{\Delta x^2}, $$
+$$ \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t = \frac{V^2}{2}\frac{\partial^2 u}{\partial x^2}(x_j,t_n) \Delta t \simeq \frac{V^2 \Delta t}{2}\frac{u(x_{j+1},t_n)-2u(x_j,t_n)+u(x_{j-1},t_n)}{\Delta x^2}, $$
 
 on obtient le schéma de Lax-Wendroff explicite
 
@@ -186,12 +186,11 @@ end
 
 **Réponse.** Le schéma de Lax-Wendroff implicite (voir TP Advection),
 
-$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^{n+1}-u_{j-1}^{n+1}}{\Delta x}
- - \frac{V^2 \Delta t}{2}\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} = 0 $$
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{V}{2} \frac{u_{j+1}^{n+1}-u_{j-1}^{n+1}}{\Delta x} - \frac{V^2 \Delta t}{2}\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} = 0 $$
 
 où $\sigma := V\Delta t/\Delta x$.
 
 ### 3.5
 Toujours dans ce même code, expliquer le rôle de la ligne `u = F\w`. En particulier, que désigne `F` ? Comment peut-on améliorer la performance de  la boucle `for n...`  ?
 
-**Réponse.** On stocke dans $F$ la factorisation de Cholesky de la matrice $A$. La matrice $A$ étant indépendante de $n$, on doit extraire cette factorisation de la boucle pour ne la faire qu'une seule fois.
+**Réponse.** On stocke dans $F$ la factorisation de Cholesky de la matrice $A$ que l'on utilise pour résoudre le système linéaire $Au = w$. La matrice $A$ étant indépendante de $n$, on doit extraire cette factorisation de la boucle pour ne la faire qu'une seule fois.
