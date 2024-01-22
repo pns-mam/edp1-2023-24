@@ -122,7 +122,7 @@ En prenant $v$ nulle au bord et en utilisant le fait que $H^1_0$ est dense dans 
 
 $$ \int_\Gamma (\frac{\partial u}{\partial n} - g)v\ \mathrm{d}\sigma = 0, $$
 
-d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ (densité de l'image de l'application trace dans $L^2(\Gamma)$).
+d'où l'on déduit que $\partial u/\partial n = g$ sur $\Gamma$ (densité de l'image de l'application trace dans $L^2$).
 
 ## Exercice 3 (7 points)
 
