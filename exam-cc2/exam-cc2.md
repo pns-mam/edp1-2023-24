@@ -18,7 +18,7 @@ où $\nabla = (\partial/\partial x_1,\dots,\partial/\partial x_n)$ et où $n$ d�
 
 **Réponse.**
 
-$$ \sum_{i=1}^n int_\Omega \frac{\partial w_i}{\partial x_i}\ \mathrm{d}x
+$$ \sum_{i=1}^n \int_\Omega \frac{\partial w_i}{\partial x_i}\ \mathrm{d}x
  = \sum_{i=1}^n \int_\Gamma w_i n_i\ \mathrm{d}\sigma $$
 
 ### 1.2
@@ -42,10 +42,9 @@ En déduire que, pour toute solution suffisamment régulière, *l'énergie* ci-d
 
 $$ E(t) := \frac{1}{2} \int_0^1 \left( \frac{\partial u}{\partial x} \right)^2 + \left( \frac{\partial u}{\partial t} \right)^2 \ \mathrm{d}x. $$
 
-**Réponse.** On obtient les relations voulues en dérivant soit par rapport à $x$ soit par rapport à $t$ l'égalité $u(x+1,t) = u(x,t)$. Pour une solution $u$ suffisamment régulière, on peut ensuite dériver par rapport au temps sous le signe somme
+**Réponse.** On obtient les relations voulues en dérivant soit par rapport à $x$, soit par rapport à $t$ l'égalité $u(x+1,t) = u(x,t)$. Pour une solution $u$ suffisamment régulière, on peut ensuite dériver par rapport au temps sous le signe somme
 
-$$ E'(t) = \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x}
- + \frac{\partial u}{\partial t} \frac{\partial^2 u}{\partial t^2}\ \mathrm{d}x, $$
+$$ E'(t) = \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x} + \frac{\partial u}{\partial t} \frac{\partial^2 u}{\partial t^2}\ \mathrm{d}x, $$
 
 puis intégrer par parties selon
 
