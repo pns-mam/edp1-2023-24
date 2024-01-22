@@ -48,7 +48,7 @@ $$ E'(t) = \int_0^1 \left\( \frac{\partial u}{\partial x} \frac{\partial^2 u}{\p
 
 puis intégrer par parties selon
 
-$$ \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x} = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1 - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\ \mathrm{d}x. $$
+$$ \int_0^1 \frac{\partial u}{\partial x} \frac{\partial^2 u}{\partial t\partial x}\ \mathrm{d}x = \left[ \frac{\partial u}{\partial x} \frac{\partial u}{\partial t} \right]_0^1 - \int_0^1 \frac{\partial^2 u}{\partial x^2} \frac{\partial u}{\partial t}\ \mathrm{d}x. $$
 
 En utilisant les relations précédentes, on voit que le terme intégré est nul, et les termes restant s'annulent parce que $u$ est solution.
 
@@ -72,14 +72,16 @@ où $a$ et $\varphi$ sont des formes bilinéaire et linéaire, respectivement, q
 
 $$ -\int_\Omega \Delta u v\ \mathrm{d}x = -\int_\Gamma \frac{\partial u}{\partial n} v\ \mathrm{d}\sigma + \int_\Omega \nabla u \cdot \nabla v\ \mathrm{d}x. $$
 
-Comme $\partial u/\partial n = g$ sur $\Gamma$, on obtient la forme voulue avec $a(u,v) := \int_\Omega \nabla u \cdot \nabla v\ \mathrm{d}x + \gamma \int_\Omega u v\ \mathrm{d}x$ et $\varphi(v) := \int_\Omega f v\ \mathrm{d}x + \int_\Gamma g v\ \mathrm{d}\sigma$.
+Comme $\partial u/\partial n = g$ sur $\Gamma$, on obtient la forme voulue avec
+
+$$ a(u,v) := \int_\Omega \nabla u \cdot \nabla v\ \mathrm{d}x + \gamma \int_\Omega u v\ \mathrm{d}x \text{ et } \varphi(v) := \int_\Omega f v\ \mathrm{d}x + \int_\Gamma g v\ \mathrm{d}\sigma. $$
 
 ### 2.2
 Montrer que $a$ est continue et coercive.
 
 **Réponse.** Pour $u$ et $v$ dans $H$ on a
 
-$$ |a(u,v)| \leq (1+\gamma) \|u\|_{H^1} \|v\|_{H^1} $$
+$$ |a(u,v)| \leq (1+\gamma) \|u\|\_{H^1} \|v\|\_{H^1} $$
 
 d'où la continuité, et
 
