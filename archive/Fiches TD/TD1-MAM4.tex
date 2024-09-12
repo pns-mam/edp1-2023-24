@@ -1,0 +1,164 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill jeudi 14 septembre 2023 \\
+
+\hrule
+
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 1}\end{center}
+
+\bigskip
+
+Le but de cette s\'erie d'exercices est de montrer quelques
+propri\'et\'es qualitatives des solutions r\'eguli\`eres de certaines \'equations aux d\'eriv\'ees
+partielles de nature diff\'erente (chaleur, \'equation des ondes, Schr\"odinger) qui font notamment intervenir la notion {\it d'\'energie}.
+\begin{enumerate}
+\item
+On consid\`ere le probl\`eme de la chaleur en une dimension
+d'espace pos\'e dans le domaine $\Omega=(0,1)$:
+\begin{equation}
+\left\{\begin{array}{lcl}
+\displaystyle\frac{\partial u}{\partial t} -  \frac{\partial^2 u}{\partial x^2}&=
+&0,\,
+(x,t)\in (0,1)\times\mathbb{R}_*^+,\\
+u(x,t)&=&0,\, (x,t)\in \{0,1\}\times \mathbb{R}_*^+,\\
+u(x,0)&=&u_0(x),\, x\in (0,1).
+\end{array}\right.
+\end{equation}
+{\bf a)} Montrer d'abord que toute fonction $v(x)$ contin\^ument d\'erivable sur
+$[0,1]$ t.q. $v(0)=0$, v\'erifie l'in\'egalit\'e de Poincar\'e
+\begin{equation}\label{eq:Poincare}
+\int_0^1 v^2(x)dx \le  \int_0^1\left(\frac{d v}{d
+    x}\right)^2dx.
+\end{equation}
+(On \'ecrira d'abord $v(x)$ comme integrale de sa d\'eriv\'ee sur
+l'intervalle $(0,x)$ et ensuite on appliquera l'in\'egalit\'e de Cauchy-Schwarz).\\
+{\bf b)} On notera dans ce qui suit par 
+$$E(t) = \int_0^1 u^2(x,t)dx$$
+l'\'energie \`a l'instant $t$. En multipliant l'\'equation de la
+chaleur par $u$ et
+en int\'egrant par rapport \`a $x$, \'etablir l'\'egalit\'e
+v\'erifi\'ee par cette quantit\'e:
+$$
+\frac{1}{2}\frac{dE(t)}{dt}
+=-\int_0^1\left(\frac{\partial u}{\partial x}\right)^2 dx.
+$$
+{\bf c)} En appliquant l'in\'egalit\'e de Poincar\'e \eqref{eq:Poincare} \`a $v(x)= u(x,t)$ en
+d\'eduire que
+$$
+E(t) \le E(0)e^{-2t}.
+$$
+On dit que l'\'energie {\it d\'ecro\^it exponentiellement en temps}.
+\item 
+On se propose de caract\'eriser la solution r\'eguli\`ere du
+probl\`eme des ondes en une dimension d'espace dans le domaine $\Omega\subset \mathbb{R}$
+\begin{equation}
+\left\{\begin{array}{lcl}
+\displaystyle\frac{\partial^2 u}{\partial t^2} -  \frac{\partial^2 u}{\partial x^2} &= &0,\,
+(x,t)\in\Omega\times\mathbb{R}_*^+,\\
+u(x,t)&=&0,\,(x,t)\in\partial\Omega\times \mathbb{R}_*^+,\\
+u(x,0)&=&u_0(x),\, x\in\Omega,\\
+\frac{\partial u}{\partial t}(x,0)& = & u_1(x),\, x\in \Omega,
+\end{array}\right.
+\end{equation}
+o\`u $u_0$ et $u_1$ sont des
+fonctions r\'eguli\`eres et $U_1$ une primitive de $u_1$.\\
+{\bf a)} Supposons maintenant que $\Omega= (0,1)$. En multipliant l'\'equation par $\frac{\partial u}{\partial t}$ et
+en int\'egrant par rapport \`a $x$, \'etablir {\it l'\'egalit\'e de
+l'\'energie}:
+\begin{equation}
+\frac{d}{dt}\left(\int_0^1 \left(\frac{\partial u}{\partial
+      t}(x,t)\right)^2dx + \int_0^1 \left(\frac{\partial u}{\partial
+      x}(x,t)\right)^2dx\right)=0.
+\end{equation}
+{\bf b)}. En utilisant l'\'egalit\'e de l'\'energie montrer que cette
+solution est unique. (On choisira $u_0=u_1=0$ et on montrera que
+l'unique solution est celle nulle).\\
+{\bf c)} V\'erifier que la fonction suivante est solution du
+probl\`eme des ondes si $\Omega=\mathbb{R}$
+\begin{equation}
+u(x,t) =
+\frac{1}{2}(u_0(x+t)+u_0(x-t))+\frac{1}{2}(U_1(x+t)-U_1(x-t)).
+\end{equation}
+Cette derni\`ere relation porte le nom de {\it formule de d'Alembert}.
+\item
+L'\'equation de Schr\"odinger d\'ecrit l'\'evolution de la fonction
+d'onde $u:\mathbb{R}^N\times \mathbb{R}^+\rightarrow \mathbb{C}$ d'une
+particule soumise \`a un potentiel $V:\mathbb{R}^N\rightarrow
+\mathbb{R}$. La quantit\'e $|u|^2$ s'interpr\`ete comme la densit\'e
+de probabilit\'e pour d\'etecter que la particule se trouve au point $(x,t)$.  
+
+On se propose de montrer les principes de conservation de l'\'energie
+pour une solution r\'eguli\`ere de l'\'equation de Schr\"odinger uni-dimensionnelle:
+\begin{equation}
+\left\{\begin{array}{lcl}
+\displaystyle i\frac{\partial u}{\partial t}+\frac{\partial^2 u}{\partial x^2} -V u &=&0,\, (x,t)\in\mathbb{R}\times
+\mathbb{R}_*^+,\\
+\displaystyle\lim_{|x|\rightarrow\infty}u(x,t)  &=& 0,\, t\in
+\mathbb{R}_*^+, \\
+\displaystyle\lim_{|x|\rightarrow\infty}\frac{\partial
+  u(x,t)}{\partial x}  &=& 0,\, t\in
+\mathbb{R}_*^+, \\
+u(x,0) & = & u_0,\,x\in \mathbb{R}.
+\end{array}\right.
+\end{equation}
+{\bf a)} Montrer que pour toute fonction d\'erivable $v$ on a
+\begin{equation}
+\Re\left(\frac{\partial v}{\partial t}\bar v\right) =
+\frac{1}{2}\frac{\partial |v|^2}{\partial t},
+\end{equation}
+o\`u $\Re v$ d\'esigne la partie r\'eelle de la fonction $v$ et $\bar v$
+son conjugu\'e complexe.\\
+{\bf b)} En multipliant l'\'equation par $\bar u$ et en int\'egrant par
+rapport \`a $x$, \'etablir l'\'egalit\'e de l'\'energie:
+\begin{equation}
+\int_{\mathbb{R}}|u(x,t)|^2dx = \int_{\mathbb{R}}|u_0(x)|^2dx.
+\end{equation}
+{\bf c)} En multipliant l'\'equation par $\frac{\partial \bar
+  u}{\partial t}$, montrer que
+\begin{equation}
+\int_{\mathbb{R}}\left(\left|\frac{\partial u}{\partial
+      x}(x)\right|^2 +V(x) |u(x,t)|^2\right)dx = \int_{\mathbb{R}}\left(\left|\frac{\partial u_0}{\partial
+      x}(x)\right|^2 +V(x) |u_0(x)|^2\right)dx.
+\end{equation}
+\end{enumerate}
+%\pagebreak
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

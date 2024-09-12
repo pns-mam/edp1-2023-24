@@ -1,0 +1,147 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech'Nice\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+11 Janvier 2021 \\
+
+\hrule
+
+\vspace{0.6cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Examen \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 2h}
+\vspace{0.6cm}
+
+
+\hrule
+\vspace{0.7cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos reponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Probl\`eme 1}\\% ({\bf Total: 10 points}) \\
+
+\noindent Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+\begin{enumerate}
+\item Montrer que le sch\'ema de {\it Lax-Friedrichs} 
+$$
+\frac{2u_j^{n+1}-u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta t}+V \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}=0.
+$$
+est stable en norme $L^2$ si $|V|\Delta x \le \Delta x$. \\
+
+Calculer l'erreur de troncature du sch\'ema.
+En d\'eduire que si le rapport $\Delta t/\Delta x$ est gard\'e
+constant quand $\Delta t$ et $\Delta x$ tendent vers $0$, alors le
+sch\'ema est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $1$
+et espace et en temps. 
+
+\item  Montrer que le sch\'ema de {\it Lax-Wendroff} ne pr\'eserve pas le principe du maximum
+discret
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+sauf si le rapport $V\Delta t/\Delta x$ vaut $-1$, $0$ ou $1$. \\
+
+Montrer que ce sch\'ema  est $L^2$-stable sous la condition CFL $|V|\Delta t \le
+\Delta x$. \\ %(on va distinguer les cas $V>0$ et $V<0$).
+
+Montrer \'egalement qu'il est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $2$
+et espace et en temps. 
+\end{enumerate}
+
+\noindent {\bf Probl\`eme 2} \\ %({\bf Total: 10 points}) \\
+
+\noindent Consid\'erons l'\'equation d'advection-diffusion dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}-\nu\frac{\partial^2u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.\\
+Consid\'erons le sch\'ema d\'ecentr\'e amont suivant:
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j}^{n}-u_{j-1}^{n}}{\Delta x}-\nu\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+\begin{enumerate}
+\item D\'eterminer l'ordre du sch\'ema. 
+\item On veut d\'eterminer les conditions des stabilit\'e $L^2$ du sch\'ema lorsque $V > 0$ et
+$V < 0$. Pour cela on proc\'edera en plusieurs \'etapes. \'Ecrire
+d'abord le facteur d'amplification $G(k)$ sous la forme
+$$
+G(k)=\alpha e^{2i\pi k\Delta x}+\beta +\gamma  e^{-2i\pi k\Delta x},\, \alpha+\beta+\gamma=1.
+$$
+avec des $\alpha$, $\beta$, $\gamma$ que l'on pr\'ecisera. \\
+
+\noindent Calculer le module complexe de $G(k)$ et montrer qu'il peut se mettre
+sous la forme
+$$
+|G(k)|^2=(1-2(\alpha+\gamma)s_k)^2+4(\alpha-\gamma)^2s_k(1-s_k),\, s_k=\sin^2(k\pi\Delta x)
+$$
+(sans remplacer pour le moment les valeurs de coefficients). \\
+
+\noindent En d\'eduire que la condition de stabilit\'e
+$|G(k)|^2 \le 1$ est satisfaite si $(\alpha-\gamma)^2\le (\alpha+\gamma)$.
+Remplacer maintenant les coefficients $\alpha$ et $\gamma$ et donner
+la condition de stabilit\'e en fonction des param\`etres du
+probl\`eme. Dans le cas o\`u $V < 0$ que se passe-t-il si $\nu\rightarrow 0$? 
+\end{enumerate}
+
+\noindent {\bf Probl\`eme 3} \\ 
+
+\noindent  On cherche \`a r\'esoudre le probl\`eme aux
+limites le suivant dans le carr\'e $\Omega=[-1,1]^2$, 
+\begin{equation}\label{eq:tube}
+\left\{\begin{array}{lcl}
+-\Delta u &=& f,\,\text{dans }\Omega\\[2ex]
+\displaystyle \frac{\partial u}{\partial \mathbf{n}}(x,\pm 1)&=&1,\,\forall x\in (-1,1),\\[2ex]
+u(\pm 1,y)&=&0,\,\forall y\in  (-1,1).
+\end{array}\right.
+\end{equation}
+où $\mathbf{n}$ est la normale extérieure à la frontière du domaine. 
+\begin{enumerate}
+\item En multipliant par une fonction test $v$ et en intégrant par parties, d\'eterminer la formulation variationnelle (FV) de ce problème. On va préciser l'espace $X$ sur lequel cette formulation est définie ainsi que la forme bilinéaire $a$ et la forme linéaire.
+\item Montrer que $u$ est solution de (FV) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.
+%\item Peut-on \'etablir l'unicit\'e de la solution \`a partir de cette \'equivalence ? (on suppose qu'il existent deux solutions. etc...)
+\end{enumerate}
+ \texttt{Indication}: apr\`es la
+  multiplication par la fonction test $v$ et integration par parties,
+  on va constater que l'integrale sur la fronti\`ere $\partial\Omega$
+  se d\'ecompose en $4$ parties correspondant aux cot\'es du carr\'e
+  et o\`u les conditions aux limites sont diff\'erentes.\\
+
+
+\end{document}
+

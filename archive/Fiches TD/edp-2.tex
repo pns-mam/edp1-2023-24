@@ -1,0 +1,164 @@
+\documentclass[leqno,11pt]{article}
+\usepackage{amssymb}
+\parindent 0cm
+\newcommand{\cD}{\cal D}
+\newcommand{\cT}{\cal T}
+\newtheorem{Th}{Theorem}
+\newtheorem{Cor}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{Remark}
+%--------dimension
+%\textwidth=15cm
+%\textheight=22cm
+%\oddsidemargin=20mm     \evensidemargin=20mm
+%\hoffset=-25mm            \voffset=-25mm
+%\pretolerance=500      \tolerance=1000  \brokenpenalty=5000
+
+
+
+\newcommand{\cqfd}
+{%
+\mbox{}%
+\nolinebreak%
+\hfill%
+\rule{2mm}{2mm}%
+\medbreak%
+\par%
+}
+\newcommand{\DD}{{\mathbb D}}
+\newcommand{\CC}{{\mathbb C}}
+\newcommand{\RR}{{\mathbb R}}
+\newcommand{\TT}{{\mathbb T}}
+\newcommand{\NN}{{\mathbb N}}
+\newcommand{\ds}{\displaystyle}
+%----------------------------Dimension
+\textwidth=17truecm
+\textheight=25truecm
+\oddsidemargin=20mm     \evensidemargin=20mm
+\hoffset=-25mm            \voffset=-20mm
+\pretolerance=500      \tolerance=1000  \brokenpenalty=5000
+\parindent=0pt
+%--------------------
+
+
+\begin{document}
+\thispagestyle{empty}
+%-----------------------------Debut titre
+\noindent\rule{17truecm}{0.4mm}
+\smallbreak
+\noindent{\large\bf Polytech'Nice Sophia Antipolis} \hfill {\large \bf EPU - MAM4/SI4}
+\smallbreak
+
+\centerline {\large \sc Equations aux D\'eriv\'ees Partielles}
+
+\bigbreak
+
+\noindent {\bf Autour de la formule et du noyau de Green} \hfill {\bf Feuille n$^o$ 2\ \ Sept. 2010}
+
+\smallbreak
+
+
+\noindent\rule{17truecm}{0.4mm} \\
+
+
+%-----------------------------Fin titre
+\vspace{1cm}
+{\sl Dans tous les exercices de cette feuille, on supposera que les fonctions sont suffisamment d\'erivables.}
+\vspace{1cm}
+
+\noindent {\bf Exercice 1 } : \\
+
+On consid\`ere une fonction $f$ num\'erique d\'efinie sur $\ds \RR^n, \, n\ge1$ et $\ds v \, = \, v(x) \, = \, (v_1(x), \,v_2(x), \cdots , \, v_n(x))$ un champ de vecteurs d\'efini sur $\ds \RR^n$. On rappelle la d\'efinition des op\'erateurs suivants :
+\begin{description}
+\item [Le gradient] not\'e $\nabla$ ou grad, op\`ere sur les fonctions num\'eriques de $n$ variables r\'eelles ($\ds f \, :  \, \RR^n \longmapsto \RR$), et produit des champs de vecteurs d\'efinis sur $\ds \RR^n$ ($\ds \nabla f \, : \, \RR^n \longmapsto \RR^n$) :
+$$
+\nabla f \, = \, \mbox{grad} f \, = \,
+\left(
+\begin{array}{c}
+\ds \frac{\partial f}{\partial x_1} \\
+\ds \frac{ \partial f}{\partial x_2}\\
+\ds \vdots \\
+\ds \frac{ \partial f}{\partial x_2}
+\end{array}
+\right)
+$$
+\item [Le Laplacien] not\'e $\Delta$, op\`ere sur les fonctions num\'eriques de $n$ variables r\'eelles ($\ds f \, : \, \RR^n \longmapsto \RR$), et produit des champs scalaires d\'efinis sur $\ds \RR^n$ ($\ds \Delta f \, : \, \RR^n \longmapsto \RR$) :
+$$
+\Delta f \, = \, \frac{\partial^2 f}{\partial x_1^2} \, + \, \frac{\partial^2 f}{\partial x_2^2} \, + \cdots + \,\frac{\partial^2 f}{\partial x_n^2}
+$$
+
+\item [La divergence] not\'ee div ou $\nabla \cdot$, op\`ere sur les champs de vecteurs d\'efinis sur $\ds \RR^n$ ($\ds v \, : \, \RR^n \longmapsto \RR^n$), et produit des champs scalaires d\'efinis sur $\ds \RR^n$ ($\ds \nabla \cdot  v \, : \, \RR^n \longmapsto \RR$):
+$$
+\mbox{div} \, v \, = \, \nabla \cdot v \, = \, \frac{\partial v_1}{\partial x_1} \, + \,  \frac{\partial v_2}{\partial x_2} \, + \cdots + \, \frac{\partial v_n}{\partial x_n}
+$$
+\end{description}
+
+\begin{enumerate}
+\item V\'erifier la relation $\ds \mbox{div} \, \nabla f \, = \, \Delta f$ ;
+\item En utilisant la formule de la d\'eriv\'ee du produit de fonctions num\'eriques d'une variable r\'eelle $uv$, rappeler la formule d'int\'egration par parties sur un intervalle $[a,b]$ de $\RR$ ;
+\item  $f$ et $g$ \'etant deux fonctions num\'eriques de $n$ variables r\'eelles, montrer que :
+$$
+\mbox{div}\, (g \cdot \nabla f) \, = \, g \, \Delta f \, + \, \nabla g \cdot \nabla f
+$$
+\item Soit $\Omega$ un domaine ouvert de $\ds \RR^n$ de fronti\`ere $\ds \partial \Omega \, = \, \Gamma$ r\'eguli\`ere. On rappelle la formule de Green, qui est l'analogue de l'int\'egration par parties :
+$$
+\int_\Omega \frac{\partial u}{\partial x_i} \, v \, = \, - \, \int_\Omega u \, \frac{\partial v}{\partial x_i} \, + \,\int_{\partial \Omega} u \,v \, n_i
+$$
+$\ds n_i$ \'etant la $i$-\`eme composante de la normale sortante \`a $\partial \Omega$.
+\begin{enumerate}
+\item Montrer que si $v$ est un champ vectoriel d\'efini sur $\ds \RR^n$ ($\, v \, : \, \RR^n \, \longmapsto \, \RR^n$), alors on a la {\sl formule de la divergence} suivante :
+$$
+\int_\Omega \mbox{div}  \, v \, =  \,\int_{\partial \Omega} v \cdot n \, = \,\,\int_{\partial \Omega} v_i \, n_i
+$$
+\item Montrer que si $f$ et $g$ sont des champs scalaires d\'efinis sur $\ds \RR^n$, alors on a :
+$$
+\int_\Omega \Delta f   \, g \, = \, - \, \int_\Omega \nabla f  \, \cdot \, \nabla g \,+ \, \int_{\partial \Omega} \frac{\partial f}{\partial n}  \, g
+$$
+
+o\`u la {\sl d\'eriv\'ee normale} $\ds \frac{\partial f}{\partial n} $ est d\'efinie de la mani\`ere suivante :
+$$
+\frac{\partial f}{\partial n} \, = \, \sum_{i=1}^n \frac{\partial f}{\partial x_i} \, n_i
+$$
+\end{enumerate}
+\end{enumerate}
+
+
+\vspace{0,5cm}
+
+\noindent {\bf Exercice 2 : Solution \'el\'ementaire de l'\'equation de la chaleur} : \\
+
+On consid\`ere la fonction $G$ d\'efinie par :
+$$
+\begin{array}{rrcl}
+\ds G : & \RR \, \times \, ]0 \, , \, +\infty[ & \longmapsto & \RR \\
+\ds & (x \, , \, t) & \longmapsto & \ds G(x,t) \, = \, \frac{1}{\sqrt{4 \pi t}}\, \exp (-\frac{x^2}{4t})
+\end{array}
+$$
+\begin{enumerate}
+\item Montrer que $G(x,t)$ est solution de l'\'equation de la chaleur dans $\RR$, c'est \`a dire que :
+$$
+\frac{\partial G}{\partial t} \, - \, \frac{\partial^2 G}{\partial x^2} \, = \, 0 \qquad \forall \, (x \, , \, t ) \, \in \, \RR \, \times \, ]0 \, , \, + \infty[
+$$
+\item Tracer (avec une  pr\'ecision mod\'er\'ee) les courbes repr\'esentatives de la fonction $\ds x \, \, \longmapsto \,G(x,t)$ pour $\ds t = \frac{1}{4}$ et pour $t=1$. Comparer les r\'esultats obtenus. Que peut-on dire du comportement de la fonction  $\ds x  \, \longmapsto \,G(x,t)$ lorsque $t \to 0$ ?
+\item Calculer la valeur de l'int\'egrale $\ds \int_{-\infty}^{+\infty} G(x,t) \, dx$ (on rappelle que  $\ds \int_{-\infty}^{+\infty} \exp(-y^2) \, dy \, = \, \sqrt{\pi} $).
+\item On d\'efinit \`a pr\'esent la fonction :
+$$
+u(x,t) \, = \, \int_{-\infty}^{+\infty} G(x-y,t) \, u_0(y) \, dy
+$$
+Montrer, en admettant que toutes les d\'erivations sour le signe $\ds \int$ soient licites, que $u$ est solution du probl\`eme de Cauchy pour l'\'equation de la chaleur :
+$$
+\left\{
+\begin{array}{rcll}
+\ds \frac{\partial u}{\partial t} \, - \, \frac{\partial^2 u}{\partial x^2} & = & 0 &  \forall \, (x \, , \, t ) \, \in \, \RR \, \times \, ]0 \, , \, + \infty[ \\
+\ds u(x,0)&=&\ds u_0(x)&
+\end{array}
+\right.
+$$
+\end{enumerate}
+\end{document}
+\vspace{0,5cm}
+\noindent {\bf Exercice 3 : } : \\
+
+
+

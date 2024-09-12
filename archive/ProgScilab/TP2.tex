@@ -1,0 +1,102 @@
+\documentclass[leqno]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{eufrak}
+\usepackage{a4}
+\usepackage{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[french]{babel}
+%\usepackage{frbib}
+\usepackage{graphicx,calc}
+
+\textwidth16cm
+\textheight24cm
+\oddsidemargin-0.4cm
+
+\topmargin-2cm     
+
+\newtheoremstyle{exo}% name
+  {9pt}%      Space above, empty = `usual value'
+  {9pt}%      Space below
+  {\normalfont}% Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Thm head font
+  {.}%        Punctuation after thm head
+  {\newline}% Space after thm head: \newline = linebreak
+  {}%         Thm head spec
+
+\theoremstyle{exo}
+
+\DeclareMathOperator{\Erf}{Erf}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\cond}{cond}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ds}{\displaystyle}
+
+\theoremstyle{exo}
+\newtheorem{exe}{Exercice}
+\newtheorem{algorithm}{Algorithme}
+
+\title{M\'ethodes it\'eratives}
+\author{}
+
+\begin{document}
+\maketitle
+
+\begin{exe}{\it M\'ethode de Jacobi}\\
+Programmer l'algorithme de Jacobi pour r\'esoudre un syst\`eme lin\'eaire. On \'ecrira une fonction \texttt{[x,iter] = Jacobi(A,b,tol,iterMax,x0)}. Les arguments d'appel sont:
+\begin{itemize}
+\item la matrice $A$ et le vecteur $b$.
+\item \texttt{x0} est le vecteur initial $x^0$.
+\item \texttt{tol} est la valeur de $\varepsilon$ du test d'arr\^et.
+\item \texttt{iterMax} est le nombre maximal d'it\'erations.
+\end{itemize} 
+Les arguments de sortie sont:
+\begin{itemize}
+\item la solution approch\'ee $x$.
+\item \texttt{iter} est le nombre d'it\'erations effectu\'ees.
+\end{itemize}
+Dans l'\'ecriture de la fonction \texttt{Jacobi} utiliser la commande \texttt{argn} pour d\'eterminer le nombre d'arguments d'entr\'ee au moment de l'appel de la fonction.
+\begin{itemize}
+\item Si ce nombre est \'egal \`a $4$, poser \texttt{x0=zeros(b);}
+\item Si ce nombre est \'egal \`a $3$, poser \texttt{x0=zeros(b);iterMax=200;}
+\item Si ce nombre est \'egal \`a $3$, poser \texttt{x0=zeros(b);iterMax=200;tol=1.e-4;}
+\end{itemize}
+Pour $n=20$ on d\'efinit \texttt{A=laplaceD(n);xx=(1:n)'/(n+1);b=xx.*sin(xx);} et \texttt{sol=A\b}. Pour diff\'erentes valeurs du param\`etre \texttt{tol=}$10^{-s},\,s=2,3,...$ calculer la solution approch\'ee \texttt{x=Jacobi(A,b,tol,1000)}. Comparer les valeurs \texttt{norm(x-sol)} et \texttt{norm(inv(A))*tol}. Commenter. 
+\end{exe}
+
+\begin{exe}{\it M\'ethode de relaxation}\\
+\'Ecrire une fonction \texttt{[x,iter]=Relax(A,b,w,tol,iterMax,x0)} programmant la m\'ethode de relaxation. Pour la m\^eme matrice que l'exercice pr\'ec\'edent et le m\^eme vecteur $b$, tracer la courbe qui \`a $\omega=i/10(i=1,...,20)$ associe le nombre d'it\'erations effectu\'ees par la m\'ethode de relaxation. On fixera \texttt{iterMax} \`a $1000$, \texttt{tol} \`a $10^{-6}$ et \texttt{x0} au vecteur nul. D\'eterminer la valeur de $\omega$ qui permet de calculer la solution en un nombre minimal d'it\'erations. Comparer avec la valeur th\'eorique.   
+\end{exe}
+
+\begin{exe}{\it Algorithme du gradient \`a pas constant}
+\begin{enumerate}
+\item \'Ecrire un programme \texttt{Gradient} calculant la solution du syst\`eme $Ax=b$ par la m\'ethode du gradient.
+\item On fixe $n=10$,\texttt{A=laplaceD(n);xx=(1:n)'/(n+1);b=xx.*sin(xx)}. Calculer la solution $x_G$ du probl\`eme obtenue par cet algorithme. On prendra $\alpha=10^{-4}$ et on limitera le nombre d'it\'erations \`a $N_{iter}=10000$, le test d'arr\^et portera sur la norme du r\'esidu qui doit \^etre inf\'erieure \`a $\varepsilon=10^{-4}$. Noter le nombre d'it\'erations effectu\'ees. Comprarer cette solution par la solution donn\'ee par \texttt{Scilab}.
+\item Pour $\alpha$ variant de $\alpha_{min}=32\cdot 10^{-4}$ \`a $\alpha_{max}=42\cdot 10^{-4}$, par pas de $10^{-5}$, tracer une courbe repr\'esentant le nombre d'it\'erations n\'ecessaires pour calculer $x_G$. On fixera $N_{iter}=2000$ et $\varepsilon=10^{-10}$. D\'eterminer num\'eriquement la valeur $\alpha$ conduisant \`a un nombre d'it\'erations minimal. Comparer avec la valeur donn\'ee par la th\'eorie. 
+\end{enumerate}
+\end{exe}
+
+\begin{exe}{\it Algorithme du gradient \`a pas variable}\\
+Pour am\'eliorer la convergence de l'algorithme du gradient, on propose de faire varier $\alpha$. \`A chaque it\'eration, on prend pour $\alpha_k$ la valeur $\alpha$ qui minimise la norme du r\'esidu $r_{k+1}=b-Ax_{k+1}$.
+\begin{enumerate}
+\item Calculer $\alpha_k$.
+\item \'Ecrire un programme \texttt{GradientV} calculant la solution du syst\`eme par la m\'ethode du gradient \`a pas variable.
+\item Comparer les deux algorithmes (\`a pas fixe et \`a pas variable) et notamment le nombre d'it\'erations et le temps de calcul pour une m\^eme pr\'ecision. On prendra les donn\'ees de l'exercice pr\'ec\'edent avec, pour le gradient \`a pas fixe, $\alpha$ \'egal \`a la valeur optimale. 
+\end{enumerate}
+\end{exe}
+
+
+\begin{exe}{\it Algorithme du gradient conjugu\'e}
+\begin{enumerate}
+\item \'Ecrire un programme \texttt{GradientC} calculant la solution du syst\`eme lin\'eaire $Ax=b$ par la m\'ethode du gradient conjugu\'e.
+\item Comparer cet algorithme et l'algorithme du gradient \`a pas variable pour la m\^eme matrice que celle d\'efinie auparavant.
+\item On ne suppose plus que la matrice $A$ soit d\'efinie positive, ni m\^eme sym\'etrique, mais seulement qu'elle est inversible. Comment appliquer la m\'ethode du gradient conjugu\'e?  
+\end{enumerate}
+\end{exe}
+\end{document}

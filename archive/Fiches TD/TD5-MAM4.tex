@@ -1,0 +1,113 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill Jeudi 12 Octobre 2023 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 5}\end{center}
+
+\bigskip
+
+\parskip 12pt
+{\bf Probl\`eme 1}. Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$.
+
+
+\begin{enumerate}
+\item Montrer que l'\'equation \'equivalente pour le sch\'ema de {\it Lax-Wendroff} 
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\cdot \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+est
+$$
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x} -\frac{V\Delta x^2}{6}\left(1-\frac{(V\Delta t)^2}{\Delta x^2}\right)\frac{\partial^3 u}{\partial x^3}=0
+$$
+Est-ce qu'on peut am\'eliorer le sch\'ema \`a partir de cette
+\'equation \'equivalente pour le rendre plus pr\'ecis?
+\item On d\'efinit le sch\'ema de Crank-Nicolson pour l'\'equation d'advection
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n+1}-u_{j-1}^{n+1}}{4\Delta x}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{4\Delta x}=0.
+$$
+\'Etudier la consistance et l'erreur de troncature du
+sch\'ema. Montrer par analyse de Fourier qu'il est
+inconditionnellement stable. \'Ecrire son \'equation
+\'equivalente. Peut-on encore l'am\'eliorer \`a partir de cette derni\`ere?
+\end{enumerate}
+{\bf Probl\`eme 2}. Consid\'erons l'\'equation d'advection-diffusion dans la domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}-\nu\frac{\partial^2u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1. Consid\'erons le sch\'ema d\'ecentr\'e amont suivant:
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j}^{n}-u_{j-1}^{n}}{\Delta x}-\nu\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+\begin{enumerate}
+\item D\'eterminer l'\'equation \'equivalente associ\'ee au sch\'ema. Comment peut-on
+am\'eliorer l'ordre du sch\'ema \`a moindre frais ? 
+Quelles sont alors les nouvelles conditions CFL?
+ \item Pour la m\^eme \'equation consid\'erons le sch\'ema
+ $$
+ \frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+ \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{\nu}{2}\left(\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}+\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}\right)=0.
+ $$
+ Etudier la stabilit\'e $L^2$ du sch\'ema. Que se passe-t-il lorsque
+ $\nu\rightarrow 0$?
+\end{enumerate}
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+\end{document}

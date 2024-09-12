@@ -1,0 +1,111 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech'Nice\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+28 Janvier 2021 \\
+
+\hrule
+
+\vspace{0.6cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Examen \'Equations aux D\'eriv\'ees Partielles - Sujet a. Dur\'ee : 1,5h}
+\vspace{0.6cm}
+
+
+\hrule
+\vspace{0.7cm}
+\noindent {\sl  Les documents de cours sont autorisés. Justifier vos reponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Probl\`eme 1}\\% ({\bf Total: 10 points}) \\
+\noindent Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+3\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+\begin{enumerate}
+\item Construire un schéma décentré explicite stable en norme $L^2$ et en norme $L^{\infty}$ et donner sa condition de stabilité. Avec une petite modification le schéma devient inconditionnellement instable. Donner ce nouveau schéma et montrer son instabilité. 
+
+\item Calculer l'erreur de troncature dans les deux cas, quel est l'ordre d'approximation?
+
+\item  On souhaite améliorer la stabilité, l'ordre d'approximation et la dissipation du schéma.
+
+Construire un schéma (i) inconditionnellement stable sans changer l'ordre d'approximation. (ii) inconditionnellement stable mais avec ordre 2 en temps et espace, (iii) non-dissipatif en passant par l'equation equivalente.
+
+
+\end{enumerate}
+
+
+\noindent {\bf Probl\`eme 2} \\ 
+Montrer que la fonction $f: (0,1)\rightarrow \mathbb{R}$ donnée par
+ \begin{equation}\label{eq:rhs}
+ f(x) = \left\{\begin{array}{rl}
+ -1,& 0 <  x\le 1/2,\\
+ 1, &1/2 <x < 1
+ \end{array}\right.
+ \end{equation}
+est à carré integrable mais pas continue sur $(0,1)$.
+%\marks{2}
+Considérons le problème aux limites suivant:
+ \begin{equation}\label{eq:bvp}
+\left\{\begin{array}{rl}
+-u''(x) &= f(x), \quad x\in (0,1)\\
+ u(0) &= u(1) = 1,
+ \end{array}\right.
+ \end{equation}
+ où $f(x)$ est donné par (\ref{eq:rhs}). 
+Montrer que la fonction suivante est une solution faible du problème aux limites (\ref{eq:bvp}) 
+\begin{equation}\label{eq:sol}
+ u(x) = \left\{\begin{array}{rl}
+ \frac{x^2}{2} -\frac{x}{4}+1, & 0 \le  x\le 1/2,\\
+ -\frac{x^2}{2}+\frac{3x}{4}+\frac{3}{4}, & 1/2 <x \le 1.
+ \end{array}\right.
+ \end{equation}
+
+
+\noindent {\bf Probl\`eme 3} \\ 
+Considérons le problème aux limites suivant:
+ \begin{equation}\label{eq:bvp2}
+\left\{\begin{array}{rl}
+-(x^2 u'(x))' + u(x) &= f(x), \quad x\in (0,1)\\
+ u(0) &= 0 ,\\
+ u'(1) + 2 u(1) &= 1,
+ \end{array}\right.
+ \end{equation}
+ où $f$ est une fonction à carré integrable .\\
+En multipliant l'équation (\ref{eq:bvp2}) par une fonction test $v$, en integrant par parties et en prenant en compte les conditions aux limites, écrire la formulation variationnelle du problème (\ref{eq:bvp2}) sous la forme
+$$
+\mbox{Trouver } u\in V_E, \mbox{tel que } a(u,v) = (f,v),\, \forall v\in V_E.
+$$
+Identifier clairement la forme bilinéaire $a$ et l'espace fonctionnel $V_E$ .
+
+\end{document}
+

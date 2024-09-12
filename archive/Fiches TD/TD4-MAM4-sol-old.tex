@@ -1,0 +1,167 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4/SI4) \hfill mercredi 10 octobre 2012 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+S\'erie 4 \\
+SOLUTIONS}\end{center}
+
+\bigskip
+
+\parskip 12pt
+{\it Stabilit\'e en norme $L^{\infty}$}.
+\begin{enumerate}
+\item Sch\'ema de Crank-Nicolson. On notera comme avant par
+  $M=\max_{j\in\mathbb{Z}}\{u_j^{n+1}\}$ et
+  $m=\min_{j\in\mathbb{Z}}\{u_j^{n+1}\}$ le maximum et le minimum des
+  valeurs fournies par le sch\'ema \`a l'instant $n+1$. On montrera
+  d'abord que le maximum est born\'e par les valeurs obtenues \`a
+  l'instant pr\'ecedent. Notos par
+  $u_k^{n+1}$, l'\'el\'ement pour lequel ce maximum est atteint. On
+  \'ecrit ensuite le  sch\'ema pour $j=k$ et on utilise le fait que
+  le maximum est $u_k^{n+1}$. Ceci nous donne
+$$
+\frac{M-u_k^n}{\Delta t}-\nu\frac{u_{k-1}^n-u_k^n+u_{k+1}^n}{2\Delta
+  x^2} \le 0 \Rightarrow M\le \left(1-\frac{\nu\Delta t}{\Delta
+    x^2}\right)u_k^n +\frac{\nu\Delta t}{2\Delta
+    x^2} (u_{k-1}^n+u_{k+1}^n).
+$$
+On voit bien que si $\nu\Delta t\le \Delta x^2$, le terme de droite
+est une combinaison convexe des $u^n_{k-1}$, $u^n_k$ et $u^n_{k+1}$,
+d'o\`u le fait que $M\le \max_{j\in \mathbb{Z}}\{u_j^n\}$. En ce qui
+concerne l'in\'egalit\'e sur le minimum, ceci se d\'eduit avec les
+m\^emes arguments, en rempla\c{c}ant $u^n_j$ par $-u_j^n$ et $M$ par $-m$. 
+\item Sch\'ema de DuFort-Frankel. On va r\'e-\'ecrire ce sch\'ema de
+  la fa\c{c}on suivante.
+$$
+\left(\frac{1}{2\Delta t}+\frac{\nu}{\Delta
+    x^2}\right)u_j^{n+1}=\left(\frac{1}{2\Delta t}-\frac{\nu}{\Delta
+    x^2}\right) u_j^{n-1}+\frac{\nu}{\Delta x^2}(u^n_{j-1}+u^n_{j+1}).
+$$
+On remarque que si $2\nu\Delta t\le \Delta x^2$, alors $u_j^{n+1}$ est
+bien une combinaison convexe des \'el\'ements du second membre, ce qui
+conduit \`a la stabilit\'e $L^\infty$ su sch\'ema.
+\end{enumerate}
+
+{\it Stabilit\'e en norme $L^2$}
+\begin{enumerate}
+\item Sch\'ema d'Euler implicite. On injecte un mode de Fourier
+  $u_j^n=G(k)^ne^{2i\pi jk\Delta x}$ dans le sch\'ema, afin de calculer
+  son facteur d'amplification
+$$
+\frac{ G(k)^{n+1}e^{2i\pi jk\Delta x}- G(k)^{n}e^{2i\pi jk\Delta
+    x}}{\Delta t}-\nu\frac{G(k)^{n+1}e^{2i\pi (j+1)k\Delta
+    x}-2 G(k)^{n+1}e^{2i\pi jk\Delta
+    x} +G(k)^{n+1}e^{2i\pi (j-1)k\Delta
+    x}}{\Delta x^2}=0.
+$$
+En simplifiant le facteur $G(k)^ne^{2i\pi jk\Delta x}$ on obtient
+$$
+G(k)-1-\frac{\nu\Delta t}{\Delta x^2}G(k)(e^{2i\pi k\Delta  x} -2 +e^{-2i\pi k\Delta  x})=0.
+$$
+Ensuite,
+$$
+\displaystyle G(k)\left(1 +\frac{\nu\Delta t}{\Delta x^2}(2-2\cos(2\pi\Delta
+  x))\right) =1 \Leftrightarrow G(k) = \frac{1}{1+4
+  \displaystyle\frac{\nu\Delta t}{\Delta x^2}\sin^2(\pi k\Delta x)}
+$$
+ce qui prouve qu'ind\'ependamment de $\Delta t$ et $\Delta x$,
+$|G(k)|\le 1$, donc le sch\'ema est {\it inconditionnellement stable}.
+\item Le $\theta$-sch\'ema. On injecte un mode de Fourier
+  $u_j^n=G(k)^ne^{2i\pi j k\Delta x}$ dans le sch\'ema, afin de calculer
+  son facteur d'amplification
+$$
+\begin{array}{l}
+\displaystyle\frac{ G(k)^{n+1}e^{2i\pi jk\Delta x}- G(k)^{n}e^{2i\pi jk\Delta
+    x}}{\Delta t} \\[2ex]
+\qquad - \theta\displaystyle\displaystyle\nu\frac{G(k)^{n+1}e^{2i\pi (j+1)k\Delta
+    x}-2 G(k)^{n+1}e^{2i\pi jk\Delta
+    x} +G(k)^{n+1}e^{2i\pi (j-1)k\Delta
+    x}}{\Delta x^2}\\[2ex]
+\qquad- \displaystyle (1-\theta)\displaystyle\nu\frac{G(k)^{n}e^{2i\pi (j+1)k\Delta
+    x}-2 G(k)^{n}e^{2i\pi jk\Delta
+    x} +G(k)^{n}e^{2i\pi (j-1)k\Delta
+    x}}{\Delta x^2}=0
+\end{array}
+$$
+En simplifiant le facteur $G(k)^ne^{2i\pi jk\Delta x}$ on obtient
+$$
+\begin{array}{l}
+\displaystyle G(k)-1-\theta\frac{\nu\Delta t}{\Delta x^2}G(k)(e^{2i\pi
+  k \Delta  x} -2
++e^{-2i\pi k\Delta  x})-(1-\theta)\frac{\nu\Delta t}{\Delta x^2}(e^{2i\pi k\Delta  x} -2
++e^{-2i\pi k\Delta  x})=0.
+\end{array}
+$$
+ce qui conduit \`a
+$$
+G(k)\left(1+4\theta \displaystyle\frac{\nu\Delta t}{\Delta
+    x^2}\sin^2(\pi k\Delta x)\right)=1-4(1-\theta)
+\displaystyle\frac{\nu\Delta t}{\Delta x^2}\sin^2(\pi k\Delta x).
+$$
+La condition $G(k)\le 1$ sera donc \'equivalente \`a
+$$
+-1\le \frac{1-4(1-\theta) \displaystyle\frac{\nu\Delta t}{\Delta
+    x^2}\sin^2(\pi k\Delta x)}{1+4\theta \displaystyle\frac{\nu\Delta
+    t}{\Delta x^2}\sin^2(\pi k\Delta x)}\le 1 \Leftrightarrow (1-2\theta) \displaystyle\frac{\nu\Delta
+    t}{\Delta x^2}\sin^2(\pi k\Delta x)\le 1.
+$$
+On en d\'eduit que si $\theta \ge 1/2$, le sch\'ema est
+{\it inconditionnellement stable} et que si $0\le \theta < 1/2$ alors il est
+stable sous la condition $(1-2\theta)\frac{\nu\Delta
+    t}{\Delta x^2} \le 1$.
+\item Sch\'ema de DuFort-Frankel. On injecte un mode de Fourier
+  $u_j^n=G(k)^ne^{2i\pi j k\Delta x}$ dans le sch\'ema, afin de calculer
+  son facteur d'amplification et on simplifiera ensuite $G(k)^{n-1}e^{2i\pi jk\Delta x}$
+$$
+\begin{array}{l}
+G(k)^2-1-c\left(2G(k)\cos(k\pi\Delta
+  x)-G(k)^2-1\right)=0,\, c=\frac{2\nu\Delta t}{\Delta x^2}\\[2ex]
+\qquad \Rightarrow G(k)^2(1+c)-2cG(k)\cos(k\pi\Delta x)+c-1=0.
+\end{array}
+$$
+Il s'agit d'une equation de second degr\'e, possedant $2$ racines
+$G_{1,2}(k)$. Si le determinant de cette \'equation est n\'egatif, les
+deux racines sont conjugu\'ees complexes, de m\^eme module et 
+$$
+|G_1(k)|^2= |G_2(k)|^2=|G_1(k)G_2(k)|=\left|\frac{c-1}{c+1}\right|<1.
+$$
+on en d\'eduit que le sch\'ema est inconditionnellement stable. Si le
+determinant est positif, les deux racines sont r\'eelles
+$$
+G_{1,2}(k)=\frac{c\cos(k\pi\Delta x)\pm \sqrt{c^2\cos^2(k\pi\Delta x)-c^2+1} }{c+1}.
+$$
+et on pourra montrer facilement par simple calcul que $\max
+\{G_1(k),G_2(k)\} = G_1(k) \le  1$ et que $\min
+\{G_1(k),G_2(k)\} = G_2(k) \ge -1$.
+\end{enumerate}
+\end{document}

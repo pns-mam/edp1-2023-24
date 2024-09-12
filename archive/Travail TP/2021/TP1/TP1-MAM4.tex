@@ -1,0 +1,129 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\usepackage{listings}
+\lstset{ 
+	language=Matlab,                		% choose the language of the code
+%	basicstyle=10pt,       				% the size of the fonts that are used for the code
+	numbers=left,                  			% where to put the line-numbers
+	numberstyle=\footnotesize,      		% the size of the fonts that are used for the line-numbers
+	stepnumber=1,                   			% the step between two line-numbers. If it's 1 each line will be numbered
+	numbersep=5pt,                  		% how far the line-numbers are from the code
+%	backgroundcolor=\color{white},  	% choose the background color. You must add \usepackage{color}
+	showspaces=false,               		% show spaces adding particular underscores
+	showstringspaces=false,         		% underline spaces within strings
+	showtabs=false,                 			% show tabs within strings adding particular underscores
+%	frame=single,	                			% adds a frame around the code
+%	tabsize=2,                				% sets default tabsize to 2 spaces
+%	captionpos=b,                   			% sets the caption-position to bottom
+	breaklines=true,                			% sets automatic line breaking
+	breakatwhitespace=false,        		% sets if automatic breaks should only happen at whitespace
+	escapeinside={\%*}{*)}          		% if you want to add a comment within your code
+}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill Lundi 27 Septembre 2021 \\
+
+\hrule
+
+%\medskip
+%
+%\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles -- TP1}\end{center}
+%
+\medskip
+
+\noindent Consid\'erons l'\'equation de la chaleur en une dimension d'espace dans la domaine born\'e $(a,b)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}-\nu \frac{\partial^2 u}{\partial x^2}=0,\, \forall (x,t)\in(a,b)\times\mathbb{R}^+_*,\\[2ex]
+u(x,0)=u_0(x),\,\forall x\in (a,b).
+\end{cases}
+$$
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$.  Les conditions aux limites sont des conditions de Dirichlet homogènes:
+$u(a,t)=u(b,t)=0,\,\forall t$. \\
+
+\noindent Le but de cette séance dédiée aux travaux pratiques est de tester numériquement les propriétés de consistance et stabilité pour les schémas d'Euler implicite et explicite dans un premier temps et ensuite pour le schéma de Crank-Nicolson et theta-schéma. L'étude théorique de ces propriétés a été faite dans le TD précédent. \\
+
+
+\noindent {\bf Étude du schéma d'Euler explicite}
+
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0 \Leftrightarrow u_j^{n+1} = u_j^n + \frac{\nu\Delta t}{\Delta x^2}(u_{j+1}^{n}-2u_j^n+u_{j-1}^{n})
+$$
+
+\begin{itemize}
+\item On va démarrer par une etude de {\it stabilité} on considérant un calcul sur l'intervalle $(-10,10)$ avec une solution initiale $u_0(x)=\max(0,1-x^2)$. 
+
+\item En faisant tourner le programme \texttt{chaleur$\_$explicite} pour différentes valeurs du nombre CFL on constate que si $CFL>0.5$ des oscillations apparaissent. 
+
+\item Noter que dans le cas on fait un estimation de la solution exacte en calculant d'une façon approché la convolution par un noyaux gaussien.
+
+%\lstinputlisting[language=Matlab]{chaleur_explicite.m}
+
+\item Pour l'étude de {\it consistance} on va changer de cas test en considérant un situation où l'on connait la solution exacte (construction à l'aide de la méthode des variables séparées).  On va se placer sur l'intervalle $(0,L)$ avec une solution initiale $u_0(x)=\sin(k\pi/L x)$ comme dans le programme \texttt{chaleur$\_$explicite2}. On peut aussi remarquer au passage que le schéma peut s'écrire sous une forme plus compacte, matricielle.
+
+\item On va faire tourner le programme \texttt{chaleur$\_$explicite2} pour un pas de temps très petit (prenons par exemple CFL=0.01) afin que l'erreur d'approximation soit dominée par celle spatiale. On fait tourner pour différentes valeurs de $\Delta x$, on enregistre les valeurs dans le programme \texttt{test$\_$prec} on constate une décroissance quadratique de l'erreur. Ceci montre que le schéma est d'ordre $2$ en espace.
+
+\item On fait tourner maintenant le programme \texttt{chaleur$\_$explicite2} pour un pas d'espace petit (prenons par exemple nx = 50) afin que l'erreur d'approximation soit dominée par celle temporelle. On fait tourner pour différentes valeurs de $\Delta t$ (en faisant décroitre le nombre de CFL), on enregistre les valeurs dans le programme \texttt{test$\_$prec} on constate une décroissance linéaire de l'erreur. Ceci montre que le schéma est d'ordre $1$ en temps.
+
+\end{itemize}
+
+On va faire maintenant la même étude sur les autres schémas: implicite, Crank-Nicolson et theta-schéma. On va constater qu'en utilisant l'écriture matricielle des schémas on pourra utiliser un programme unique avec un paramètre $\theta$ pour tous. 
+
+\begin{enumerate}
+\item {\it Sch\'ema d'Euler implicite}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0  %\Leftrightarrow - \frac{\nu\Delta t}{\Delta x^2} u_{j+1}^{n+1} +\left(1+ 2\frac{\nu\Delta t}{\Delta x^2}\right) u_{j}^{n+1}- \frac{\nu\Delta t}{\Delta x^2} u_{j-1}^{n+1}  = u_j^n
+$$
+
+\item {\it Sch\'ema de Crank-Nicolson}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+$$
+
+\item {\it Le $\theta$ sch\'ema}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\theta\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-(1-\theta)\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+$$
+
+\end{enumerate}
+
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

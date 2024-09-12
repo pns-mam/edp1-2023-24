@@ -1,0 +1,145 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill Vendredi 15 Septembre 2022 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 2}\end{center}
+
+\bigskip
+
+\parskip 12pt
+Le but de cette s\'erie d'exercices est d'illuster la propri\'et\'e de
+stabilit\'e de quelques sch\'emas appliqu\'es aux \'equations de la
+chaleur et d'advection \`a travers le principe du maximum discret. On
+consid\'erera les sch\'emas explicite et implicite pour l'\'equation
+de la chaleur et explicite decentr\'e pour l'\'equation d'advection.
+\begin{enumerate}
+\item On veut approcher l'\'equation de la chaleur en une dimension
+  d'espace. Consid\'erons le sch\'ema aux diff\'erences finies {\it explicite}
+  suivant
+\begin{equation}
+\frac{u_j^{n+1}-u_j^n}{\Delta
+  t}-\nu\frac{u_{j-1}^n-2u_j^n+u_{j+1}^n}{\Delta x^2} = 0,\, n >0,
+j\in \mathbb{Z}.
+\end{equation}
+avec $u_j^0$ donn\'es par une condition initiale.\\
+{\bf a)} Montrer que si la condition CFL (Courant Friedrichs Lewy) suivante est
+v\'erif\'ee
+\begin{equation}\label{eq:CFL}
+\frac{\nu\Delta t}{(\Delta x)^2}\le \frac{1}{2}
+\end{equation}
+alors $u_j^{n+1}$ peut s'\'ecrire comme combinaison
+convexe\footnote{combinaison lin\'eaire o\`u tous les co\'efficients
+  sont positifs et leur somme vaut $1$.} des
+valeurs au temps pr\'ec\'edent $u_{j-1}^n$, $u_{j}^n$ et
+$u_{j+1}^n$. En d\'eduire que si la donn\'ee initiale est born\'ee par
+deux constantes $m$ et $M$ alors les m\^emes in\'egalit\'es restent
+vraies pour tous les temps ult\'erieurs c.a.d.
+\begin{equation}\label{eq:max}
+m\le u_j^0\le M, \forall j\in\mathbb{Z} \Rightarrow m\le u_j^n\le M,
+\forall j\in\mathbb{Z},\, \forall n\ge 0.
+\end{equation}
+On dit que le {\it principe du maximum discret} est v\'erifi\'e et le
+sch\'ema est {\it stable} \`a condition que \eqref{eq:CFL} soit
+v\'erifi\'ee (ou {\it conditionnellement stable}). \\
+{\bf b)} Supposons maintenant que la condition CFL \eqref{eq:CFL} ne soit par
+v\'erifi\'ee. Montrer que si la solution initiale est donn\'ee par
+$u_j^0=(-1)^j$, $u_j^n$ explose, c.a.d. tend vers l'infini lorsque $n$
+tend vers l'infini. Dans ce cas on dit que le sch\'ema est {\it instable}.
+\item On veut approcher l'\'equation de la chaleur en une dimension
+  d'espace par le sch\'ema aux diff\'erences finies {\it implicite}
+  suivant 
+\begin{equation}
+\left\{\begin{array}{lcl}
+\displaystyle\frac{u_j^{n}-u_j^{n-1}}{\Delta
+  t}-\nu\frac{u_{j-1}^n-2u_j^n+u_{j+1}^n}{\Delta x^2} &=& 0,\, n >1,
+0<j<J,\\[2ex]
+u_0^n = u_J^n & = &0,\, \forall n\ge 0.
+\end{array}\right.
+\end{equation}
+Il s'agit ici d'un probl\`eme aux limites o\`u on a impos\'e des conditions de
+Dirichlet. \\
+{\bf a)} Si on note par $U^n = (u_j^n)_{1\le j\le J}$ le vecteur des valeurs
+inconnues \`a l'instant $n$, v\'erifier qu'on peut calculer de mani\`ere unique $U^n$
+en fonction de $U^{n-1}$, en r\'esolvant un syst\`eme lin\'eaire de
+la forme
+$$
+AU^n=U^{n-1}
+$$
+dont on pr\'ecisera la matrice. (Il faudra ensuite montrer que la
+matrice est inversible ce qui entra\^inera l'unicit\'e).\\
+{\bf b)} Montrer que pour tous les temps $t_n \ge 0$ le principe du
+maximum discret \eqref{eq:max} est v\'erifi\'e sans aucune condition
+sur le pas de temps $\Delta t$ et le pas d'espace $\Delta x$. On dit que le
+sch\'ema est {\it inconditionnellement stable}. 
+\item Consid\'erons maintenat le sch\'ema explicite {\it d\'ecentr\'e
+    amont} en tant qu'approximation par diff\'erences finies de
+  l'\'equation d'advection avec $V>0$
+\begin{equation}\label{eq:adv}
+\displaystyle\frac{u_j^{n+1}-u_j^{n}}{\Delta
+  t}+V\frac{u_j^n-u_{j-1}^n}{\Delta x} = 0,\, n >0.
+\end{equation}
+{\bf a)} Montrer que sous une nouvelle condition CFL, diff\'erente de
+\eqref{eq:CFL}
+\begin{equation}\label{eq:CFL2}
+\frac{V\Delta t}{\Delta x} \le 1
+\end{equation}
+le sch\'ema \eqref{eq:adv} v\'erifie le principe du maximum discret et
+donc il est stable.\\
+{\bf b)} Montrer que si la condition \eqref{eq:CFL2} n'est pas
+satisfaite, le sch\'ema d\'ecentr\'e amont n'est pas stable pour la
+condition initiale donn\'ee par $u^0_j=(-1)^j$.
+\item Le but de cet exercice est de montrer que le problème de Cauchy pour le Laplacien est mal posé. Prenons un domaine bidimensionnel $\Omega = (0,1)\times (0,2\pi)$ . Nous considérons le problème de Cauchy suivant en $x$ et le problème des valeurs aux limites en y
+$$
+\left\{\begin{array}{rcll}
+-\displaystyle\frac{\partial^2u}{\partial x^2}  -\frac{\partial^2u}{\partial y^2} & = & 0, & x\in \Omega, \\[2ex]
+u(x,0) = u(x,2\pi) &=& 0, & 0< x<1,\\[2ex]
+\displaystyle u(0,y) = 0, \frac{\partial u}{\partial x}(0,y) &=&  -ne^{-\sqrt{n}}\sin (ny), & 0<y<2\pi.
+\end{array}\right.
+$$
+{\bf a)} Vérifier que $u (x, y) = -e^{-\sqrt{n}}\sin (ny) \sinh (nx)$ est une solution. \\
+{\bf b)} Montrer que la condition initiale et toutes ses dérivées en $x=0$ convergent uniformément vers 0, tandis que, pour tout $x>0$, la solution $u(x,y)$ et toutes ses dérivées sont non bornées lorsque $n$ tend vers l'infini.
+\end{enumerate}
+%\pagebreak
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

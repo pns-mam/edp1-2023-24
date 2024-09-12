@@ -1,0 +1,136 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech'Nice\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+23 Octobre 2020 \\
+
+\hrule
+
+\vspace{0.6cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Contrôle \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 2h}
+\vspace{0.6cm}
+
+
+\hrule
+\vspace{0.7cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos reponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Probl\`eme 1}\\% ({\bf Total: 10 points}) \\
+
+\noindent On consid\`ere le probl\`eme de la chaleur en une dimension
+d'espace 
+\begin{equation}\label{eq:heat}
+\left\{\begin{array}{lcll}
+\displaystyle\frac{\partial u}{\partial t} - \nu \frac{\partial^2 u}{\partial x^2}&=
+&0,\,
+(x,t)\in (0,1)\times\mathbb{R}_*^+, & \text{Équation à l'intérieur du domaine } \\
+u(0,t)&=&0,\, t\in \mathbb{R}_*^+ &\text{CL Dirichlet à gauche}\\
+\displaystyle \frac{\partial u}{\partial x}(1,t)&=&0,\, t\in \mathbb{R}_*^+ &\text{CL Neumann à droite}\\
+u(x,0)&=&u_0(x),\, x\in (0,1) & \text {Condition initiale}.
+\end{array}\right.
+\end{equation}
+On admettra (sans demonstration) l'inégalité de Poincaré:  toute fonction $v(x)$ contin\^ument d\'erivable sur
+$[0,1]$ t.q. $v(0)=0$, v\'erifie 
+\begin{equation}\label{eq:Poincare}
+\int_0^1 v^2(x)dx \le \int_0^1\left(\frac{d v}{d
+    x}\right)^2dx.
+\end{equation}
+On notera dans ce qui suit l'\'energie \`a l'instant $t$ de la solution de l'équation \eqref{eq:heat} par
+$$
+E(t) = \int_0^1 u^2(x,t)dx.
+$$
+{\bf a)} En multipliant l'\'equation de la
+chaleur par $u$ et
+en int\'egrant par rapport \`a $x$, \'etablir l'\'egalit\'e
+v\'erifi\'ee l'énergie: %({\bf 2.5 points}) :
+$$
+\frac{1}{2}\frac{dE(t)}{dt}
+=-\nu\int_0^1\left(\frac{\partial u}{\partial x}\right)^2 dx.
+$$
+%\texttt{Indication}:  Après avoir intégré par rapport à $x$ sur l'intervalle $(0,1)$, il faudra intégrer par parties un des termes et ensuite prendre en compte les conditions aux limites.\\
+
+\noindent {\bf b)} En appliquant l'in\'egalit\'e de Poincar\'e \eqref{eq:Poincare} \`a $v(x)= u(x,t)$ et en utilisant le résultat du point précédent d\'eduire que l'\'energie {\it d\'ecro\^it exponentiellement en temps} %({\bf 1.5 points}) 
+\begin{equation} \label{eq:energ}
+E(t) \le E(0)e^{-2\nu t}.
+\end{equation}
+
+\noindent {\bf c)} Calculer la solution à variables séparées de l'équation \eqref{eq:heat} dans le cas où $\nu=1$ et $u_0(x) = \sin(\frac{3\pi}{2}x)$. Pour ce faire on va écrire la solution sous la forme 
+$$
+u(x,t) = f(x)g(t),
+$$
+et on va l'introduire dans l'équation \eqref{eq:heat} et puis on va en déduire les équations vérifiées par $f$ et $g$. On tiendra compte des conditions aux limites et des conditions initiales. \\%({\bf 4 points}) \\
+%\noindent \texttt{Indication}:  Après la séparation des variables et la résolutions des équations différentielles vérifiées par $f$ et $g$ on va choisir la solution qui est bornée. Celle-ci est en fait exponentiellement décroissante par rapport au temps et sera de la forme $u(x,t) = Ce^{-\lambda t} f(x)$ où C est une constante et $\lambda$ est un réel positif qu'on va déterminer. \\
+
+\noindent {\bf d)}  Évaluer l'énergie $E(t)$ de la solution calculée précédemment et vérifier l'inégalité \eqref{eq:energ} en calculant explicitement le membre de gauche et de droite de cette inégalité. Pourrait-on donner une condition systématique à vérifier pour que cette inégalité soit vraie dans le cas des solutions à variables séparées? %({\bf 2 points}) 
+
+\newpage
+\noindent {\bf Probl\`eme 2} \\ %({\bf Total: 10 points}) \\
+
+\noindent Consid\'erons de nouveau l'\'equation de la chaleur en une dimension d'espace dans le domaine born\'e $(0,1)$ avec des conditions de Dirichlet homogènes. On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. \\
+
+\noindent {\bf a)}  On se propose d'étudier pour commencer le {\it sch\'ema d'Euler explicite}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+Montrer que ce schéma est consistant, d'ordre 1 en temps et 2 en espace et conditionnellement stable en norme $L_2$. Trouver cette condition de stabilité (appelée condition CFL) en utilisant la méthode de von Neumann.  \\%({\bf 2.5 points})\\
+
+%\noindent \texttt{Indication}: On va commencer par écrire l'erreur de troncature. On va ensuite simplifier l'expression de celle-ci en utilisant les développement en series de Taylor. Attention: ne pas confondre la valeur approchée de la solution avec la valeur de la solution dans les points de la grille de discrétisation.\\
+
+\noindent{\bf b)} Est-ce que ce schéma est stable en norme $L^{\infty}$? Si le cas, sous quelle condition de stabilité? \\ %({\bf 0.5 points})\\
+
+%\noindent \texttt{Indication}: Il faut commencer par exprimer $u_j^{n+1}$ comme combinaison linéare des valeurs calculées à l'instant $n$ et préciser sous quelles conditions le principe du maximum discret est vérifié.\\
+
+
+\noindent {\bf c)} On propose maintenant deux améliorations possibles de ce schéma:
+\begin{equation}\label{sch:1}
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\frac{2\nu}{3} \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-\frac{\nu}{3} \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+\end{equation}
+\begin{equation}\label{sch:2}
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\frac{\nu}{3} \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-\frac{2\nu}{3} \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+\end{equation}
+Montrer que ces deux schémas ont la même précision en temps et en espace que le schéma d'Euler et que le schéma \eqref{sch:1} est conditionnellement stable mais avec une condition CFL moins restrictive que le schéma d'Euler explicite alors que le schéma \eqref{sch:2} est inconditionnellement stable. \\
+
+\noindent Comment peut-on améliorer la précision en temps de ces schémas? \\%({\bf 6 points})\\
+
+%\noindent \texttt{Indication} Les schémas du type \eqref{sch:1} et \eqref{sch:2} font partie de la même catégorie. De ce fait la consistance et la stabilité de ces derniers peuvent être analysées en même temps.\\
+
+
+\noindent {\bf d)} Ecrire ces schémas sous forme matricielle 
+$$
+A_1 {\bf U}^{n+1} = A_2 {\bf U}^{n},
+$$
+où ${\bf U}^{n} = (u_j^n )_{1\le j \le N}$ est le vecteur des valeurs approchées à l'instant $n$, en donnant explicitement la forme des matrices $A_1$  et $A_2$ qui apparaissent dans l'itération en temps. \\
+
+\noindent Montrer que ces matrices sont tridiagonales et peuvent s'exprimer  facilement à l'aide de la matrice de discrétisation du Laplacien. %({\bf 1 point})
+
+
+\end{document}
+

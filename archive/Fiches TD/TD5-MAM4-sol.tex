@@ -1,0 +1,171 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill lundi 12 Octobre 2023 \\
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 5 \\
+SOLUTIONS}\end{center}
+
+\bigskip
+
+{\bf Probl\`eme 1}
+\begin{enumerate}
+\item L'erreur de troncature du sch\'ema de Lax-Wendroff s'\'ecrit
+$$
+{\cal E}^n_j=\frac{u(x_{j},t_{n+1})-u(x_j,t_n)}{\Delta
+  t}+V\frac{u(x_{j+1},t_{n})-u(x_{j-1},t_n)}{2\Delta
+  x}-\frac{V^2\Delta t}{2}\frac{u(x_{j+1},t_n)-2
+  u(x_{j},t_n)+u(x_{j-1},t_n)}{\Delta x^2}.
+$$
+A l'aide des d\'eveloppements de Taylor et en utilisant l'\'equation
+v\'erif\'ee par la solution on a
+$$
+\begin{array}{lcl}
+{\cal E}^n_j &=&\displaystyle\frac{\partial u}{\partial t}+\frac{\Delta
+  t}{2}\frac{\partial^2 u}{\partial t^2} + \frac{\Delta
+  t^2}{6}\frac{\partial^3 u}{\partial t^3} + {\cal O} (\Delta t^3) + V \frac{\partial u}{\partial x}+V\frac{\Delta
+  x^2}{6}\frac{\partial^3 u}{\partial x^3}+ {\cal O} (\Delta x^3) -\displaystyle \frac{V^2\Delta t}{2} \frac{\partial^2
+  u}{\partial x^2} +  {\cal O} (\Delta x^2\Delta t)\\[2ex]
+& = & \displaystyle \frac{\partial u}{\partial t}+V\frac{\partial
+  u}{\partial x}-\frac{\Delta t}{2}\left(\frac{\partial^2 u}{\partial
+    t^2}-V^2 \frac{\partial^2 u}{\partial x^2}\right)+ \frac{\Delta
+  t^2}{6}\frac{\partial^3 u}{\partial t^3} + V\frac{\Delta
+  x^2}{6}\frac{\partial^3 u}{\partial x^3} + {\cal O} (\Delta t^3) +{\cal O} (\Delta x^3) +  {\cal O} (\Delta x^2\Delta t) \\[2ex]
+& = & \displaystyle\frac{\Delta
+  t^2}{6}\frac{\partial^3 u}{\partial t^3} + V\frac{\Delta
+  x^2}{6}\frac{\partial^3 u}{\partial x^3} + {\cal O} (\Delta t^3)
++{\cal O} (\Delta x^3) +  {\cal O} (\Delta x^2\Delta t) \\[2ex]
+&=& \displaystyle\frac{V \Delta x^2}{6}\left(1-V^2\frac{\Delta t^2}{\Delta x^2}\right) \frac{\partial^3 u}{\partial x^3}+{\cal O} (\Delta t^3)
++{\cal O} (\Delta x^3) +  {\cal O} (\Delta x^2\Delta t).
+\end{array} 
+$$
+ce qui montre que l'\'equation \'equivalente associ\'ee est bien
+$$
+\frac{\partial u}{\partial t}+V \frac{\partial u}{\partial x} - \frac{V \Delta x^2}{6}\left(1-V^2\frac{\Delta t^2}{\Delta x^2}\right) \frac{\partial^3 u}{\partial x^3}=0
+$$
+En discr\'etisant maintenant celle-ci, on obtiendra une erreur de
+troncature en ${\cal O} (\Delta t^3)
++{\cal O} (\Delta x^3) +  {\cal O} (\Delta x^2\Delta t)$, d'o\`u on
+voit que la pr\'ecision sera amelior\'ee seulement si on prend $\Delta
+x$ du m\^eme ordre que $\Delta t$. Dans ce cas, le sch\'ema
+r\'esultant sera d'ordre $3$.
+\item L'erreur de troncature du sch\'ema de Crank-Nicolson s'\'ecrit:
+$$
+{\cal E}^n_j=\frac{u(x_{j},t_{n+1})-u(x_j,t_n)}{\Delta
+  t}+V\frac{u(x_{j+1},t_{n+1})-u(x_{j-1},t_{n+1})}{4\Delta
+  x} + V\frac{u(x_{j+1},t_{n})-u(x_{j-1},t_{n})}{4\Delta
+  x} .
+$$
+En faisant les d\'eveloppements de Taylor et en utilisant l\'equation
+v\'erif\'ee par la solution on a
+$$
+\begin{array}{lcl}
+{\cal E}^n_j &=& \displaystyle\frac{\partial u}{\partial t}+\frac{\Delta
+  t}{2}\frac{\partial^2 u}{\partial t^2} + \frac{\Delta
+  t^2}{6}\frac{\partial^3 u}{\partial t^3} + {\cal O} (\Delta t^3) \\[2ex]
+& + & \displaystyle V\frac{\partial u}{\partial x}+V\frac{\Delta
+  x^2}{6}\frac{\partial^3 u}{\partial x^3}+ \frac{V\Delta
+  t}{2}\frac{\partial^2 u}{\partial t\partial x}+\frac{V\Delta
+  t^2}{4}\frac{\partial^3 u}{\partial t^2\partial x}+{\cal O} (\Delta
+x^3)+{\cal O} (\Delta x^2\Delta t)\\[2ex]
+& = & \displaystyle \frac{\partial u}{\partial t}+V\frac{\partial
+  u}{\partial x}+\frac{\Delta t}{2}\left(\frac{\partial^2 u}{\partial
+    t^2} +V \frac{\partial^2 u}{\partial t\partial x}\right) \\[2ex]
+&+&\displaystyle \frac{\Delta
+t^2}{6}\frac{\partial^3 u}{\partial t^3} + \frac{V \Delta
+t^2}{4} \frac{\partial^3 u}{\partial t^2\partial x}+V\frac{\Delta
+  x^2}{6}\frac{\partial^3 u}{\partial x^3} + {\cal O} (\Delta
+t^3)+{\cal O} (\Delta x^3)+{\cal O} (\Delta x^2\Delta t)\\[2ex]
+& = & \displaystyle\frac{V}{12}\left(2\Delta x^2+V^2\Delta t^2\right)
+\frac{\partial^3 u}{\partial x^3} + {\cal O} (\Delta
+t^3)+{\cal O} (\Delta x^3)+{\cal O} (\Delta x^2\Delta t).
+\end{array} 
+$$
+Le sch\'ema est donc d'ordre $2$ en temps et espace. Ceci pourrait
+\^etre am\'elior\'e en discr\'etisant l'\'equation \'equivalente
+associ\'ee
+$$
+\frac{\partial u}{\partial t}+V \frac{\partial u}{\partial x} -\displaystyle\frac{V}{12}\left(2\Delta x^2+V^2\Delta t^2\right)
+\frac{\partial^3 u}{\partial x^3}=0
+$$
+\`a condition de prendre $\Delta x$ du m\^eme ordre que $\Delta t$.
+
+\noindent Pour l'\'etude de la stabilit\'e, on injectera un mode de
+Fourier $G(k)^ne^{2i\pi kj\Delta x}$ dans le sch\'ema afin de calculer le facteur
+d'amplification. On obtiendra ainsi apr\`es simplification:
+$$
+\frac{G(k)-1}{\Delta t}+VG(k)\frac{e^{2i\pi k\Delta x} -e^{-2i\pi k\Delta x} }{4\Delta x}+V\frac{e^{2i\pi k\Delta x} -e^{-2i\pi k\Delta x} }{4\Delta x}=0
+$$
+ce qui conduit apr\`es calcul, \`a la stabilit\'e du sch\'ema.
+$$
+G(k) \left(2 + i\frac{V\Delta t}{\Delta x}\sin(2\pi k\Delta x)\right)=
+\left(2 - i\frac{V\Delta t}{\Delta x}\sin(2\pi k\Delta
+  x)\right)\Rightarrow |G(k)|=1.
+$$
+\end{enumerate}
+{\bf Probl\`eme 2}. L'erreur de troncature du sch\'ema d\'ecentr\'e
+$$
+{\cal E}^n_j=\frac{u(x_{j},t_{n+1})-u(x_j,t_n)}{\Delta
+  t}+V\frac{u(x_{j},t_{n})-u(x_{j-1},t_n)}{\Delta
+  x}-\nu\frac{u(x_{j+1},t_n)-2
+  u(x_{j},t_n)+u(x_{j-1},t_n)}{\Delta x^2}.
+$$
+A l'aide des d\'eveloppements de Taylor et en utilisant l'\'equation
+v\'erif\'ee par la solution on a
+$$
+\begin{array}{lcl}
+{\cal E}^n_j &=& \displaystyle\frac{\partial u}{\partial t}+\frac{\Delta
+  t}{2}\frac{\partial^2 u}{\partial t^2} + {\cal O} (\Delta t^2) + V \frac{\partial u}{\partial x}-V\frac{\Delta
+  x}{2}\frac{\partial^2 u}{\partial x^2}+ {\cal O} (\Delta x^2) -\displaystyle \nu \frac{\partial^2
+  u}{\partial x^2} +  {\cal O} (\Delta x^2)\\[2ex]
+& = & \displaystyle\frac{\Delta
+  t}{2}\frac{\partial^2 u}{\partial t^2}  - V\frac{\Delta
+  x}{2}\frac{\partial^2 u}{\partial x^2} +  {\cal O} (\Delta t^2) + {\cal O} (\Delta x^2).
+\end{array}
+$$
+On voit bien que le sch\'ema est au moins d'ordre $1$ en temps et en
+espace. Par contre les termes d'ordre dominant ne peuvent pas \^etre
+remplac\'es d'une mani\`ere simple. En effet,  en utilisant l'\'equation \`a l'interieur on a que
+$$
+\frac{\partial^2 u}{\partial t^2}=V^2 \frac{\partial^2 u}{\partial x^2}-2\nu V \frac{\partial^3
+  u}{\partial x^3}+\nu^2 \frac{\partial^4 u}{\partial x^4}
+$$
+ce qui fait que l'erreur de troncature s'\'ecrit comme
+$$
+{\cal E}^n_j = \frac{V^2\Delta t-V\Delta x}{2}\frac{\partial^2
+  u}{\partial x^2}-\nu V\Delta t V \frac{\partial^3
+  u}{\partial x^3}+\frac{\nu^2\Delta t}{2}\frac{\partial^4 u}{\partial x^4}+{\cal O} (\Delta t^2) + {\cal O} (\Delta x^2).
+$$
+La discr\'etisation de l'equation \'equivalente, obtenue en ajoutant le terme
+d'ordre $2$ n'aiderait pas \`a l'augmentation de l'ordre en temps du sch\'ema,
+car il restent des termes d'ordre $\Delta t$ dans l'erreur de
+troncature, mais seulement de la pr\'ecision en espace.
+\end{document}

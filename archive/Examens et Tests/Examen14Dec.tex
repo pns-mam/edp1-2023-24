@@ -1,0 +1,171 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent MAM4 - \'Equations aux d\'eriv\'ees partielles \hfill 
+14 D\'ecembre 2012 \\
+
+\hrule
+
+\bigskip
+\bigskip
+%\parskip 6pt
+\centerline {\large \sc Examen EDP. Dur\'ee : 2H00}
+\vspace{1cm}
+
+\hrule
+\vspace{0.5cm}
+\noindent {\sl Documents autoris\'es: les documents de cours et TD. Justifier vos reponses et commenter
+  les programmes d'une fa\c{c}on concise
+et claire. On pourra consid\'erer comme acquis les d\'eveloppements
+d\'ej\`a faits ailleurs \`a condition de bien situer la source
+(cours, no. s\'erie exercices, no. exercice)}\\
+
+{\bf Probl\`eme 1}. Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+\begin{equation}\label{eq:transp}
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+\end{equation}
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1 et la
+vitesse de convection n\'egative $V<0$. On souhaite discr\'etiser \eqref{eq:transp}
+en utilisant le sch\'ema explicite d\'ecentr\'e amont.
+\begin{enumerate}
+\item Pr\'eciser le sch\'ema de discr\'etisation et d\'eterminer l'\'equation \'equivalente associ\'ee,
+  apr\'es l'\'evaluation du terme dominant de son erreur de
+  troncature. Montrer que la discr\'etisation de cette \'equation
+  \'equivalente donne un nouveau sch\'ema qui peut s'\'ecrire sous la
+  forme:
+\begin{equation}\label{eq:equiv}
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j}^{n}}{\Delta x}-\nu^*\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+\end{equation}
+avec un $\nu^*$ que l'on pr\'ecisera.
+\item D\'eterminer les conditions de stabilit\'e $L^{\infty}$ et $L^2$
+  pour le sch\'ema \eqref{eq:equiv}. Est-ce qu'elles sont
+  diff\'erentes de celles pour le sch\'ema d\'ecentr\'e initial?
+\end{enumerate}
+{\bf Probl\`eme 2}. Consid\'erons l'\'equation d'advection-diffusion dans le domaine born\'e $(0,1)$:
+\begin{equation}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}-\nu\frac{\partial^2u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{equation}
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+Consid\'erons le sch\'ema centr\'e suivant:
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\nu\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+$$
+\begin{enumerate}
+\item Montrer que le sch\'ema est consistant et d\'eterminer son ordre.
+\item \'Etudier la stabilit\'e $L^2$ du sch\'ema. Que se passe-t-il lorsque
+$\nu \rightarrow 0$?
+\end{enumerate}
+{\bf Probl\`eme 3}. On cherche \`a r\'esoudre le probl\`eme aux
+limites le suivant dans le carr\'e $\Omega=[-1,1]^2$, 
+\begin{equation}\label{eq:tube}
+\left\{\begin{array}{lcl}
+-\Delta u &=& f,\,\text{dans }\Omega\\
+u(x,\pm 1)&=&0,\,\forall x\in ]-1,1[,\\
+\frac{\partial u}{\partial \mathbf{n}}(\pm 1,y)&=&1,\,\forall y\in  ]-1,1[.
+\end{array}\right.
+\end{equation}
+\begin{enumerate}
+\item D\'eterminer la formulation variationnelle (FV) associ\'ee dans un
+  espace $X$ que l'on pr\'ecisera.
+\item Montrer que $u$ est solution de (FV) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.
+\item Peut-on \'etablir l'unicit\'e de la solution \`a partir de cette
+  \'equivalence ? (on suppose qu'il existent deux solutions. etc...)
+\end{enumerate}
+ \texttt{Indication}: apr\`es la
+  multiplication par la fonction test $v$ et integration par parties,
+  on constatera que l'integrale sur la fronti\`ere $\partial\Omega$
+  se d\'ecompose en $4$ parties correspondant aux cot\'es du carr\'e
+  et o\`u les conditions aux limites sont diff\'erentes.\\
+
+\noindent {\bf Probl\`eme 4}. On s'interesse au calcul d'une approximation de la solution $u:[0,1]\rightarrow\mathbb{R}$ du probl\`eme:
+\begin{equation}\label{prob}
+\left\{\begin{array}{l}
+-u''(x) = f(x),\\
+u(0)=u(1)=0.
+\end{array}\right.
+\end{equation}
+Une discr\'etisation par diff\'erences
+finies de l'\'equation, en utilisant une partition uniforme de
+l'intervalle $[0,1]$, donn\'ee par les points $x_j=j/n,\,j=1,...,n-1$
+conduit \`a un syst\`eme lin\'eaire $A \mathbf{u} = b$
+o\`u $\mathbf{u}\in\mathbb{R}^{n-1}$ est une vecteur de composantes $u_j$
+repr\'esentant la solution discr\`ete. Cette derni\`ere approche la
+solution exacte aux $n-1$ points int\'erieurs $x_j,\,j=1,..,n-1$ (on
+dit que $u_j$ est une approximation de $u(x_j)$ et
+$u_0=u_{n}=0$, ceci traduisant le fait que $u(0)=u(1)=0$).  La matrice $A\in{\cal M}_{n-1}(\mathbb{R})$ et le second membre $b\in \mathbb{R}^{n-1}$ sont respectivement:
+\begin{equation}\label{matrice}
+A=n^2\left(\begin{array}{ccccc}
+2 & -1 & 0 & \hdots & 0\\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \hdots & 0 & -1 & 2    
+\end{array}\right),\,b = \left(\begin{array}{c}f(x_1)\\ \vdots \\ f(x_{n-1})\end{array}\right).
+\end{equation}
+\begin{enumerate}
+\item Initialisation.
+\begin{itemize}
+\item \'Ecrire une fonction \texttt{laplaceD(n)} construisant la matrice $A$, dont l'argument d'entr\'ee est $n$ et l'argument de sortie est $A$.
+\item \'Ecrire une fonction ayant pour argument $n$ et $f$ et qui construit le vecteur $b$.
+\end{itemize}
+\item Validation.
+\begin{itemize}
+\item Donner la solution exacte $\tilde u^e(x)$ du probl\`eme
+  (\ref{prob}), quand la fonction $f$ est constante \'egale \`a $1$. 
+\item \'Ecrire une fonction construisant le vecteur $\mathbf{u}^e = (\tilde
+  u^e(x_1),\hdots,\tilde u^e(x_{n-1}))^t$  qui donne la solution
+  exacte aux points $x_k$. 
+\item R\'esoudre le syst\`eme $A \mathbf{u} =
+  b$. Comparer $\mathbf{u}$ et $\mathbf{u}^e$ en les dessinant sur le
+  m\^eme graphique. Expliquer quel genre de r\'esultat on attend.
+\end{itemize}
+\item Convergence de la m\'ethode. On prend comme solution exacte et
+  second membre les fonctions suivantes
+$$
+\tilde u^e(x)= (x-1)\sin(10x),\,f(x) = -20\cos(10x)+100(x-1)\sin(10x).
+$$
+\begin{itemize}
+\item Construire d'abord deux fonctions correspondant \`a $\tilde u^e(x)$
+et $f(x)$. 
+\item Repr\'esenter la norme de l'erreur entre la solution
+approch\'ee (obtenue par la m\'ethode des diff\'erences finies) et
+celle exacte $\mathbf{u} - \mathbf{u}^e$ en fonction de $n$
+en \'echelle logarithmique. Expliquer quel genre de r\'esultat on
+attend. 
+\end{itemize}
+\texttt{Indication}: on pourra prendre par exemple la norme
+$L^{\infty}$ ($\|u\|_{L^{\infty}} = \max_i |u_i| $) calcul\'ee par
+exemple en \texttt{Scilab} par \texttt{norm(x,'inf')}
+\end{enumerate}
+\end{document}
+

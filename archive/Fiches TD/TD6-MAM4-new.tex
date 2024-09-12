@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4)
+\hfill mardi 18 Octobre 2022\\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+S\'erie 6}\end{center}
+
+\bigskip
+
+\parskip 12pt
+\noindent Consid\'erons l'\'equation des ondes dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial^2 u}{\partial t^2}-\frac{\partial^2 u}{\partial
+  x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0,\, \displaystyle\frac{\partial u}{\partial t}(x,0)=u_1(x)$,
+$u$,$u_0$ et $u_1$ p\'eriodiques de p\'eriode 1 et $u_1$ \`a moyenne nulle
+$$
+\int_0^1 u_1(x)\,dx =0.
+$$
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$.\\
+
+\noindent {\bf Probl\`eme 1}. Consid\'erons d'abord le $\theta$-sch\'ema centr\'e
+\begin{equation}
+\frac{u_j^{n+1}-2u_j^n+u_j^{n-1}}{\Delta t^2}-\theta
+\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta
+  x^2}-(1-2\theta)\frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta
+  x^2}-\theta \frac{u_{j+1}^{n-1}-2u_j^{n-1}+u_{j-1}^{n-1}}{\Delta
+  x^2}=0.
+\end{equation}
+avec $0\le \theta \le 1/2$.
+\begin{enumerate}
+
+\item Montrer que si $1/4\le \theta \le 1$, le $\theta$-sch\'ema
+  centr\'e est inconditionnellement stable en norme $L^2$. Si $0\le
+  \theta < 1/4$, il est stable sous la condition
+$$
+\frac{\Delta t}{\Delta x} < \sqrt{\frac{1}{1-4\theta}}.
+$$
+Consid\'erons maintenant le cas limite o\`u $\Delta t/\Delta
+  x=(1-4\theta)^{-1/2}$ avec $0\le \theta < 1/4$. Montrer que le
+  sch\'ema est instable dans ce cas, en v\'erifiant que $u_j^n =
+  (-1)^{j+n}(2n-1)$ est une solution.
+\item On admettera que l'\'energie discrete suivante
+$$
+E^n=\sum_{j=0}^N\left(\frac{u_j^{n+1}-u_j^n}{\Delta
+    t}\right)^2+a_{\Delta x}(u^{n+1},u^n)+\theta a_{\Delta x}(u^{n+1}-u^n,u^{n+1}-u^n)
+$$
+est une approximation d'ordre $1$ en espace et en temps de l'\'energie
+continue d\'efinie en cours. Ici on a not\'e pour tout
+$u,v\in\mathbb{R}^{n+1}$, $u=(u_j)_{0\le j\le N},\, v=(v_j)_{0\le j\le N}$
+$$
+a_{\Delta x}(u,v)=\sum_{j=0}^N \frac{u_{j+1}-u_j}{\Delta x}\cdot
+\frac{v_{j+1}-v_j}{\Delta x}.
+$$
+Montrer que le $\theta$-sch\'ema centr\'e conserve l'\'energie
+discrete, c.a.d. $E^n=E^0$ pour tout $n>0$.
+\end{enumerate}
+\noindent {\bf Probl\`eme 2}. Consid\'erons le sch\'ema de
+Lax-Friedrichs appliqu\'e \`a l'\'equation des ondes \'ecrite comme
+syst\`eme du premier ordre
+\begin{equation}
+\displaystyle \frac{1}{2\Delta t}\left(\begin{array}{c}
+    2v_j^{n+1}-v_{j+1}^n-v_{j-1}^n \\2w_j^{n+1}-w_{j+1}^n-w_{j-1}^n \end{array}\right)-\frac{1}{2\Delta x}\left(\begin{array}{cc}
+    0 & 1 \\1 & 0 \end{array}\right)
+\left(\begin{array}{c} v_{j+1}^n - v_{j-1}^n \\ w_{j+1}^n - w_{j-1}^n\end{array}\right) = 0
+\end{equation}
+Ici $v$ a la signification d'un d\'eplacement et $w$, d'une
+d\'eformation. Montrer que ce sch\'ema est stable en norme $L^2$ sous la condition CFL $\Delta
+t\le \Delta x$ et qu'il est pr\'ecis \`a l'ordre $1$ en espace et en
+temps si le rapport $\Delta t/\Delta x$ est gard\'e constant lorsque
+$\Delta t$ et $\Delta x$ tendent vers $0$.\\
+
+\noindent {\bf Probl\`eme 3}.  Consid\'erons le sch\'ema de
+Lax-Wendroff appliqu\'e \`a l'\'equation des ondes \'ecrite comme
+syst\`eme du premier ordre
+\begin{equation}
+\displaystyle \frac{1}{\Delta t}\left(\begin{array}{c}
+    v_j^{n+1}-v_{j}^n \\w_j^{n+1}-w_{j}^n \end{array}\right)-\frac{1}{2\Delta x}\left(\begin{array}{cc}
+    0 & 1 \\1 & 0 \end{array}\right)
+\left(\begin{array}{c} v_{j+1}^n - v_{j-1}^n \\ w_{j+1}^n -
+    w_{j-1}^n\end{array}\right)-\frac{\Delta t}{2\Delta x^2} \left(\begin{array}{cc}
+    0 & 1 \\1 & 0 \end{array}\right)^2 \left(\begin{array}{c} v_{j+1}^n -2v_j^n+ v_{j-1}^n \\ w_{j+1}^n -2w_j^n+ w_{j-1}^n\end{array}\right)= 0
+\end{equation} 
+Montrer que ce sch\'ema est stable en norme $L^2$ sous la condition CFL $\Delta
+t\le \Delta x$ et qu'il est pr\'ecis \`a l'ordre $2$ en espace et en
+temps.
+
+\end{document}

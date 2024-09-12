@@ -1,0 +1,128 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4/SI4) \hfill mercredi 3 octobre 2012 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+S\'erie 4}\end{center}
+
+\bigskip
+
+\parskip 12pt
+\noindent Le but de cette s\'erie d'exercices est d'illuster la
+propri\'et\'e de stabilit\'e en norme $L^\infty$ et en norme $L^2$ de quelques sch\'emas appliqu\'es \`a l'\'equation de la
+chaleur.  Pour la stabilit\'e  $L^\infty$ on v\'erifiera le principe
+du maximum discret. Pour la stabilit\'e $L^2$ on calculera le facteur
+d'amplification de chaque sch\'ema en y injectant un mode de Fourier
+et on \'etablira sous quelles conditions ce facteur d'amplification
+est inferieur \`a un en module.
+ 
+\noindent Consid\'erons l'\'equation de la chaleur en une dimension d'espace dans la domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}-\nu \frac{\partial^2 u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,\\[2ex]
+u(x,0)=u_0(x),\,\forall x\in (0,1).
+\end{cases}
+$$
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. Les
+conditions aux limites sont des conditions de Dirichlet homog\`enes:
+$u(0,t)=u(1,t)=0,\,\forall t\in\mathbb{R}^+_*$. 
+
+\noindent On se propose d'\'etudier les sch\'emas suivants:
+
+\begin{enumerate}
+\item {\it Sch\'ema d'Euler explicite}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+
+\item {\it Sch\'ema d'Euler implicite}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+$$
+
+\item {\it Sch\'ema de Crank-Nicolson}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+$$
+
+\item {\it Le $\theta$ sch\'ema}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\theta\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-(1-\theta)\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+$$
+
+\item {\it Sch\'ema aux six points}
+$$
+\begin{array}{lcl}
+\displaystyle\frac{u_{j+1}^{n+1}-u_{j+1}^n}{12\Delta t}& +& \displaystyle\frac{5(u_{j}^{n+1}-u_{j}^n)}{6\Delta t}+\frac{u_{j-1}^{n+1}-u_{j-1}^n}{12\Delta t}+\\[2ex]
+& -&\displaystyle\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+\end{array}
+$$
+
+\item {\it Sch\'ema de DuFort-Frankel}
+$$
+\frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n}-u_j^{n+1}-u_j^{n-1}+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+
+
+{\it Stabilit\'e en norme $L^{\infty}$}\\
+1) Montrer que le sch\'ema de Crank-Nicolson est stable en norme $L^{\infty}$ si $\nu\Delta t\le \Delta x^2$.\\
+2) Montrer que que le sch\'ema de DuFort-Frankel et Euler explicite sont stables en norme $L^{\infty}$ si $2\nu\Delta t\le \Delta x^2$. \\
+3) Que peut-on dire de la stabilit\'e $L^{\infty}$ du sch\'ema d'Euler
+implicite?\\
+
+{\it Stabilit\'e en norme $L^2$}\\
+1) Montrer que le sch\'ema explicite est stable en norme $L^2$ sous la condition $2\nu\Delta t\le \Delta x^2$ et que le sch\'ema implicite est inconditionnellement stable.\\
+2) Montrer que le $\theta$- sch\'ema est stable en norme $L^2$ inconditionnellement si $1/2\le \theta \le 1$ et sous la conditions CFL $2(1-2\theta)\nu\Delta t\le (\Delta x)^2$ si $0\le\theta\le 1$.\\
+3) Montrer que le sch\'ema de DuFort-Frankel est inconditionnellement
+stable en norme $L^2$. Montrer que si on fait tendre $\Delta t$ et
+$\Delta x$ simultanement vers $0$ de mani\`ere que le rapport $\Delta
+t/\Delta x$ tende aussi vers $0$, alors le sch\'ema de DuFort-Frankel
+est convergent (on dit qu'il est "conditionnellement'' convergent).  
+
+\end{enumerate}
+
+\bigskip
+\hrule
+\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+\begin{itemize}
+\item[$\bullet$] Un contr\^ole \'ecrit le mercredi $24$ octobre (pendant la s\'eance de TD). 
+\item[$\bullet$] Une note sur les exercices des TDs: pr\'esence au
+  tableau pendant les s\'eances.
+\item[$\bullet$] Un examen \'ecrit durant la session d'examens. 
+\end{itemize}
+La note finale est : $\frac{1}{3}$(note contr\^ole cont.) $+$
+$\frac{1}{3}$(note exercices TD) $+$
+$\frac{1}{3}$(note examen).
+
+\end{document}

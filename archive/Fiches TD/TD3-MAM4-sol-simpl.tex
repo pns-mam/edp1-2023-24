@@ -1,0 +1,281 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill lundi 2 Octobre 2020 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 3\\ SOLUTIONS}\end{center}
+
+\bigskip
+
+
+\noindent Par la suite on va utiliser les relations suivantes
+bas\'ees sur des d\'eveloppements en s\'erie de Taylor et on va tenir compte du fait que $\frac{\partial u}{\partial t} = \nu
+\frac{\partial^2 u}{\partial x^2}$ (car $u$ est solution de l'\'equation)
+\begin{equation}\label{eq:util}
+\begin{array}{l}
+\displaystyle \frac{u(x_j,t_{n+1})-u(x_j,t_n)}{\Delta t}  = 
+\displaystyle\frac{\partial u}{\partial t}(x_j,t_n) + \frac{\Delta t}{2}
+\frac{\partial^2 u}{\partial t^2}(x_j,t_n)+{\cal O}(\Delta t^2),\\[2ex]
+\displaystyle \frac{u(x_{j+1},t_n)-2u(x_j,t_n)+u(x_{j-1},t_n)}{\Delta
+  x^2}  = \displaystyle\frac{\partial^2 u}{\partial
+  x^2}(x_j,t_n)+{\cal O}(\Delta x^2),\\[2ex]
+\displaystyle \frac{u(x_{j+1},t_{n+1})-2u(x_j,t_{n+1})+u(x_{j-1},t_{n+1})}{\Delta
+  x^2}  = \displaystyle  \displaystyle\frac{\partial^2 u}{\partial
+  x^2}(x_j,t_{n+1})+{\cal O}(\Delta x^2)\\[2ex]
+\qquad = \displaystyle \frac{\partial^2 u}{\partial
+  x^2}(x_j,t_n)+  \Delta t \underbrace{\frac{\partial^3 u}{\partial t\partial
+  x^2}(x_j,t_n)}_{\text{on va ensuite remplacer }\frac{\partial^2 u}{\partial x^2} = \frac{1}{\nu} \frac{\partial u}{\partial t}}+{\cal O}(\Delta t^2) + {\cal O}(\Delta x^2)\\[2ex]
+\qquad = \displaystyle \frac{\partial^2 u}{\partial
+  x^2}(x_j,t_n)+  \frac{1}{\nu} \Delta t \frac{\partial^2 u}{\partial
+  t^2}(x_j,t_n)+{\cal O}(\Delta t^2) + {\cal O}(\Delta x^2)
+\end{array}
+\end{equation}
+\begin{enumerate}
+\item On regardera d'abord la consistance du
+  $\theta$-sch\'ema et on obtiendra comme cas particulier le sch\'ema de Crank-Nicolson. On \'evalue dans ce cas l'erreur de troncature
+\begin{equation}\label{eq:theta}
+\begin{array}{l}
+{\cal E}^n_j=\displaystyle \frac{u(x_j,t_{n+1})-u(x_j,t_n)}{\Delta t} -\displaystyle\theta
+\frac{u(x_{j+1},t_n)-2u(x_j,t_n)+u(x_{j-1},t_n)}{\Delta  x^2}\\
+\quad-\displaystyle (1-\theta) \frac{u(x_{j+1},t_{n+1})-2u(x_j,t_{n+1})+u(x_{j-1},t_{n+1})}{\Delta
+  x^2}\\
+\quad = \displaystyle\frac{\partial u}{\partial t}(x_j,t_n) + \frac{\Delta t}{2}
+\frac{\partial^2 u}{\partial t^2}(x_j,t_n)+{\cal O}(\Delta t^2)-\displaystyle\nu\theta \left( \frac{\partial^2 u}{\partial
+  x^2}(x_j,t_n)+{\cal O}(\Delta x^2)\right)\\
+\quad -\displaystyle\nu(1-\theta) \left(\frac{\partial^2 u}{\partial
+  x^2}(x_j,t_n)+  \frac{1}{\nu} \Delta t \frac{\partial^2 u}{\partial
+  t^2}(x_j,t_n)+{\cal O}(\Delta t^2) + {\cal O}(\Delta x^2)\right).
+\end{array}
+\end{equation}
+En groupant les termes du m\^eme
+ordre de \eqref{eq:theta} on obtient
+$$
+\begin{array}{l}
+{\cal E}^n_j =\displaystyle \underbrace{\frac{\partial u}{\partial t}(x_j,t_n) -  \nu\frac{\partial^2
+  u}{\partial x^2}(x_j,t_n)}_{=0}\\[2ex]
+\quad + \Delta t \underbrace{\left(\frac{1}{2} -(1-\theta) \right)}_{\text{ce terme s'annule ssi } \theta = 1/2} \frac{\partial^2
+  u}{\partial t^2}(x_j,t_n)  \\[2ex]
+\quad  + {\cal O}(\Delta t^2) + {\cal O}(\Delta x^2)
+\end{array}
+$$
+On voit bien que pour $\theta=0$ (implicite) ou $\theta=1$
+(explicite) le sch\'ema est d'ordre $1$ en temps et $2$ espace et il
+devient d'ordre $2$ en temps pour $\theta=1/2$ (Crank-Nicolson).
+
+%\item {\it Sch\'ema aux six points}. On voit bien que tous les termes
+%  de l'erreur de troncature du sch\'ema ont d\'ej\`a \'et\'es
+%  trait\'ees pr\'ec\'edamment et l'erreur de troncature de ce sch\'ema
+%  peut s'obtenir directement de celui de Crank-Nicolson
+%\begin{equation}\label{eq:crank}
+%\tilde {\cal E}^n_j =-\frac{\Delta x^2}{12}\,\nu\frac{\partial^4
+%  u}{\partial x^4}(x_j,t_n) -\frac{\nu\Delta t \Delta x^2}{24}\frac{\partial^6 u}{\partial
+%  x^6}(x_j,t_n)+ {\cal O}(\Delta t^2) +{\cal O}(\Delta
+%x^4).
+%\end{equation}
+%en y ajoutant $1/12 \bar {\cal E}^n_j$ o\`u:
+%\begin{equation}\label{eq:reste}
+%\begin{array}{l}
+%\bar {\cal E}^n_j =  \displaystyle
+%\frac{u(x_{j+1},t_{n+1})-u(x_{j+1},t_n)}{\Delta t} +\displaystyle
+%  \frac{u(x_{j-1},t_{n+1})-u(x_{j-1},t_n)}{\Delta t} -2\frac{u(x_{j},t_{n+1})-u(x_{j},t_n)}{\Delta t}\\[2ex]
+%\quad =\displaystyle\frac{\partial u}{\partial t}(x_{j+1},t_n) +\frac{\Delta t}{2}
+%\frac{\partial^2 u}{\partial t^2}(x_{j+1},t_n)+\frac{\partial u}{\partial t}(x_{j-1},t_n) + \frac{\Delta t}{2}
+%\frac{\partial^2 u}{\partial t^2}(x_{j-1},t_n)\\[2ex]
+%\quad \displaystyle-2\frac{\partial u}{\partial t}(x_{j},t_n)-2\frac{\Delta t}{2}
+%\frac{\partial^2 u}{\partial t^2}(x_{j},t_n)+{\cal O}(\Delta
+%t^2)=\displaystyle\nu\left(\frac{\partial^2 u}{\partial
+%    x^2}(x_{j+1},t_n)+\frac{\partial^2 u}{\partial
+%    x^2}(x_{j-1},t_n) -2\frac{\partial^2 u}{\partial
+%    x^2}(x_{j},t_n)\right)\\[2ex]
+%\quad+\displaystyle\nu^2 \frac{\Delta t}{2}\left(\frac{\partial^4 u}{\partial
+%    x^4}(x_{j+1},t_n)+\frac{\partial^4 u}{\partial
+%    x^4}(x_{j-1},t_n)-2 \frac{\partial^4 u}{\partial
+%    x^4}(x_{j},t_n)\right) +{\cal O}(\Delta x^4)+ {\cal O}(\Delta
+%t^2)\\[2ex]
+%\quad =\displaystyle \nu\Delta x^2 \frac{\partial^4 u}{\partial
+%    x^4}(x_{j},t_n) +\frac{\nu^2\Delta t \Delta x^2}{2}\frac{\partial^6 u}{\partial
+%    x^6}(x_{j},t_n) +{\cal O}(\Delta x^4)+{\cal O}(\Delta
+%t^2).
+%\end{array}
+%\end{equation}
+%On constate qu'en ajoutant \`a la formule \eqref{eq:crank}, $1/12$
+%de la formule \eqref{eq:reste} on obtient le r\'esultat.
+
+%\item {\it Sch\'ema de Gear}. On choisit cette fois-ci de faire les
+%  d\'eveloppements de Taylor autour du point $(x_j,t_{n+1})$. On
+%  obtient la formule suivante pour le premier terme (le deuxi\`eme
+%  \'etant donn\'e dans \eqref{eq:util})
+%$$
+%3u(x_j,t_{n+1})-4u(x_j,t_n)+u(x_j,t_{n-1})=2\Delta t \frac{\partial
+%  u}{\partial t} (x_j,t_{n+1})+{\cal O}(\Delta t^3),
+%$$
+%En combinant les deux termes de l'erreur de troncature et en
+%utilisation le fait que $u$ est solution de l'\'equation, on obtient
+%$$
+%\begin{array}{l}
+%\displaystyle{\cal E}^n_j=\frac{3u(x_j,t_{n+1})-4u(x_j,t_n)+u(x_j,t_{n-1})}{2\Delta
+%  t}-\nu \frac{u(x_{j+1},t_{n+1})-2u(x_j,t_{n+1})+u(x_{j-1},t_{n+1})}{\Delta
+%  x^2} \\
+%\quad \displaystyle= {\cal O}(\Delta t^2)+{\cal O}(\Delta x^4).
+%\end{array}
+%$$
+\item {\it Sch\'ema de DuFort-Frankel}. En faisant des d\'eveloppement
+  de Taylor autour du point $(x_j,t_{n})$ on obtient
+$$
+\begin{array}{l}
+\displaystyle{\cal E}^n_j=\frac{u(x_j,t_{n+1})-u(x_j,t_{n-1})}{2\Delta
+  t}-\nu \frac{u(x_{j+1},t_{n})-u(x_j,t_{n+1})-u(x_j,t_{n-1})+u(x_{j-1},t_{n})}{\Delta
+  x^2} \\
+\quad = \displaystyle \frac{\partial
+  u}{\partial t} (x_j,t_{n}) + {\cal O}(\Delta t^2) - \nu \left(2\frac{u(t^n,x_j)}{\Delta x^2}+ \frac{\partial ^2u}{\partial x^2} + {\cal O}(\Delta x^2) \right)
+ + \nu \frac{u(x_j,t_{n+1})+u(x_j,t_{n-1})}{\Delta
+  x^2} \\
+   = \displaystyle \frac{\partial
+  u}{\partial t} (x_j,t_{n}) -\nu \frac{\partial ^2u}{\partial x^2} (x_j,t_{n}) 
+ + \nu \frac{u(x_j,t_{n+1})+u(x_j,t_{n-1})-2u(x_j,t_n)}{\Delta
+  x^2} + {\cal O}(\Delta t^2)+{\cal O}(\Delta x^2)\\
+   =\displaystyle \frac{\Delta t^2}{\Delta x^2} \left( \frac{\partial^2 u}{\partial t^2}(x_j,t_n) +{\cal O}(\Delta t^2) \right)+ {\cal O}(\Delta t^2)+{\cal O}(\Delta x^2)
+  
+%  \nu \displaystyle \frac{u(x_{j+1},t_{n+1})-2u(x_j,t_{n+1})+u(x_{j-1},t_{n+1})}{\Delta
+%  x^2} \\
+%\quad- \nu \displaystyle \frac{2u(x_j,t_{n+1}) -u(x_j,t_{n+1})-u(x_j,t_{n-1})}{\Delta
+%  x^2} = \displaystyle\frac{\partial
+%  u}{\partial t} (x_j,t_{n}) + {\cal O}(\Delta t^2) \\
+%\quad -\displaystyle \nu\left(\frac{\partial^2  u}{\partial x^2}
+%  (x_j,t_{n}) + {\cal O}(\Delta x^2)\right)+\nu \frac{\Delta
+%  t^2}{\Delta x^2}\left(\frac{\partial^2  u}{\partial t^2} (x_j,t_{n})
+%  + {\cal O}(\Delta t^2)\right)\\
+%\quad \displaystyle=\nu \frac{\Delta
+%  t^2}{\Delta x^2}\left(\frac{\partial^2  u}{\partial t^2} (x_j,t_{n}) + {\cal O}(\Delta t^2)\right)+{\cal O}(\Delta t^2)+{\cal O}(\Delta x^2).
+\end{array}
+$$
+On voit que le sch\'ema est consistant uniquement si $\frac{\Delta
+  t}{\Delta x}$ tend vers $0$.  Dans ce cas on aurait l'ordre $2$ en temps et en espace.
+
+\end{enumerate}
+
+\noindent {\bf Stabilit\'e en norme $L^2$}
+\begin{enumerate}
+%\item Sch\'ema d'Euler implicite. On injecte un mode de Fourier
+%  $u_j^n=A(k)^ne^{2i\pi jk\Delta x}$ dans le sch\'ema, afin de calculer
+%  son facteur d'amplification
+%$$
+%\frac{ A(k)^{n+1}e^{2i\pi jk\Delta x}- A(k)^{n}e^{2i\pi jk\Delta
+%    x}}{\Delta t}-\nu\frac{A(k)^{n+1}e^{2i\pi (j+1)k\Delta
+%    x}-2 A(k)^{n+1}e^{2i\pi jk\Delta
+%    x} +A(k)^{n+1}e^{2i\pi (j-1)k\Delta
+%    x}}{\Delta x^2}=0.
+%$$
+%En simplifiant le facteur $A(k)^ne^{2i\pi jk\Delta x}$ on obtient
+%$$
+%A(k)-1-\frac{\nu\Delta t}{\Delta x^2}A(k)(e^{2i\pi k\Delta  x} -2 +e^{-2i\pi k\Delta  x})=0.
+%$$
+%Ensuite,
+%$$
+%\displaystyle A(k)\left(1 +\frac{\nu\Delta t}{\Delta x^2}(2-2\cos(2\pi\Delta
+%  x))\right) =1 \Leftrightarrow A(k) = \frac{1}{1+4
+%  \displaystyle\frac{\nu\Delta t}{\Delta x^2}\sin^2(\pi k\Delta x)}
+%$$
+%ce qui prouve qu'ind\'ependamment de $\Delta t$ et $\Delta x$,
+%$|A(k)|\le 1$, donc le sch\'ema est {\it inconditionnellement stable}.
+\item Le $\theta$-sch\'ema. On injecte un mode de Fourier
+  $u_j^n=A(k)^ne^{2i\pi j k\Delta x}$ dans le sch\'ema, afin de calculer
+  son facteur d'amplification
+$$
+\begin{array}{l}
+\displaystyle\frac{ A(k)^{n+1}e^{2i\pi jk\Delta x}- A(k)^{n}e^{2i\pi jk\Delta
+    x}}{\Delta t} \\[2ex]
+\qquad - (1-\theta)\displaystyle\displaystyle\nu\frac{A(k)^{n+1}e^{2i\pi (j+1)k\Delta
+    x}-2 A(k)^{n+1}e^{2i\pi jk\Delta
+    x} +A(k)^{n+1}e^{2i\pi (j-1)k\Delta
+    x}}{\Delta x^2}\\[2ex]
+\qquad- \displaystyle \theta\displaystyle\nu\frac{A(k)^{n}e^{2i\pi (j+1)k\Delta
+    x}-2 A(k)^{n}e^{2i\pi jk\Delta
+    x} +A(k)^{n}e^{2i\pi (j-1)k\Delta
+    x}}{\Delta x^2}=0
+\end{array}
+$$
+En simplifiant le facteur $A(k)^ne^{2i\pi jk\Delta x}$ on obtient
+$$
+\begin{array}{l}
+\displaystyle A(k)-1-(1-\theta)\frac{\nu\Delta t}{\Delta x^2}A(k)(e^{2i\pi
+  k \Delta  x} -2
++e^{-2i\pi k\Delta  x})-\theta\frac{\nu\Delta t}{\Delta x^2}(e^{2i\pi k\Delta  x} -2
++e^{-2i\pi k\Delta  x})=0.
+\end{array}
+$$
+ce qui conduit \`a
+$$
+A(k)\left(1+4(1-\theta)\displaystyle\frac{\nu\Delta t}{\Delta
+    x^2}\sin^2(\pi k\Delta x)\right)=1-4\theta
+\displaystyle\frac{\nu\Delta t}{\Delta x^2}\sin^2(\pi k\Delta x).
+$$
+La condition $A(k)\le 1$ sera donc \'equivalente \`a
+$$
+-1\le \frac{1-4\theta \displaystyle\frac{\nu\Delta t}{\Delta
+    x^2}\sin^2(\pi k\Delta x)}{1+4(1-\theta) \displaystyle\frac{\nu\Delta
+    t}{\Delta x^2}\sin^2(\pi k\Delta x)}\le 1 \Leftrightarrow 2(2\theta-1) \displaystyle\frac{\nu\Delta
+    t}{\Delta x^2}\sin^2(\pi k\Delta x)\le 1.
+$$
+On en d\'eduit que si $\theta \le 1/2$, le sch\'ema est
+{\it inconditionnellement stable} et que si $1/2 < \theta \le 1$ alors il est
+stable sous la condition $$2(2\theta-1)\frac{\nu\Delta
+    t}{\Delta x^2} \le 1.$$ 
+    
+    En particulier le schéma de Crank-Nicolson est inconditionnellement stable.
+\item Sch\'ema de DuFort-Frankel. On injecte un mode de Fourier
+  $u_j^n=A(k)^ne^{2i\pi j k\Delta x}$ dans le sch\'ema, afin de calculer
+  son facteur d'amplification et on simplifiera ensuite $A(k)^{n-1}e^{2i\pi jk\Delta x}$
+$$
+\begin{array}{l}
+A(k)^2-1-c\left(2A(k)\cos(k\pi\Delta
+  x)-A(k)^2-1\right)=0,\, c=\frac{2\nu\Delta t}{\Delta x^2}\\[2ex]
+\qquad \Rightarrow A(k)^2(1+c)-2cA(k)\cos(k\pi\Delta x)+c-1=0.
+\end{array}
+$$
+Il s'agit d'une equation de second degr\'e, possedant $2$ racines
+$A_{1,2}(k)$. Si le determinant de cette \'equation est n\'egatif, les
+deux racines sont conjugu\'ees complexes, de m\^eme module et 
+$$
+|A_1(k)|^2= |A_2(k)|^2=|A_1(k)A_2(k)|=\left|\frac{c-1}{c+1}\right|<1.
+$$
+on en d\'eduit que le sch\'ema est inconditionnellement stable. Si le
+determinant est positif, les deux racines sont r\'eelles
+$$
+A_{1,2}(k)=\frac{c\cos(k\pi\Delta x)\pm \sqrt{c^2\cos^2(k\pi\Delta x)-c^2+1} }{c+1}.
+$$
+et on pourra montrer facilement par simple calcul que $\max
+\{A_1(k),A_2(k)\} = A_1(k) \le  1$ et que $\min
+\{A_1(k),A_2(k)\} = A_2(k) \ge -1$.
+\end{enumerate}
+
+\end{document}

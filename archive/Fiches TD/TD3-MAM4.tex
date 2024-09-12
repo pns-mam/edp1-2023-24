@@ -1,0 +1,171 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill vendredi 29 Septembre 2023 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 3}\end{center}
+
+\bigskip
+
+\parskip 12pt
+\noindent Consid\'erons l'\'equation de la chaleur en une dimension d'espace dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}-\nu \frac{\partial^2 u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,\\[2ex]
+u(x,0)=u_0(x),\,\forall x\in (0,1).
+\end{cases}
+$$
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. 
+
+\noindent Les conditions aux limites sont des conditions de Dirichlet homogènes:
+$u(0,t)=u(1,t)=0,\,\forall t$. \\
+
+\noindent Le but de cette s\'erie d'exercices est d'illuster dans un premier temps la propri\'et\'e de consistance
+d'\'evaluer la pr\'ecision de quelques sch\'emas. Ceci se fera en calculant l'erreur de troncature \`a l'aide de d\'eveloppements de
+Taylor. 
+ 
+\noindent Ensuite on va travailler sur la
+propri\'et\'e de stabilit\'e en norme $L^2$. On va évaluer le facteur
+d'amplification de chaque sch\'ema en y injectant un mode de Fourier
+et on \'etablira sous quelles conditions ce facteur d'amplification
+est inferieur \`a un en module. 
+
+
+\noindent On se propose d'\'etudier les sch\'emas suivants:
+
+\begin{enumerate}
+%\item {\it Sch\'ema d'Euler explicite}
+%$$
+%\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+%$$
+%
+%\item {\it Sch\'ema d'Euler implicite}
+%$$
+%\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+%$$
+
+\item {\it Sch\'ema de Crank-Nicolson}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+$$
+
+\item {\it Le $\theta$ sch\'ema}
+$$
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\theta\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-(1-\theta)\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+$$
+
+On va remarquer que les développement faits pour ce schéma permettront de déduire les conclusions pour les schémas d'Euler implicite et explicite (fait en cours) et Crank-Nicolson qui sont des cas particuliers de $\theta$ schéma.
+%\item {\it Sch\'ema aux six points}
+%$$
+%\begin{array}{lcl}
+%\displaystyle\frac{u_{j+1}^{n+1}-u_{j+1}^n}{12\Delta t}& +& \displaystyle\frac{5(u_{j}^{n+1}-u_{j}^n)}{6\Delta t}+\frac{u_{j-1}^{n+1}-u_{j-1}^n}{12\Delta t}+\\[2ex]
+%& -&\displaystyle\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=0.
+%\end{array}
+%$$
+
+\item {\it Sch\'ema de DuFort-Frankel}
+$$
+\frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n}-u_j^{n+1}-u_j^{n-1}+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+
+%\item {\it Sch\'ema de Gear}
+%$$
+%\frac{3u_j^{n+1}-4u_j^n+u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+%$$
+\newpage
+\noindent {\bf Consistance et ordre d'approximation}\\
+Montrer que:
+\begin{itemize}
+\item  le $\theta$ sch\'ema est pr\'ecis à l'ordre
+$1$ en temps et l'ordre $2$ en espace.
+\item le sch\'ema de Crank-Nicolson
+est pr\'ecis à l'ordre $2$ en temps et l'ordre $2$
+en espace
+%\item le sch\'emas à six points est pr\'ecis à l'ordre $2$ en temps et l'ordre $4$ en espace. 
+\item Que peut-on dire du sch\'ema de
+DuFort- Frankel?
+\end{itemize}
+
+Quelques r\`egles \`a suivre 
+\begin{itemize}
+\item Il faudra d\'evelopper tous les termes du sch\'ema {\it au
+    m\^eme point}; le choix de ce dernier n'a pas d'importance et n'a
+  aucune influence sur le r\'esultat final, mais peut influencer la
+  longueur et la difficult\'e du calcul.
+\item Il est recommand\'e de diviser le calcul en plusieurs \'etapes,
+  les r\'esultats intermediaires pouvant \^etre utils par la suite.
+\item Il faut {\it absolument} utiliser \`a un certain moment
+  l'\'equation v\'erifi\'ee par la solution, qui simplifiera les
+  calculs et permettera de trouver le r\'esultat optimal.
+\item Il faut \'eviter de manipuler les termes non-significatifs, ceci
+  conduisant \`a des calculs inutiles.
+\end{itemize}
+
+{\bf Stabilit\'e en norme $L^2$}\\
+%1) Montrer que le sch\'ema explicite est stable en norme $L^2$ sous la condition $2\nu\Delta t\le \Delta x^2$ et que le sch\'ema implicite est inconditionnellement stable.\\
+Montrer que:
+\begin{itemize}
+\item le $\theta$- sch\'ema est
+{\it inconditionnellement stable} en norme $L^2$ si $\theta \le 1/2$ et que si $1/2 < \theta \le 1$ alors il est
+stable sous la condition $$2(2\theta-1)\frac{\nu\Delta
+    t}{\Delta x^2} \le 1.$$ 
+    \item le sch\'ema de DuFort-Frankel est inconditionnellement
+stable en norme $L^2$.
+\item si on fait tendre $\Delta t$ et
+$\Delta x$ simultanement vers $0$ de mani\`ere que le rapport $\Delta
+t/\Delta x$ tende aussi vers $0$, alors le sch\'ema de DuFort-Frankel
+est convergent (on dit qu'il est "conditionnellement'' convergent).  
+\end{itemize}
+
+
+
+%\noindent \texttt{Indication}: On pourra \'etudier directement le $\theta$-sch\'ema en pr\'ecisant
+%ensuite pour quelles valeurs de $\theta$ on obtient les sch\'emas
+%explicites, implicites et Crank-Nicolson. On tiendra compte des
+%changements pour ce dernier o\`u l'ordre d'approximation n'est pas le m\^eme.
+\end{enumerate}
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

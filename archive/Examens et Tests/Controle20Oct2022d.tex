@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+21 Octobre 2022 \\
+
+\hrule
+
+\vspace{0.8cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Contrôle EDP (Sujet D) Dur\'ee : 90 minutes}
+\vspace{0.8cm}
+
+
+\hrule
+\vspace{0.5cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos réponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Questions théoriques}:
+\begin{itemize}
+\item Définir la notion de dispersion numérique et expliquer brièvement comment on peut montrer qu'un schéma est dispersif.
+\item Écrire le schéma de Crank-Nicolson pour l'équation de la chaleur.
+\item Donner l'expression de l'erreur de consistance pour le schéma d'Euler implicite centré amont appliqué à l'équation d'advection.
+\end{itemize}
+
+\vspace{0.5 cm}
+
+
+\noindent {\bf Exercice 1}
+
+\noindent On consid\`ere l'\'equation de la chaleur :
+\begin{equation} \label{eqn:chaleur}
+\left\{
+\begin{array}{rcl}
+\displaystyle \frac{\partial u}{\partial t} \, - \nu\, \frac{\partial^2 u}{\partial x^2}  & =  & 0  \qquad \forall \, (x,t) \, \in \, \mathbb{R} \times \mathbb{R}^+ \\
+\displaystyle u(x,0)  & =  & u_0(x)  \qquad \forall \, x \, \in \, \mathbb{R}
+\end{array}
+\right.
+\end{equation}
+et on se propose de la r\'esoudre en utilisant le sch\'ema num\'erique implicite suivant
+\begin{equation} \label{eqn:schema2}
+\displaystyle  \frac{2u_j^{n+1} \, - 3u_j^n + \, u_j^{n-1}}{\Delta t} \, - \nu\,  \frac{u_{j+1}^{n+1} \,- \,  2 \, u_j^{n+1} \, + \, u_{j-1}^{n+1}}{\Delta x ^2 } \,  =  \,   0 \qquad (j,n) \, \in \, \mathbb{Z} \times \mathbb{N}^* .
+\end{equation}
+
+\begin{enumerate}
+\item Montrer que le schéma (\ref{eqn:schema2}) est consistant et donner son ordre d'approximation.
+\item Montrer que ce sch\'ema implicite est inconditionnellement stable. 
+\end{enumerate}
+\texttt{Indication}: Si le facteur d'amplification vérifie une équation quadratique, le schéma est stable si les deux solutions sont inférieures à $1$ en module. Il est instable si au moins une des solutions est strictement supérieure à $1$ en module.\\
+
+\noindent {\bf Exercice 2}
+
+\noindent On considère l'\'equation d'advection dans le domaine born\'e $(0,1)$ avec $V>0$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1. \\
+
+\begin{enumerate}
+\item Montrer que le sch\'ema de {\it Lax-Wendroff} implicite diffusif avec la partie advective explicite
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+$$
+est inconditionnellement stable en norme $L^2$. \\
+
+\item Calculer l'erreur de troncature du sch\'ema.
+En d\'eduire que le sch\'ema est consistant avec l'\'equation d'advection. Quelle est sa précision? 
+
+%\item  
+%\noindent On va discrétiser l'équation par le schéma de {\it Lax-Wendroff} 
+%$$
+%\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+%\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+%$$
+%\begin{itemize}
+%\item[a)]
+%En utilisant la méthode de von Neumann montrer que ce sch\'ema est $L^2$-stable sous la même condition CFL que le schéma explicite décentré $V\Delta t \le \Delta x$. \\ %(on va distinguer les cas $V>0$ et $V<0$).
+%
+%\item[b)] En calculant l'erreur de troncature et en éffectuant les développements de Taylor autour des points bien choisis, montrer \'egalement qu'il est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $2$ et espace et en temps. 
+%
+%\end{itemize}
+\end{enumerate}
+
+
+
+
+\end{document}
+

@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\usepackage{listings}
+\lstset{ 
+	language=Matlab,                		% choose the language of the code
+%	basicstyle=10pt,       				% the size of the fonts that are used for the code
+	numbers=left,                  			% where to put the line-numbers
+	numberstyle=\footnotesize,      		% the size of the fonts that are used for the line-numbers
+	stepnumber=1,                   			% the step between two line-numbers. If it's 1 each line will be numbered
+	numbersep=5pt,                  		% how far the line-numbers are from the code
+%	backgroundcolor=\color{white},  	% choose the background color. You must add \usepackage{color}
+	showspaces=false,               		% show spaces adding particular underscores
+	showstringspaces=false,         		% underline spaces within strings
+	showtabs=false,                 			% show tabs within strings adding particular underscores
+%	frame=single,	                			% adds a frame around the code
+%	tabsize=2,                				% sets default tabsize to 2 spaces
+%	captionpos=b,                   			% sets the caption-position to bottom
+	breaklines=true,                			% sets automatic line breaking
+	breakatwhitespace=false,        		% sets if automatic breaks should only happen at whitespace
+	escapeinside={\%*}{*)}          		% if you want to add a comment within your code
+}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill lundi 19 Octobre 2020 \\
+
+\hrule
+
+\medskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles -- Mini projet par groupe}\end{center}
+
+\medskip
+
+
+\noindent Le but de ce mini-projet est de vous faire mieux comprendre la méthode des différences finies appliquée à un cas test assez réaliste, à savoir la simulation numérique de la temperature dans une pièce. Comme précisé en cours, le travail se fera par binôme ou trinôme. \\
+{\bf Bien lire les consignes de travail avant de commencer!} \\
+
+\noindent Un code de départ pour la simulation numérique du Laplacien dans un domaine non-nécessairement rectangulaire vous sera fourni à titre d'exemple. Une fois que vous avez bien compris ce code et vous l'avez fait tourner pour différents paramètres et configurations vous pouvez enfin démarrer le travail. Ce travail se fera en deux parties. \\
+
+\noindent {\bf Partie 1}. Cette partie porte sur la simulation statique de la chaleur et il s'agit d'une extension directe du travail de TP.
+\begin{itemize}
+\item Dessiner un plan de votre chambre (cela peut être une chambre imaginaire mais elle doit pas être rectangulaire, mais de géométrie un peu plus complexe comme celle du programme donné à titre d'exemple), y compris les fenêtres, les portes et les radiateurs. (comme vous travaillez en groupe, il me faudra au moins 2 exemples de chambres différentes)
+
+\item On modélisera la température de votre pièce en utilisant l'équation de chaleur stationnaire 
+$$
+-\Delta u = f
+$$
+également appelée équation de Poisson. Pour ce faire, écrire un programme Matlab similaire au programme donné dans la séance de TP. On suppose ici que les murs sont parfaitement isolants, ce qui implique des conditions aux limites de Neumann homogènes, et pour les fenêtres et les portes, on suppose aucune isolation, ce qui implique des conditions de Dirichlet avec une température donnée.
+\item Calculer la température ambiante en été, lorsque les portes et les fenêtres sont à 20C. Quel résultat observez-vous?
+\item Calculer la température ambiante en hiver, sans chauffage, par une froide journée d'hiver avec -10C à l'extérieur, et les portes à une température de 15C.
+\item Faites de même maintenant avec le radiateur allumé afin que la température soit confortable. Vos appareils de chauffage sont-ils bien placés?
+\end{itemize}
+
+\noindent {\bf Partie 2}.  Dans la deuxième partie il faudra faire une simulation instationnaire en utilisation la discrétisation de l'équation de la chaleur par la méthode d'Euler explicite et implicite. Quelques indications:
+\begin{itemize}
+\item[(a)] Il ne faut pas changer de géométrie et la discretisation du Laplacien sera très utile car on va se servir de cette matrice pour implémenter les deux schémas écrits sous forme matricielle.
+\item[(b)] Il faudra ajouter dans votre programme une boucle en temps et puis simuler l'évolution de la temperature dans des cas tests que vous allez définir.
+\item[(c)] Analyser les différences entre les schémas implicite et explicite (du point de vue de la stabilité ou vitesse d'execution du programme).
+\end{itemize}
+
+Quelques suggestions de test:
+
+\begin{itemize}
+\item votre chambre est initialement froide car vous êtes partis en vacances au ski. Simuler le chauffage progressif une fois que le radiateur est allumé à votre retour. 
+\item en plein été, la temperature extérieure est très élevée et vous mettez le radiateur en mode "clim". Combien de temps il vous faut pour atteindre la temperature "idéale"?
+\end{itemize} 
+
+
+\noindent {\bf Mini-rapport}. Le travail sera rendu sous forme de rapport (10 pages max) et codes (à part). Ce rapport devra inclure:
+\begin{itemize}
+\item[(a)]  une brève présentation du problème et des cas tests qui vous permettent d'obtenir les résultats, 
+\item[(b)]  les résultats numériques sous forme de figures et les commentaires et conclusions autour de ces résultats. 
+\end{itemize}
+A ne pas faire:
+\begin{itemize}
+\item[(c)]  Vous ne devez pas écrire beaucoup mais l'essentiel doit y être (ce n'est pas la longueur mais la qualité des résultats et conclusions qui compte). 
+\item[(d)]  Ne pas mettre les codes en annexe mais les ajouter séparément quand vous envoyez les résultats. 
+\item[(e)] Un code qui ne fonctionne pas risque d'invalider votre travail, tout comme le plagiat.
+\end{itemize}
+Date limite de rendu: {\bf vendredi 27 Novembre}.\\
+
+\noindent {\bf Présentation orale}. Une brève presentation orale de 5 minutes par groupe + 5 minutes de questions aura lieu {\bf le vendredi 4 Décembre}, créneau de cours/TD. 
+
+ \bigskip 
+\bigskip
+\hrule
+\bigskip
+\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+\begin{itemize}
+\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+\end{itemize}
+La note finale est : $30\%$(note contr\^ole) $+$
+$30\%$(note devoir/projet) $+$
+$40\%$(note examen).
+
+\end{document}

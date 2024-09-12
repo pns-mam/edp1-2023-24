@@ -1,0 +1,94 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\usepackage{listings}
+\lstset{ 
+	language=Matlab,                		% choose the language of the code
+%	basicstyle=10pt,       				% the size of the fonts that are used for the code
+	numbers=left,                  			% where to put the line-numbers
+	numberstyle=\footnotesize,      		% the size of the fonts that are used for the line-numbers
+	stepnumber=1,                   			% the step between two line-numbers. If it's 1 each line will be numbered
+	numbersep=5pt,                  		% how far the line-numbers are from the code
+%	backgroundcolor=\color{white},  	% choose the background color. You must add \usepackage{color}
+	showspaces=false,               		% show spaces adding particular underscores
+	showstringspaces=false,         		% underline spaces within strings
+	showtabs=false,                 			% show tabs within strings adding particular underscores
+%	frame=single,	                			% adds a frame around the code
+%	tabsize=2,                				% sets default tabsize to 2 spaces
+%	captionpos=b,                   			% sets the caption-position to bottom
+	breaklines=true,                			% sets automatic line breaking
+	breakatwhitespace=false,        		% sets if automatic breaks should only happen at whitespace
+	escapeinside={\%*}{*)}          		% if you want to add a comment within your code
+}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill lundi 11 Octobre 20201\\
+
+\hrule
+
+\medskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles -- séance TP}\end{center}
+
+\medskip
+
+\noindent Le but de cette séance est la simulation numérique du Laplacien dans un domaine carré et la prise en compte des conditions en limites de Dirichlet et Neumann (en suivant les exemples du cours). \\
+
+\noindent Les résultats (en terme d'implementation numérique) de cette séance seront très utiles pour le travail de projet et en ce sens ce travail est préparatoire pour celui du projet.\\ 
+
+\noindent On va commencer par un exemple simple: l'implementation numérique d'un Laplacien dans un domaine carré avec des conditions aux limites de Dirichlet homogène. A tire d'exemple, on fournit le code \texttt{Laplace$\_$DirHom$\_$Carre}. \\
+
+\noindent Pour commencer:
+\begin{itemize}
+\item faire tourner ce code pour différentes valeurs du second membre et nombre de points de discretisation.
+\item changer la taille du domaine de calcul, tout en restant rectangulaire.
+\end{itemize}
+
+\noindent Dans la deuxième partie de la séance, il va falloir modifier ce code pour prendre en compte:
+\begin{itemize}
+\item les termes sources localisés (de type chauffage), en définissant préalablement la partie du domaine où cette source est placée.
+\item les conditions aux limites de Dirichlet non-homogènes (de type fenêtre ou porte d'entrée) sur une partie de la frontière en modifiant le second membre comme montré en cours. 
+\item les conditions aux limites de Neumann homogènes (de type murs isolants)
+\end{itemize}
+Une fois que le code précédent tourne on va essayer de changer la position de portes et des fenêtres, ainsi que celle du chauffage et tester différentes configurations.\\
+
+\noindent Si le temps le permet, on va essayer de modifier aussi le domaine de calcul qui pourrait ne pas être rectangulaire. A minima on va regarder (et on va essayer de faire tourner le programme donné à titre d'exemple).
+
+%\bigskip
+%\bigskip
+%\hrule
+%\bigskip
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} 
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+29 Novembre 2021 \\
+
+\hrule
+
+\vspace{0.5cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Examen \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 1H30}
+\vspace{0.5cm}
+
+
+\hrule
+\vspace{0.5cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos réponses de fa\c{c}on claire et concise.}\\
+
+\noindent {\bf Questions de cours} :
+\begin{itemize}
+\item[--] citer un avantage de la formulation faible par rapport à la formulation forte
+\item[--] donner un exemple d'espace de Hilbert
+\item[--] \'enoncer le théorème de Lax-Milgram
+\item[--] \'enoncer le résultat d'équivalence entre la formulation faible d'un problème variationnel et un problème d'optimisation
+\end{itemize}
+
+\noindent {\bf Exercice 1}\\
+\noindent Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$~:
+$$
+\displaystyle\frac{\partial u}{\partial t}+3\frac{\partial u}{\partial
+  x}=0,\, (x,t)\in(0,1)\times\mathbb{R}^+_*,
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+\begin{enumerate}
+\item Construire un schéma décentré explicite conditionnellement stable au sens $L^2$ et donner sa condition de stabilité.
+\item \`A l'aide d'un développement de Taylor d'ordre $3$ en $x$ et $3$ en $t$, calculer l'erreur de troncature et
+donner l'ordre d'approximation.
+%\item Avec une petite modification le schéma devient inconditionnellement instable. Donner ce nouveau schéma et montrer son instabilité. 
+%\item On souhaite améliorer la stabilité, l'ordre d'approximation et la dissipation du schéma.
+\item Expliquer finalement les différentes modifications à apporter au schéma
+\begin{itemize}
+\item[(i)] pour le rendre inconditionnellement stable sans changer son ordre d'approximation,
+\item[(ii)] pour qu'il soit d'ordre deux en temps et en espace,
+\item[(iii)] pour qu'il soit non-dissipatif (utiliser l'équation équivalente).
+\end{itemize}
+%Pas nécessaire de faire les calculs pour (i) et (ii).
+%Construire un schéma (i) inconditionnellement stable sans changer l'ordre d'approximation. (ii) inconditionnellement stable mais avec ordre 2 en temps et espace, (iii) non-dissipatif en passant par l'equation equivalente.
+\end{enumerate}
+
+\noindent {\bf Exercice 2} \\ 
+Considérons le problème aux limites suivant~:
+\begin{equation}\label{eq:bvp2}
+\left\{\begin{array}{rl}
+-(e^x u'(x))' + u(x) &= f(x), \quad x\in (0,1)\\
+ u(0) &= 0 ,\\
+ u'(1) + 2 u(1) &= 1,
+ \end{array}\right.
+ \end{equation}
+où $f$ est une fonction continue sur $[0,1]$.% à carré integrable .\\
+\begin{enumerate}
+\item En multipliant l'équation (\ref{eq:bvp2}) par une fonction test $v$, en int\'egrant par parties et en prenant en compte les conditions aux limites, écrire la formulation variationnelle (FV) du problème (\ref{eq:bvp2}) sous la forme
+$$
+\mbox{Trouver } u\in V_E \mbox{ tel que } (\forall v \in V_E): a(u,v) = L(v).
+$$
+Identifier clairement la forme bilinéaire $a$, la forme linéaire $L$, et l'espace fonctionnel $V_E$.  Bien distinguer les conditions aux limites essentielles (à inclure dans l'espace) de celle naturelles (prises en compte directement dans la formulation variationnelle).
+\item Montrer que $u$ est solution de (FV) ssi elle minimise sur $V_E$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.
+\end{enumerate}
+
+\end{document}

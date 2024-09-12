@@ -1,0 +1,137 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill jeudi 17 Novembre 2022 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 8}\end{center}
+
+\bigskip
+\begin{enumerate}
+\item On consid\`ere le probl\`eme aux limites de Neumann suivant:
+\begin{equation}\label{NeuGen}
+\begin{cases}
+-\Delta u = f,\,\text{dans }\Omega\\
+\frac{\partial u}{\partial n} = g,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+o\`u $f$ et $g$ sont continues sur $\bar\Omega$ et $\Omega$ est un ouvert born\'e r\'egulier et connexe.\\
+{\bf a}. Trouver une formulation variationnelle (V) de ce probl\`eme sur l'espace $X=H^1(\Omega)$ et montrer qu'une fonction $u\in{\cal C}^2(\bar\Omega)$ est solution de (\ref{NeuGen}) ssi est solution de (V).\\
+{\bf b}. Montrer qu'une condition n\'ecessaire d'existence de solution
+de (\ref{NeuGen}) portant sur $f$ et $g$ (condition dite de
+compatibilit\'e) est la suivante:
+$$
+\int_{\Omega}f(x)dx+ \int_{\partial\Omega} g(x)d\sigma= 0.
+$$
+{\bf c}. Montrer que $u$ est solution de (V) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
+{\bf d}. Montrer que la solution n'est pas unique à une constante pr\`es. 
+%de la solution de (\ref{NeuGen}) dans ${\cal C}^2(\bar\Omega)$ si elle existe.
+
+\item On consid\`ere le probl\`eme des plaques suivant:
+\begin{equation}\label{Plaque}
+\begin{cases}
+\Delta(\Delta u) = f,\,\text{dans }\Omega\\
+u = \frac{\partial u}{\partial n} = 0,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+o\`u $f$ est continue sur $\bar\Omega$.\\
+{\bf a}. Trouver une formulation variationnelle (V) de ce probl\`eme sur l'espace $X=\{v\in H^2(\Omega),\, v=\frac{\partial v}{\partial n}=0,\, \partial\Omega\}$. Montrer qu'une fonction $u\in{\cal C}^4(\bar\Omega)$ est solution de (\ref{Plaque}) ssi elle est solution de (V).\\
+{\bf b}. Montrer que $u$ est solution de (V) ssi elle minimise sur $X$ une fonctionnelle $E(v)$ que l'on pr\'ecisera.\\
+%{\bf c}. En d\'eduire l'unicit\'e de la solution de (\ref{Plaque}) dans ${\cal C}^4(\bar\Omega)$ si elle existe.
+
+\item On suppose que $\Omega$ est un ouvert borné régulier de classe ${\cal C}^1$. A l'aide de l'approche variationnelle démontrer l'existence et unicité de la solution du problème aux limites
+
+\begin{equation}\label{Robin}
+\begin{cases}
+-\Delta u = f,\,\text{dans }\Omega\\
+\frac{\partial u}{\partial n} + u = g,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+où $f\in L^2(\Omega)$. On admettra l'inégalité suivante (qui généralise l'inégalité de Poincaré):
+$$
+\|v\|_{L^2(\Omega)} \le C (\|v\|_{L^2(\partial\Omega)} +\| \nabla v\|_{L^2(\Omega)} ),\, \forall v \in H^1(\Omega).
+$$
+
+
+\item Soit $\Omega$ un ouvert r\'egulier. On consid\`ere l'\'equation 
+\begin{equation}\label{ConvDiff}
+\begin{cases}
+-\Delta u +V\cdot\nabla u = f,\,\text{dans }\Omega\\
+u = 0,\,\text{sur }\partial\Omega.
+\end{cases}
+\end{equation}
+o\`u $V$ est un champ de divergence nulle. \\
+{\bf a} Reprendre la premi\`ere question de l'exercice $1$. \\
+{\bf b} Peut-on associer à ce probl\`eme un probl\`eme de
+minimisation comme nous l'avons fait à l'exercice $1$? \\
+{\bf c} Montrer que (\ref{ConvDiff}) admet au plus une solution. \\
+{\bf d} Aurait-on obtenu un r\'esultat identique si la divergence de
+$V$ prenait des valeurs strictement positives?
+
+
+%\item Soit $\Omega$ un ouvert de $\mathbb{R}^N$ et $(\Omega_1,\Omega_2)$ une
+%  partition de $\Omega$ et $A(x)=k_iId,\,\forall
+%  x\in\Omega_i,\,i=1,2$. On note
+%  $\Gamma=\partial\Omega_1\cap\partial\Omega_2$ l'interface
+%  (suppos\'ee r\'eguli\`ere et incluse dans $\Omega$) entre $\Omega_1$
+%  et $\Omega_2$. Montrer que si $u_i\in {\cal C}(\bar \Omega_i),\,i=1,2$ sont solutions de
+%$$
+%\begin{cases}
+%-k_i\Delta u_i=f,\,\text{dans }\Omega_i,\,i=1,2,\\
+%u_1=u_2,\,\text{sur }\Gamma,\\
+%k_1\nabla u_1\cdot n = k_2\nabla u_2 \cdot n,\,\text{sur }\Gamma,\\
+%u_i=0,\,i=1,2,\,\text{sur }\partial\Omega.
+%\end{cases}
+%$$
+%alors la fonction $u$ d\'efinie comme $u_i$ dans $\Omega_i,\,i=1,2$
+%est l'unique solution dans $X=\{u\in {\cal C}(\bar \Omega),\,
+%u|_{\Omega_i}\in {\cal C}^1(\bar \Omega_i),\, i=1,2, \, u=0 \mbox{
+%  sur } \partial\Omega \}$ de 
+%$$
+%\begin{cases}
+%-\text{div}(A\nabla u)=f,\,\text{dans }\Omega,\\
+%u=0,\,\text{sur }\partial\Omega.
+%\end{cases}
+%$$
+\end{enumerate}
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+\end{document}

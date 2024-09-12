@@ -1,0 +1,178 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+\newcommand{\dxx}{\frac{\partial}{\partial x}}
+\newcommand{\dxy}{\frac{\partial }{\partial y}}
+\newcommand{\dxz}{\frac{\partial}{\partial z}}
+\newcommand{\dxi}{\frac{\partial}{\partial x_i}}
+\newcommand{\Dxy}{\frac{\partial^2}{\partial x \partial y}}
+\newcommand{\Dxz}{\frac{\partial^2}{\partial x \partial z}}
+\newcommand{\Dyz}{\frac{\partial^2}{\partial y \partial z}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\dr}{\frac{\partial}{\partial r}}
+\newcommand{\drr}{\frac{\partial^2}{\partial r^2}}
+\newcommand{\de}{\frac{\partial}{\partial \theta}}
+\newcommand{\dt}{\frac{\partial}{\partial t}}
+\newcommand{\doo}{\frac{\partial^2}{\partial \theta^2}}
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\kk}{\mathbf{k}}
+\newcommand{\XX}{\mathbf{X}}
+\newcommand{\xp}{\mathbf{x'}}
+\newcommand{\EE}{\mathbf{E}}
+\newcommand{\HH}{\mathbf{H}}
+\newcommand{\nn}{\mathbf{n}}
+\newcommand{\cE}{\widehat{\mathbf{E}}}
+\newcommand{\cH}{\widehat{\mathbf{H}}}
+\newcommand{\drx}{\frac{\partial r}{\partial x}}
+\newcommand{\dry}{\frac{\partial r}{\partial y}}
+\newcommand{\dox}{\frac{\partial \theta}{\partial x}}
+\newcommand{\doy}{\frac{\partial \theta}{\partial y}}
+\newcommand{\dur}{\frac{\partial u}{\partial r}}
+\newcommand{\duo}{\frac{\partial u}{\partial \theta}}
+\newcommand{\dx}{\frac{\partial }{\partial x}}
+\newcommand{\dy}{\frac{\partial }{\partial y}}
+\newcommand{\duro}{\frac{\partial^2 u}{\partial r\partial \theta}}
+\newcommand{\durr}{\frac{\partial^2 u}{\partial r^2}}
+\newcommand{\duoo}{\frac{\partial^2 u}{\partial \theta^2}}
+\newcommand{\sincos}{\sin\theta\cos\theta}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill vendredi 20 Novembre 2020 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+SOLUTIONS}\end{center}
+
+\bigskip
+On va faire des calculs et si c'est n\'ecessaire on va donner des explications additionnelles 
+\begin{enumerate}
+\item 
+$$
+\begin{array}{ccl}
+  \nabla \cdot (p \mathbf{v})&=& \dxx (p v_x)+\dxy (p v_y)+\dxz (p v_z)\\
+  &=& v_x \dxx p+v_y \dxy p +v_z \dxz p +p (\dxx v_x+\dxy v_y+\dxz v_z)\\
+  &=& \nabla p\cdot \mathbf{v}+p\nabla\cdot \mathbf{v}.
+  \end{array}
+$$
+
+ $$\begin{array}{ccl}
+  \nabla\times (p\mathbf{v})&=&(\dxy(pv_z)-\dxz (pv_y),\dxz (pv_x)-\dxx (pv_z),\dxx (pv_y)-\dxy (pv_x))^T\\
+  &=& \left(\begin{array}{c}
+  			\dxy p \,v_z -\dxz p \, v_y+p(\dxy v_z-\dxz v_y)\\
+  			\dxz p \,v_x -\dxx p \, v_x+p(\dxz v_x-\dxx v_z)\\
+  			\dxx p \,v_y -\dxy p \, v_x+p(\dxx v_y-\dxy v_x)		
+  	      \end{array}\right)\\
+  &=& \nabla p\times \mathbf{v}+p(\nabla \times \mathbf{v}).
+  \end{array}
+$$
+
+$$
+\begin{array}{ccl}\nabla\times (\nabla p)&=&\nabla\times (\dxx p,\dxy p, \dxz p)\\
+	&=& (\Dyz p-\Dyz p,\Dxz p-\Dxz p,\Dxy p -\Dxy p)=0
+	\end{array}
+$$
+ $$
+\begin{array}{ccl}
+	\nabla \cdot (\nabla \times \mathbf{v})&=& \nabla \cdot (\dxy v_z-\dxz v_y\, ,\dxz v_x -\dxx v_z\, , \dxx v_y -\dxy v_x)\\
+	&=& \Dxy v_z -\Dxz v_y +\Dyz v_x -\Dxy v_z+\Dxz v_y -\Dyz v_x=0
+	\end{array}
+$$
+\item Dans la formule de Green on remplace d'abord $u$  par $uv$ ce qui conduit
+  \`a 
+$$
+\int_\Omega \frac{\partial u}{\partial x_i}  \, v \, d\mathbf{x}= \, - \, \int_\Omega 
+u \frac{\partial v}{\partial x_i}\,d\mathbf{x}+ \, \int_{\partial \Omega}
+u v n_i \, d\sigma.
+$$
+On remplacera ensuite $u$ par $\frac{\partial u}{\partial x_i},\,
+i=1,..,N$ et puis on sommera les relations. 
+\item On va utiliser la formule $\nabla\cdot (p\mathbf{v})=p\nabla
+  \cdot \mathbf{v}+\mathbf{v}\cdot \nabla p$ et la formule de Green.
+$$\begin{array}{ccl}
+	\int_{\Omega}(\nabla\cdot \mathbf{w})\phi d\mathbf{x}&=&\int_{\Omega}\nabla\cdot(\phi \mathbf{w})d\mathbf{x}-\int_{\Omega}\mathbf{w}\cdot \nabla \phi d\mathbf{x}\\
+	&=& -\int_{\Omega} \mathbf{w}\cdot \nabla \phi d\mathbf{x}+\int_{\Omega}\sum_{i=1}^3 \dxi (\phi \mathbf{w})d\mathbf{x}\\
+&=& -\int_{ \Omega} \mathbf{w}\cdot \nabla \phi d \mathbf{x} +\sum_{i=1}^3 \int_{\partial \Omega} (\phi \mathbf{w} )\cdot n_i(x) d \sigma\\
+	&=& -\int_{\Omega} \mathbf{w} \cdot \nabla \phi d\mathbf{x}+\int_{\partial\Omega}(\mathbf{w}\cdot \mathbf{n})\phi d\sigma.
+	\end{array}
+$$
+En prenant $\phi=1$, on a $\nabla \phi =0 $ et donc
+	$$\int_{\Omega}\nabla\cdot
+        \mathbf{w}d\mathbf{x}=\int_{\partial\Omega}\mathbf{w}\cdot
+        \mathbf{n} d\sigma.$$
+
+\item 
+On utilise la formule $\nabla\times (p\mathbf{v}) = p \nabla\times \mathbf{v}+ \nabla p \times \mathbf{v}$ et la formule de Green.
+	$$
+{\begin{array}{ccl}
+	 \int_{\Omega}(\nabla\times \mathbf{w})\phi d\mathbf{x}&=& \int_{\Omega}\nabla\times (\phi \mathbf{w})d\mathbf{x}-\int_{\Omega}\nabla\phi\times \mathbf{w} d\mathbf{x}\vspace{0.3cm}\\
+	&=& \int_{\Omega} \mathbf{w} \times \nabla\phi d\mathbf{x}+\int_{\Omega}(\dxy (\phi w_3)-\dxz (\phi w_2), \dxz (\phi w_1)-\dxx (\phi w_3), \dxx (\phi w_2)-\dxy (\phi w_1))^T d \mathbf{x}\vspace{0.3cm}\\
+	&=& \int_{\Omega} \mathbf{w} \times \nabla\phi d\mathbf{x}+\int_{\partial \Omega} \left(\phi(w_3 n_2-w_2n_3),\phi(w_1n_3-w_3n_1),\phi(w_2n_1-w_1n_2)\right)^T \vspace{0.3cm}\\
+	&=&\int_{\Omega} \mathbf{w} \times \nabla\phi d\mathbf{x}+\int_{\partial\Omega}(\mathbf{n}\times \mathbf{w})\phi d\sigma \vspace{0.3cm}\\
+	&=&\int_{\Omega} \mathbf{w} \times \nabla\phi d\mathbf{x}-\int_{\partial\Omega}(\mathbf{w}\times \mathbf{n})\phi d\sigma
+	\end{array}}
+$$
+On prend encore une fois $\phi=1$ et on obtient:
+	$$\int_{\Omega}(\nabla\times \mathbf{w})\phi d\mathbf{x}=\int_{\partial\Omega}\mathbf{w}\times \mathbf{n}d\sigma.$$
+\item On v\'erifiera que $u$ satisafait bien l'\'equation ainsi que
+  les conditions aux limites. Il est \'evident que $u(0)=u(1)=0$. On
+  \'evalue d'abord la d\'eriv\'ee premi\`ere et ensuite la d\'eriv\'ee seconde
+$$
+\begin{array}{l}
+u'(x)=\int_0^1f(s)(1-s)ds -\int_0^x f(s)ds - xf(x)+
+xf(x)=\int_0^1f(s)(1-s)ds -\int_0^x f(s)ds\\
+u''(x) = (u'(x))'=-f(x)
+\end{array}
+$$
+donc $u$ est bien solution du probl\`eme aux limites.
+\item On va calculer d'abord quelques d\'eriv\'ees partielles qui vont \^etre utiles. 
+$$\begin{array}{l}
+\displaystyle\drx=\frac{x}{\sqrt{x^2+y^2}}=\frac{r\cos\theta}{r}=\cos\theta,\, \dry=\frac{y}{\sqrt{x^2+y^2}}=\sin\theta\\
+\displaystyle\dox=\frac{-y}{x^2+y^2}=-\frac{\sin\theta}{r},\, \doy=\frac{x}{x^2+y^2}=\frac{\cos\theta}{r}
+\end{array}$$
+Maintenant on calcule le Laplacien
+$$
+\begin{array}{l}
+	\Delta u=\displaystyle\frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2}\\
+	\quad=\displaystyle\dx(\dur\drx+\duo\dox)+\dy(\dur\dry+\duo\doy)\\
+	\quad=\displaystyle\dx(\dur\cos\theta-\duo \frac{\sin\theta}{r})+\dy(\dur \sin\theta+\duo \frac{\cos\theta}{r})\\
+	\quad=\displaystyle\dr(\dur \cos\theta)\drx+\doo(\dur\cos\theta)\dox-\dr(\duo\frac{\sin\theta}{r})\drx-\doo(\duo\frac{\sin \theta}{r})\dox\\
+	\quad+\displaystyle\dr(\dur\sin\theta)\dry+\doo(\dur\sin\theta)\doy+\dr(\duo\frac{\cos\theta}{r})\dry+\doo(\duo\frac{\cos\theta}{r})\doy\\
+	\quad
+        =\displaystyle\durr\cos^2\theta-\frac{\sincos}{r}\duro+\frac{\sin^2
+          \theta}{r}\dur\\
+\quad \displaystyle-\frac{\sincos}{r}\duro+\frac{\sincos}{r^2}\duo+\frac{\sin^2\theta}{r^2}\duoo+\frac{\sincos}{r^2}\duo\\
+	 \quad+\displaystyle\durr
+         \sin^2\theta+\frac{\sincos}{r}\duro+\frac{\cos^2\theta}{r}\dur\\
+\quad \displaystyle+\frac{\sincos }{r}\duro -\frac{\sincos}{r^2}\duo+\frac{\cos^2\theta}{r^2}\duoo -\frac{\sincos}{r^2}\duo\\
+	\quad=\displaystyle\durr+\frac{1}{r}\dur+\frac{1}{r^2}\duoo
+	\end{array}
+$$
+\end{enumerate}
+
+
+\end{document}

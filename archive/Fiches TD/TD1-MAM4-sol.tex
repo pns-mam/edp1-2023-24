@@ -1,0 +1,187 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{mathabx}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill lundi 6 Septembre 2021 \\
+
+\hrule
+
+\bigskip
+\bigskip
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --TD1 \\
+SOLUTIONS}\end{center}
+
+\bigskip
+
+\parskip 12pt
+
+\begin{enumerate}
+\item
+
+{\bf a)} On \'ecrit d'abord $v(x)$ comme integrale de sa d\'eriv\'ee sur
+l'intervalle $(0,x)$ 
+$$
+v(x) = \int_0^x\frac{d v(y)}{dy}dy\Rightarrow \int_0^1 v^2(x) dx=  \int_0^1 \left(\int_0^x\frac{d v(y)}{dy}dy\right)^2dx.
+$$
+Ensuite on applique l'in\'egalit\'e de Cauchy-Schwarz tout en
+simplifiant les calculs qui suivent
+$$
+\begin{array}{lcl}
+\displaystyle\int_0^1 v^2(x) dx &\le& \displaystyle\int_0^1 \left(\int_0^x dy \cdot
+  \int_0^x\left(\frac{d v(y)}{dy}\right)^2dy\right)dx\\
+&= &\displaystyle\int_0^1 \left( x\cdot \int_0^x\left(\frac{d v(y)}{dy}\right)^2dy\right)dx\\
+&\le & \displaystyle\left(\int_0^1xdx \right)\cdot \int_0^1\left(\frac{d v(y)}{dy}\right)^2dy =
+\frac{1}{2} \int_0^1\left(\frac{d v(x)}{dx}\right)^2dx.
+\end{array}
+$$
+
+{\bf b)} En multipliant l'\'equation de la
+chaleur par $u$ et
+en int\'egrant par rapport \`a $x$, on obient:
+$$
+\int_0^1 \left(\frac{\partial u}{\partial t}\cdot u \right)dx- \int_0^1
+\left(\frac{\partial^2 u}{\partial x^2}\cdot u \right)dx = 0
+$$
+En int\'egrant ensuite par parties et en utilisant les conditions aux
+limites $u(0,t)=u(1,t)=0$ on obtient
+$$
+\int_0^1 \frac{1}{2}\frac{\partial}{\partial t} \left(u^2(x,t)\right) dx+\int_0^1
+\left(\frac{\partial u}{\partial x}\right)^2dx=0.
+$$
+La fonction $u$ \'etant suppos\'ee suffisamment r\'eguli\`ere on peut
+inverser l'integrale par rapport \`a $x$ et la d\'eriv\'ee par rapport
+\`a $t$. En rempla\c{c}ant l'expression de $E(t)$ on obtient le r\'esultat.\\
+{\bf c)} 
+En appliquant l'in\'egalit\'e de Poincar\'e \`a $v(x)= u(x,t)$, l'\'egalit\'e de l'\'energie du point pr\'ec\'edent se
+re-transcrit comme
+$$
+\frac{dE(t)}{dt} = -\int_0^1
+\left(\frac{\partial u}{\partial x}\right)^2dx \le -2\int_0^1 u^2(x,t)dx =  -2E(t).
+$$
+En divisant par $E(t)$ (qui est une quantit\'e positive) et
+int\'egrant entre $0$ et $t$, on obtient le r\'esultat. On voit bien que l'\'energie {\it d\'ecro\^it exponentiellement en temps}.
+\item 
+{\bf a)} En multipliant l'\'equation des ondes par $\frac{\partial u}{\partial t}$ et
+en int\'egrant par rapport \`a $x$ on obtient
+$$
+\int_0^1 \left(\frac{\partial^2 u}{\partial t^2}\cdot \frac{\partial
+    u}{\partial t} \right)dx- \int_0^1\left(
+\frac{\partial^2 u}{\partial x^2}\cdot \frac{\partial
+    u}{\partial t} \right)dx = 0
+$$
+En int\'egrant par parties et en utilisant les conditions aux
+limites on obtient
+$$
+\int_0^1 \frac{1}{2}\frac{\partial}{\partial t} \left(\frac{\partial
+    u}{\partial t}\right)^2 dx+\int_0^1 \frac{\partial}{\partial t}
+\left(\frac{\partial u}{\partial x}\right)^2dx=0.
+$$
+ce qui conduit au r\'esultat en inversant comme avant l'integrale et la d\'eriv\'ee.\\
+{\bf c)} En choisissant $u_0=u_1=0$ et en int\'egrant l'\'egalit\'e de
+l'\'energie entre $0$ et $t$ on voit que
+$$
+\int_0^1 \left(\frac{\partial u}{\partial
+      t}(x,t)\right)^2dx + \int_0^1 \left(\frac{\partial u}{\partial
+      x}(x,t)\right)^2dx = 0,\, \forall (x,t) \in \Omega\times\mathbb{R}.
+$$
+Il s'agissant des quantit\'es positives, la somme des integrales peut \^etre
+nulle uniquement si les fonctions \`a int\'egrer le sont. On en
+d\'eduit donc que $\frac{\partial u}{\partial t}= \frac{\partial
+  u}{\partial x} = 0$ et la conclusion suit.\\
+{\bf b)} V\'erifiable par simple calcul:
+$$
+\begin{array}{lcl}
+\displaystyle\frac{\partial^2u}{\partial t^2}-\frac{\partial^2u}{\partial x^2} &=&
+\frac{1}{2}(u_0''(x+t) + u_0''(x-t))-\frac{1}{2}(u_1'(x+t) -
+u_1'(x-t))\\
+&-&\frac{1}{2}(u_0''(x+t) + u_0''(x-t))+\frac{1}{2}(u_1'(x+t) -
+u_1'(x-t))=0,\\
+u(x,0) &= &u_0(x),\\
+\frac{\partial u}{\partial t}(x,0)&=&u_1(x).
+\end{array}
+$$
+\item
+{\bf a)} On \'ecrit $|v|^2=v\cdot \bar v$ et on applique la formule de
+d\'erivation du produit
+$$
+\frac{\partial |v|^2}{\partial t} = \frac{\partial (v\cdot \bar v)}{\partial t} =\frac{\partial v}{\partial t}\bar
+v + \frac{\partial \bar v}{\partial t}v = \frac{\partial v}{\partial t}\bar
+v + \overline{\frac{\partial v}{\partial t}\bar v} = 2 \Re\left(\frac{\partial v}{\partial t}\bar v\right).
+$$
+{\bf b)} En multipliant l'\'equation de Schr\"odinger par $\bar u$ et en int\'egrant par
+rapport \`a $x$, on obtient
+$$
+\int_{\mathbb{R}}\left(i\frac{\partial u}{\partial t}\cdot \bar u +\frac{\partial^2 u}{\partial x^2}\cdot u-V|u|^2\right)dx=0
+$$
+En int\'egrant par parties et en utilisant les conditions sur le
+comportement de $u$ \`a l'infini on d\'eduit
+$$
+\int_{\mathbb{R}}i\frac{\partial u}{\partial t}\cdot \bar u dx= \int_{\mathbb{R}}\left(\left|\frac{\partial u}{\partial x}\right|^2+V|u|^2\right)dx.
+$$
+Le membre de droite \'etant r\'eel on d\'eduit que
+$\int_{\mathbb{R}}\frac{\partial u}{\partial t}\cdot \bar u dx$ est
+purement imaginaire
+$$
+\Re\left(\frac{\partial u}{\partial t}\bar u\right)=0 \Rightarrow
+\int_{\mathbb{R}} \frac{\partial |u|^2}{\partial t} =0.
+$$
+Sous les hypoth\`eses de r\'egularit\'e on change l'integrale et la
+d\'eriv\'ee et la conclusion suit:
+\begin{equation}
+\frac{d}{dt}\int_{\mathbb{R}}|u|^2dx=0\Rightarrow \int_{\mathbb{R}}|u(x,t)|^2dx = \int_{\mathbb{R}}|u_0(x)|^2dx.
+\end{equation}
+{\bf c)} En multipliant l'\'equation par $\frac{\partial \bar
+  u}{\partial t}$, on a 
+$$
+\int_{\mathbb{R}}\left(i\left|\frac{\partial u}{\partial t}\right|^2
+  +\frac{\partial^2 u}{\partial x^2}\cdot \frac{\partial \bar
+    u}{\partial t}-Vu\cdot\frac{\partial \bar u}{\partial t}\right)dx=0
+$$
+On int\`egre par parties et en prenant la partie r\'eelle on obtient
+$$
+\int_{\mathbb{R}}\left(i\left|\frac{\partial u}{\partial t}\right|^2
+  -\frac{\partial u}{\partial x}\cdot \frac{\partial^2 \bar
+    u}{\partial t\partial x}-Vu\cdot\frac{\partial \bar u}{\partial
+    t}\right)dx=0 \Leftrightarrow \Re \int_{\mathbb{R}}\left(
+  \frac{\partial u}{\partial x}\cdot \frac{\partial^2 \bar
+    u}{\partial t\partial x}+Vu\cdot\frac{\partial \bar u}{\partial
+    t}\right)dx=0
+$$
+ou d'une façon équivalente en utilisant le résultat du point a)
+$$
+\int_{\mathbb{R}} \frac{\partial}{\partial
+  t}\left(\left|\frac{\partial u}{\partial x}\right|^2+V|u|^2\right)dx
+= 0 \Rightarrow \frac{d}{dt} \int_{\mathbb{R}} \left(\left|\frac{\partial u}{\partial x}\right|^2+V|u|^2\right)dx= 0.
+$$
+En int\'egrant maintenant par rapport au temps on obtient le r\'esultat voulu:
+\begin{equation}
+\int_{\mathbb{R}}\left(\left|\frac{\partial u}{\partial
+      x}(x)\right|^2 +V(x) |u(x,t)|^2\right)dx = \int_{\mathbb{R}}\left(\left|\frac{\partial u_0}{\partial
+      x}(x)\right|^2 +V(x) |u_0(x)|^2\right)dx.
+\end{equation}
+\end{enumerate}
+
+\end{document}

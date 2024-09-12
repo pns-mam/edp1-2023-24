@@ -1,0 +1,177 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent MAM4/SI4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+24 Octobre, 2012 \\
+
+\hrule
+
+\medskip
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Test \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 1H30}
+\vspace{0.5cm}
+
+\noindent {\bf NOM \& Pr\'enom} :
+........................................................ {\bf Groupe TD} : 
+\vspace{1cm}
+
+\hrule
+\vspace{0.5cm}
+\noindent {\sl Documents autoris\'es: uniquement les documents cours et TD distribu\'es. R\'eponses \`a r\'ediger sur la feuille d'\'enonc\'e (il n'en sera distribu\'e qu'une), apr\`es avoir fait vos
+  exercices/essais au brouillon. Justifier vos reponses et commenter
+  les programmes Scilab d'une fa\c{c}on concise
+et claire. \\On pourra consid\'erer comme acquis les d\'eveloppements
+d\'ej\`a faits ailleurs \`a condition de bien situer la source
+(cours, no. s\'erie exercices, no. exercice)}\\
+
+\noindent En absence de pr\'ecisions suppl\'ementaires, on discr\'etise
+toujours le domaine en utilisant un maillage r\'egulier $(x_j,t_n)=(j\Delta x,n\Delta t)$,  $\forall n\ge 0,\,j\in\{0,1,...,N+1\}$, $\Delta x=1/(N+1)$ et $\Delta t>0$.\\
+
+\noindent {\bf Probl\`eme 1}. \noindent Consid\'erons l'\'equation d'advection dans la domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+\begin{enumerate}
+\item Montrer que le sch\'ema de {\it Lax-Friedrichs} 
+$$
+\frac{2u_j^{n+1}-u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta t}+V \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}=0.
+$$
+est stable en norme $L^2$ si $|V|\Delta x \le \Delta x$. ({\bf 2 POINTS})
+\newpage
+Calculer l'erreur de troncature du sch\'ema.
+En d\'eduire que si le rapport $\Delta t/\Delta x$ est gard\'e
+constant quand $\Delta t$ et $\Delta x$ tendent vers $0$, alors le
+sch\'ema est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $1$
+et espace et en temps. ({\bf 2 POINTS})
+\vspace{13cm}
+\item  Montrer que le sch\'ema de {\it Lax-Wendroff} ne pr\'eserve pas le principe du maximum
+discret
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+sauf si le rapport $V\Delta t/\Delta x$ vaut $-1$, $0$ ou $1$. ({\bf 2 POINTS})
+
+
+\newpage Montrer que ce sch\'ema  est $L^2$-stable sous la condition CFL $|V|\Delta t \le
+\Delta x$. ({\bf 3 POINTS})
+
+\vspace{16cm}
+Montrer \'egalement qu'il est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $2$
+et espace et en temps.  ({\bf 2 POINTS})
+\end{enumerate}
+\vspace{10cm}
+\noindent {\bf Probl\`eme 2}. Consid\'erons l'\'equation d'advection-diffusion dans la domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}-\nu\frac{\partial^2u}{\partial x^2}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+Consid\'erons le sch\'ema d\'ecentr\'e amont suivant:
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j}^{n}-u_{j-1}^{n}}{\Delta x}-\nu\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+\begin{enumerate}
+\item D\'eterminer l'ordre du sch\'ema. ({\bf 2 POINTS})
+\vspace{9cm}
+\item On veut d\'eterminer les conditions des stabilit\'e $L^2$ du sch\'eema lorsque $V > 0$ et
+$V < 0$. Pour cela on proc\'edera en plusieurs \'etapes. \'Ecrire
+d'abord le facteur d'amplification $G(k)$ sous la forme
+$$
+G(k)=\alpha e^{2i\pi k\Delta x}+\beta +\gamma  e^{-2i\pi k\Delta x},\, \alpha+\beta+\gamma=1.
+$$
+avec des $\alpha$, $\beta$, $\gamma$ que l'on pr\'ecisera. ({\bf 2 POINTS})
+\newpage
+\noindent Calculer le module complexe de $G(k)$ et montrer qu'il peut se mettre
+sous la forme
+$$
+|G(k)|^2=(1-2(\alpha+\gamma)s_k)^2+4(\alpha-\gamma)^2s_k(1-s_k),\, s_k=\sin^2(k\pi\Delta x)
+$$
+(sans remplacer pour le moment les valeurs de coefficients).  ({\bf 2 POINTS})
+\vspace{8cm}
+
+\noindent En d\'eduire que la condition de stabilit\'e
+$|G(k)|^2 \le 1$ est satisfaite si $(\alpha-\gamma)^2\le (\alpha+\gamma)$.
+Remplacer maintenant les coefficients $\alpha$ et $\gamma$ et donner
+la condition de stabilit\'e en fonction des param\`etres du
+probl\`eme. Dans le cas o\`u $V < 0$ que se passe-t-il si $\nu\rightarrow 0$? ({\bf 2 POINTS})
+\end{enumerate}
+\vspace{8cm}
+\noindent {\bf Probl\`eme 3}. On veut implementer num\'eriquement \`a
+l'aide du logiciel \texttt{Scilab} le {$\theta$ sch\'ema}
+$$
+\left\{\begin{array}{l}
+\displaystyle\frac{u_j^{n+1}-u_j^n}{\Delta t}-\theta\nu
+\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-(1-\theta)\nu
+\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=\theta f^n_j+(1-\theta)f^{n+1}_j, 1\le j
+\le N,\\[2ex]
+\displaystyle u^n_0=u^n_{N+1}=0,\, \\
+u_j^0=u_0(x_j), f^n_j = f(x_j^n),\, 1\le j \le N.
+\end{array}\right.
+$$
+o\`u $u_0$ est la condition initiale et $f$ est le second membre connu
+\`a priori.  \\
+Pour cela on proc\'edera par \'etapes. On notera le vecteur de
+inconnues par $U^n=(u^n_j)_{1\le
+  j\le n}$, celui qui donnera le second membre par $F^n=(f^n_j)_{1\le
+  j\le n}$ et le nombre de CFL par $\sigma=\frac{\nu\Delta t}{\Delta x^2}$.
+\begin{enumerate}
+\item Montrer que le sch\'ema peut s'\'ecrire sous forme matricielle
+  ou l'on pr\'ecisera $A$.
+$$
+(I+(1-\theta)\sigma A)U^{n+1}= (I-\theta\sigma A)U^{n}+\theta
+F^n+(1-\theta) F^{n+1}.
+$$
+\'Ecrire une fonction \texttt{Scilab} qui a l'en-t\^ete
+  \texttt{function Un=heattheta(xspan,tspan,nu,u0,f,theta)} qui
+  calculera la solution de l'\'equation de la chaleur par le
+  $\theta$-sch\'ema. Ses param\`etres sont: \texttt{xspan} (le vecteur des $x_j$),
+  \texttt{tspan} (le vecteur des $t_n$), \texttt{nu} (le coefficient de
+  diffusion $\nu$), la condition initiale \texttt{u0} ($u_0$) et le
+  second membre $f$. (remarquons que le nombre d'inconnues en espace, $N$ peut
+  s'obtenir comme \texttt{length(xspan)-2}). ({\bf 3 POINTS})
+\vspace{10cm}
+
+\item Consid\'erons maintenant le cas concret du sch\'ema de
+  Crank-Nicolson o\`u $(a,b) = (0,\pi)$,
+  $\nu= 1$, $f (x, t) = -\sin(x) \sin(t) + \sin(x)\cos(t)$, condition
+  initiale $u(x, 0) = \sin(x)$. Dans ce cas, la solution exacte est
+  $u(x,t) = \sin(x)\cos(t)$. \'Ecrire un programme qui r\'esout ce probl\`eme sur
+  l'intervalle en temps $[0,1]$ et tracer la solution exacte au temps
+  final sur le m\^eme graphique que celle approch\'ee. ({\bf 3 POINTS})
+\end{enumerate}
+
+\end{document}
+

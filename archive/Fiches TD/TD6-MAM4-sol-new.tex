@@ -1,0 +1,174 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4/SI4) \hfill mardi 18 Octobre 2022 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --S\'erie 6 \\
+SOLUTIONS}\end{center}
+
+\bigskip
+
+\noindent {\bf Probl\`eme 1}
+\begin{enumerate}
+\item On injecte un mode de Fourier $u_j^n= G(k)^n e^{2\pi ijk\Delta
+    x}$ dans le sch\'ema afin d'\'evaluer son facteur
+  d'amplification. Apr\`es simplification des termes ceci conduit \`a:
+\begin{equation}
+\begin{array}{l}
+\displaystyle\frac{G(k)^2-2G(k)+1}{\Delta t ^2}-(\theta
+G^2(k)+(1-2\theta)G(k)+\theta)\frac{e^{2i\pi k\Delta x} -2 + e^{-2i\pi
+    k\Delta x}}{\Delta x^2}=0,\\
+\displaystyle\Leftrightarrow G(k)^2-2G(k)+1 + 4\frac{\Delta t^2}{\Delta x^2} (\theta
+G^2(k)+(1-2\theta)G(k)+\theta) \sin^2(k\pi \Delta x)=0
+\end{array}
+\end{equation}
+En notant $\sigma=\frac{\Delta t^2}{\Delta x^2}$ et $s_k = \sin^2(k\pi
+\Delta x)$ l'\'equation devient
+\begin{equation}\label{eq:G}
+(1+4\theta s_k \sigma)G^2(k)-2(1- 2(1-2\theta) s_k\sigma)G(k)+1+4\theta s_k\sigma=0.
+\end{equation}
+Le determinant r\'eduit de cette \'equation est donn\'e par
+$$
+\Delta =(1- 2(1-2\theta) s_k\sigma)^2-(1+4\theta s_k
+\sigma)^2=-4s_k\sigma (1-s_k\sigma +4\theta s_k\sigma)
+$$
+Consid\'erons d'abord le cas $\Delta < 0$ ce qui \'equivaut \`a $(1-4\theta) s_k\sigma <
+1$. On voit bien que si $\theta \ge 1/4$ ceci est automatiquement
+v\'erifi\'e. Dans le cas $\theta \le 1/4$, ceci a lieu si $\sigma <
+\frac{1}{1-4\theta}$ ou
+\begin{equation}\label{eq:cond}
+\frac{\Delta t}{\Delta x}< \sqrt{\frac{1}{1-4\theta}}.
+\end{equation}
+Si le d\'eterminant est n\'egatif, les racines complexes $G_{1,2}(k)$ de
+l'\'equation \eqref{eq:G} sont conjugu\'ees et v\'erifient
+$$
+|G_j(k)|^2 = |G_1(k)G_2(k)|=\frac{1+4\theta s_k\sigma}{1+4\theta s_k\sigma}=1 \Rightarrow |G_j(k)|=1.
+$$ 
+ce qui prouve que le sch\'ema est stable inconditionnellement si
+$\theta \ge 1/4$ et sous la condition \eqref{eq:cond} si $\theta <
+1/4$. Dans le cas o\`u les racines de \eqref{eq:G} sont r\'eelles, ce qui
+correspond au cas o\`u $(1-4\theta) s_k\sigma >
+1$, le fait que le produit $G_1(k)G_2(k)=1$ prouve bien qu'il y en a une plus
+grand en module que $1$, donc le sch\'ema est instable.
+\item On prouvera l'\'egalit\'e de l'\'energie dans le cas du sch\'ema
+  explicite $\theta=0$, dans le cas g\'en\'eral ceci se faisant, par
+  lin\'earit\'e,  de la m\^eme fa\c{c}on. En multipliant le sch\'ema par
+  $u_j^{n+1}-u_j^{n-1}$ et en sommant ensuite sir $j$ on obtient
+\begin{equation}\label{eq:tmp}
+\begin{array}{l}
+\displaystyle\frac{u_j^{n+1}-2u_j^n+u_j^{n-1}}{\Delta t^2}\cdot
+(u_j^{n+1}-u_j^{n-1})-\frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta
+  x^2}\cdot (u_j^{n+1}-u_j^{n-1})=0,\\
+\displaystyle\Leftrightarrow \frac{u_j^{n+1}-u_j^n-u_j^n + u_j^{n-1}}{\Delta t}\cdot
+\frac{u_j^{n+1}-u_j^{n}  + u_j^{n} - u_j^{n-1}}{\Delta t} -\frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta x^2}\cdot
+(u_j^{n+1}-u_j^{n-1})=0,\\
+\displaystyle \Leftrightarrow \sum_{j=0}^N\left[\left(\frac{u_j^{n+1}-u_j^n}{\Delta
+    t}\right)^2 - \left(\frac{u_j^{n}-u_j^{n-1}}{\Delta
+    t}\right)^2 \right] -\sum_{j=0}^N \frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta x^2}\cdot
+(u_j^{n+1}-u_j^{n-1})=0.
+\end{array}
+\end{equation}
+Pour calculer le deuxi\`eme terme de l'\'equation \eqref{eq:tmp} on
+montrera que pour un $v=(v_j)_{j\in\mathbb{Z}}$ p\'eriodique,
+c.a.d. $v_j=v_{j+N},\, j\in\mathbb{Z}$ on a 
+\begin{equation}\label{eq:tmp2}
+\begin{array}{l}
+\displaystyle\sum_{j=0}^N \frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta
+  x^2}v_j=\displaystyle\sum_{j=0}^N \frac{u_{j+1}^{n}-u_j^{n}}{\Delta
+  x^2}v_j-\sum_{j=0}^N \frac{u_{j}^{n}-u_{j-1}^{n}}{\Delta x^2}v_j\\
+\qquad \qquad=\displaystyle\sum_{j=0}^N \frac{u_{j+1}^{n}-u_j^{n}}{\Delta
+  x^2}v_j-\sum_{l=-1}^{N-1} \frac{u_{l+1}^{n}-u_{l}^{n}}{\Delta
+  x^2}v_{l+1} = \displaystyle \sum_{j=0}^N \frac{u_{j+1}^{n}-u_j^{n}}{\Delta
+  x^2}v_j-\sum_{l=0}^{N} \frac{u_{l+1}^{n}-u_{l}^{n}}{\Delta
+  x^2}v_{l+1}\\
+\qquad \qquad= -\displaystyle\sum_{j=0}^N \frac{u_{j+1}^{n}-u_j^{n}}{\Delta
+  x^2}(v_{j+1}-v_j) = -a_{\Delta x} (u^n,v).
+\end{array}
+\end{equation}
+En introduisant le r\'esultat de \eqref{eq:tmp2} dans \eqref{eq:tmp}
+on obtient
+\begin{equation}
+\displaystyle \sum_{j=0}^N\left[\left(\frac{u_j^{n+1}-u_j^n}{\Delta
+    t}\right)^2 - \left(\frac{u_j^{n}-u_j^{n-1}}{\Delta
+    t}\right)^2 \right] + a_{\Delta x} (u^n,u^{n+1}-u^{n-1})=0
+\Leftrightarrow E^{n+1}-E^n=0
+\end{equation}
+ce qui prouve que l'\'energie discrete se conserve.
+\end{enumerate}
+\noindent {\bf Probl\`eme 2}
+\begin{enumerate}
+\item Pour l'\'etude de la stabilit\'e on cherchera \`a calculer les
+  valeurs propres de la matrice d'amplification $A(k)$ apr\`es avoir
+  inject\'e $U_j^n =A(k)^n e^{2i\pi jk\Delta x} I$ dans le sch\'ema
+$$
+\begin{array}{l}
+\displaystyle\frac{1}{2\Delta t}\left[2A(k)-(e^{2i\pi k\Delta x}+e^{-2i\pi k\Delta
+    x})I \right] -\frac{1}{2\Delta x} J (e^{2i\pi k\Delta x}-e^{-2i\pi k\Delta
+    x})=0,\\
+\displaystyle\Leftrightarrow A(k)= \cos(2\pi k\Delta x)I +i\frac{\Delta t}{\Delta
+  x} \sin(2\pi k\Delta x) J
+\end{array}
+$$
+Les valeurs propres de $A(k)$, qu'on notera $G_{1,2}(k)$ sont
+donn\'ees par
+\begin{equation}
+G_{1,2}(k) = \cos(2\pi k\Delta x) \pm i \frac{\Delta t}{\Delta
+  x} \sin(2\pi k\Delta x)
+\end{equation}
+Celles-ci sont de module inferieur \`a $1$ si $\frac{\Delta t}{\Delta
+  x}  \le 1$.
+\item Pour l'\'etude de la stabilit\'e on cherchera \`a calculer les
+  valeurs propres de la matrice d'amplification $A(k)$ apr\`es avoir
+  inject\'e $U_j^n =A(k)^n e^{2i\pi jk\Delta x} I$ dans le sch\'ema
+$$
+\begin{array}{l}
+\displaystyle\frac{1}{\Delta t}\left[A(k) - I \right] -\frac{1}{2\Delta x} J (e^{2i\pi k\Delta x}-e^{-2i\pi k\Delta
+    x}) -\frac{\Delta t}{2\Delta x^2} J^2 (e^{2i\pi k\Delta x}-2+e^{-2i\pi k\Delta
+    x}) =0,\\
+\displaystyle\Leftrightarrow A(k)= I +i\frac{\Delta t}{\Delta
+  x} \sin(2\pi k\Delta x) J+ \frac{\Delta t^2}{\Delta x^2}(\cos(2\pi k\Delta x)-1)J^2
+\end{array}
+$$
+Les valeurs propres de $A(k)$, qu'on notera $G_{1,2}(k)$ sont
+donn\'ees par
+\begin{equation}
+G_{1,2}(k) = 1\pm i \frac{\Delta t}{\Delta
+  x} \sin(2\pi k\Delta x) + \frac{\Delta t^2}{\Delta x^2}(\cos(2\pi k\Delta x)-1)
+\end{equation}
+ et leur module est
+$$
+|G_{1,2}(k)|^2 = \left(1 + \frac{\Delta t^2}{\Delta x^2}(\cos(2\pi k\Delta x)-1)\right)^2+\frac{\Delta t^2}{\Delta
+  x^2} \sin^2(2\pi k\Delta x).
+$$
+Par calcul on d\'eduit que $|G_{1,2}(k)|\le 1$ si $\frac{\Delta t}{\Delta
+  x}  \le 1$.
+\end{enumerate}
+\end{document}

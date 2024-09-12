@@ -1,0 +1,136 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill jeudi 5 Octobre 2023 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 4}\end{center}
+
+\bigskip
+
+\parskip 12pt
+\noindent Consid\'erons l'\'equation de la chaleur en deux dimension d'espace dans le domaine born\'e $(0,1)^2$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}-\nu \frac{\partial^2 u}{\partial x^2}-\nu \frac{\partial^2 u}{\partial y^2}=0,\, \forall (x,t)\in(0,1)^2\times\mathbb{R}^+_*,\\[2ex]
+u(x,0)=u_0(x),\,\forall x\in (0,1).
+\end{cases}
+$$
+On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j,y_l)=(n\Delta t,j\Delta x,l\Delta y)$,  $\forall n\ge 0,
+j\in\{0,1,...,N+1\},\, l\in\{0,1,...,M+1\}$ o\`u $\Delta x=1/(N+1),\, \Delta y=1/(N+1)$ et $\Delta t>0$. 
+
+\noindent Les conditions aux limites sont des conditions de Dirichlet homogènes:
+$u(0,y,t)=u(1,y,t)=0,\,u(x,0,t)=u(x,1,t)=0,\,\forall t$. \\
+
+\noindent Le but de cette s\'erie d'exercices est d'étudier la stabilité quelques sch\'emas classiques. 
+
+
+\noindent On se propose d'\'etudier les sch\'emas suivants:
+
+\begin{enumerate}
+\item {\it Sch\'ema d'Euler explicite}
+$$
+\frac{u_{j,l}^{n+1}-u_{j,l}^n}{\Delta t}-\nu \frac{u_{j+1,l}^{n}-2u_{j,l}^n+u_{j-1,l}^{n}}{\Delta x^2}-\nu \frac{u_{j,l+1}^{n}-2u_{j,l}^n+u_{j,l-1}^{n}}{\Delta y^2}=0.
+$$
+
+\item {\it Sch\'ema d'Euler implicite}
+$$
+\frac{u_{j,l}^{n+1}-u_{j,l}^n}{\Delta t}-\nu \frac{u_{j+1,l}^{n+1}-2u_{j,l}^{n+1}+u_{j-1,l}^{n+1}}{\Delta x^2}-\nu \frac{u_{j,l+1}^{n+1}-2u_{j,l}^{n+1}+u_{j,l-1}^{n+1}}{\Delta y^2}=0.
+$$
+
+\item {\it Sch\'ema de Peaceman-Rachford}
+$$
+\begin{array}{l}
+\displaystyle \frac{u_{j,l}^{n+1/2}-u_{j,l}^n}{\Delta t}-\nu \frac{u_{j+1,l}^{n+1/2}-2u_{j,l}^{n+1/2}+u_{j-1,l}^{n+1/2}}{2\Delta x^2}-\nu \frac{u_{j,l+1}^{n}-2u_{j,l}^{n}+u_{j,l-1}^{n}}{2\Delta y^2}=0.\\
+
+\displaystyle \frac{u_{j,l}^{n+1}-u_{j,l}^{n+1/2}}{\Delta t}-\nu \frac{u_{j+1,l}^{n+1/2}-2u_{j,l}^{n+1/2}+u_{j-1,l}^{n+1/2}}{2\Delta x^2}-\nu \frac{u_{j,l+1}^{n+1}-2u_{j,l}^{n+1}+u_{j,l-1}^{n+1}}{2\Delta y^2}=0.
+\end{array}
+$$
+
+\item {\it Sch\'ema des directions alternées (ADI)}
+$$
+\begin{array}{l}
+\displaystyle \frac{u_{j,l}^{n+1/2}-u_{j,l}^n}{\Delta t}-\nu \frac{u_{j+1,l}^{n+1/2}-2u_{j,l}^{n+1/2}+u_{j-1,l}^{n+1/2}}{2\Delta x^2}-\nu \frac{u_{j+1,l}^{n}-2u_{j,l}^{n}+u_{j-1,l}^{n}}{2\Delta x^2}=0.\\
+
+\displaystyle \frac{u_{j,l}^{n+1}-u_{j,l}^{n+1/2}}{\Delta t}-\nu \frac{u_{j,l+1}^{n+1}-2u_{j,l}^{n+1}+u_{j,l-1}^{n+1}}{2\Delta y^2}-\nu \frac{u_{j,l+1}^{n+1/2}-2u_{j,l}^{n+1/2}+u_{j,l-1}^{n+1/2}}{2\Delta y^2}=0.
+\end{array}
+$$
+
+\newpage
+{\bf Indication}\\
+
+Dans le cas du schéma d'Euler explicite on pourra montrer dans un premier temps la stabilité en norme $L^{\infty}$ en montrant que $u_{j,l}^{n+1}$ est une combinaison convexe des valeurs calculées au pas du temps précédent. \\
+
+Ensuite on pourra appliquer  de la méthode de von Neumann dans le cas de la stabilité $L^2$ pour les schémas d'Euler explicite et implicite.
+\begin{itemize}
+\item Injecter dans le schéma un mode de Fourier:
+$$
+u^n_{j,l} = A(k,m)^n e^{2i\pi (kj\Delta x + ml\Delta y)},\, k,m\in \mathbb{Z}
+$$
+
+\item Simplifier et calculer le facteur d'amplification du schéma $A(k,m)$ (on remarquera que dans ce cas, ce facteur dépend de deux arguments car la série de Fourier sera en fait une double somme sur $k$ et $m$).
+\item Si la condition de stabilité $|A(k,m)| \le 1$ est vérifiée alors le schéma est stable.
+\end{itemize}
+
+On devra trouver que les schémas d'Euler implicite est inconditionnellement stable et le schéma d'Euler explicite est conditionnellement stable sous la condition:
+
+$$
+\frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{\Delta y^2} \le \frac{1}{2}.\\
+$$
+
+\noindent Dans le cas des schémas Peaceman-Rashford et ADI on va procéder de la façon suivante:\\
+Injecter dans le schéma un mode de Fourier:
+$$
+u^n_{j,l} = \hat{u}^n_{k,m}  e^{2i\pi (kj\Delta x + ml\Delta y)},\, k,m\in \mathbb{Z}
+$$
+et ensuite on montrera que
+$$
+ \hat{u}^{n+1}_{k,m} = A(k,m)  \hat{u}^{n}_{k,m}.
+$$
+Si le facteur d'amplification du schéma $|A(k,m)|\le 1$ alors le schéma est stable.
+
+
+\end{enumerate}
+
+%\bigskip
+%\hrule
+%\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
+%\begin{itemize}
+%\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
+%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
+%\end{itemize}
+%La note finale est : $30\%$(note contr\^ole) $+$
+%$30\%$(note devoir/projet) $+$
+%$40\%$(note examen).
+
+\end{document}

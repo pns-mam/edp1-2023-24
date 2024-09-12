@@ -1,0 +1,165 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent MAM4/SI4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+28 Novembre, 2012 \\
+
+\hrule
+
+\medskip
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Test \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 1H30}
+\vspace{0.5cm}
+
+\noindent {\bf NOM \& Pr\'enom} :
+........................................................ {\bf Groupe TD} : 
+\vspace{1cm}
+
+\hrule
+\vspace{0.5cm}
+\noindent {\sl Documents autoris\'es: uniquement les documents cours et TD distribu\'es. R\'eponses \`a r\'ediger sur la feuille d'\'enonc\'e (il n'en sera distribu\'e qu'une), apr\`es avoir fait vos
+  exercices/essais au brouillon. Justifier vos reponses et commenter
+  les programmes Scilab d'une fa\c{c}on concise
+et claire. \\On pourra consid\'erer comme acquis les d\'eveloppements
+d\'ej\`a faits ailleurs \`a condition de bien situer la source
+(cours, no. s\'erie exercices, no. exercice)}\\
+
+\noindent En absence de pr\'ecisions suppl\'ementaires, on discr\'etise
+toujours le domaine en utilisant un maillage r\'egulier $(x_j,t_n)=(j\Delta x,n\Delta t)$,  $\forall n\ge 0,\,j\in\{0,1,...,N+1\}$, $\Delta x=1/(N+1)$ et $\Delta t>0$.\\
+\noindent {\bf Probl\`eme 1}. On consid\`ere l'\'equation de la chaleur :
+\begin{equation} \label{eqn:chaleur}
+\left\{
+\begin{array}{rcl}
+\displaystyle \frac{\partial u}{\partial t} \, - \nu\, \frac{\partial^2 u}{\partial x^2}  & =  & 0  \qquad \forall \, (x,t) \, \in \, \mathbb{R} \times \mathbb{R}^+ \\
+\displaystyle u(x,0)  & =  & u^0(x)  \qquad \forall \, x \, \in \, \mathbb{R}
+\end{array}
+\right.
+\end{equation}
+et on se propose de la r\'esoudre en utilisant le sch\'ema num\'erique explicite suivant
+\begin{equation} \label{eqn:schema1}
+\displaystyle  \frac{u_j^{n+1} \, - \, u_j^{n-1}}{2 \Delta t} \, - \nu\,  \frac{u_{j+1}^{n} \,- \,  2 \, u_j^{n} \, + \, u_{j-1}^{n}}{\Delta x ^2 } \,  =  \,   0 \qquad (j,n) \, \in \, \mathbb{Z} \times \mathbb{N}^* .
+\end{equation}
+ainsi que sa version implicite
+\begin{equation} \label{eqn:schema2}
+\displaystyle  \frac{u_j^{n+1} \, - \, u_j^{n-1}}{2 \Delta t} \, - \nu\,  \frac{u_{j+1}^{n+1} \,- \,  2 \, u_j^{n+1} \, + \, u_{j-1}^{n+1}}{\Delta x ^2 } \,  =  \,   0 \qquad (j,n) \, \in \, \mathbb{Z} \times \mathbb{N}^* .
+\end{equation}
+
+\begin{enumerate}
+\item Calculer l'ordre des sch\'emas (\ref{eqn:schema1})  et  (\ref{eqn:schema2}). ({\bf 3
+    POINTS})
+\newpage
+\item Montrer que le sch\'ema explicite est instable, tandis que
+  l'implicite est inconditionnellement stable. ({\bf 4 POINTS})
+\end{enumerate}
+\vspace{22cm}
+\noindent {\bf Probl\`eme 2}. On consid\`ere l'\'equation de la chaleur (\ref{eqn:chaleur}), qu'on se propose de r\'esoudre en utilisant le sch\'ema num\'erique suivant (o\`u $\theta \ge 0$ est un nombre r\'eel positif) :
+
+\begin{equation} \label{eqn:schema4}
+\displaystyle (1+\theta) \, \frac{u_j^{n+1} \, - \, u_j^n}{\Delta t}
+\, - \,\theta\, \frac{u_j^n \, - \, u_j^{n-1}}{\Delta t} \, - \nu \,  \frac{u_{j+1}^{n+1} \,- \,  2 \, u_j^{n+1} \, + \, u_j^{n+1}}{\Delta x ^2 } \,  =  \,   0 \qquad (j,n) \, \in \, \mathbb{Z}\times \mathbb{N}^* .
+\end{equation}
+
+\begin{enumerate}
+\item Montrer, en calculant avec l'erreur de troncature,
+  que le sch\'ema est en g\'en\'eral d'ordre $1$ en temps et $2$ en
+  espace. Calculer la valeur de $\theta \, \ge \, 0$ pour laquelle le
+  sch\'ema soit d'ordre $2$ en temps. ({\bf 2 POINTS})
+\vspace{12cm}
+\item Montrer que le sch\'ema (\ref{eqn:schema4}) est
+  inconditionnellement stable. ({\bf 3 POINTS})
+\end{enumerate}
+\newpage
+\noindent {\bf Probl\`eme 3} - On consid\`ere l'\'equation d'advection : \\
+
+\begin{equation} \label{eqn:transport}
+\left\{ 
+\begin{array}{rcl}
+\displaystyle \frac{\partial u}{\partial t} \, + \, c \, \frac{\partial u}{\partial x} & = & 0 \qquad (x,t) \in \mathbb{R} \times \mathbb{R}^*_+ \\
+u(x,0) &= &\displaystyle u^0(x) \qquad x \in \mathbb{R}
+\end{array}
+\right.
+\end{equation}
+
+\begin{enumerate}
+\item Donner le sch\'ema explicite d\'ecentr\'e amont dans le cas o\`u $c<0$ et
+  $c>0$. ({\bf 1 POINT})
+\vspace{3cm}
+\item  En calculant le facteur d'amplification du sch\'ema dans ses
+  deux versions, dire sous quelle condition il est $\displaystyle
+  L^2$-stable. ({\bf 4 POINTS})
+\newpage
+\item On suppose maintenant que $c>0$ et que la  condition de stabilit\'e ci-dessus est v\'erifi\'ee.  Montrer que dans ce cas, on a aussi:
+\begin{equation} \label{eqn:stab}
+\sup_{j \, \in \, \mathbb{Z}} \left|  u_j^{n+1} \right| \; \le \, \sup_{j \, \in \, \mathbb{Z}} \left|  u_j^{n} \right| 
+\end{equation}
+Comment interpr\'eter l'in\'egalit\'e (\ref{eqn:stab})  ? ({\bf 2 POINTS})
+\end{enumerate}
+\vspace{9cm}
+\noindent {\bf Probl\`eme 4}. On veut implementer num\'eriquement \`a
+l'aide du logiciel \texttt{Scilab} le {sch\'ema} de Crank-Nicolson
+$$
+\left\{\begin{array}{l}
+\displaystyle\frac{u_j^{n+1}-u_j^n}{\Delta t}-\nu
+\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{2\Delta x^2}-\nu
+\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{2\Delta x^2}=\frac{1}{2}(f^n_j+f^{n+1}_j), 1\le j
+\le N,\\[2ex]
+\displaystyle u^n_0=u^n_{N+1}=0,\, u_j^0=u_0(x_j), f^n_j = f(x_j^n),\, 1\le j \le N.
+\end{array}\right.
+$$
+o\`u $u_0$ est la condition initiale et $f$ est le second membre.  On notera le vecteur de
+inconnues par $U^n=(u^n_j)_{1\le
+  j\le n}$, celui qui donnera le second membre par $F^n=(f^n_j)_{1\le
+  j\le n}$ et le nombre de CFL par $\sigma=\frac{\nu\Delta t}{\Delta x^2}$.
+\begin{enumerate}
+\item Montrer que le sch\'ema peut s'\'ecrire sous forme matricielle
+  ou l'on pr\'ecisera $A$. ({\bf 1 POINT})
+$$
+(I+\sigma/2 A)U^{n+1}= (I-\sigma/2 A)U^{n}+1/2
+F^n+1/2 F^{n+1}.
+$$
+\newpage
+\'Ecrire une fonction \texttt{Scilab} qui a l'en-t\^ete
+  \texttt{function Un=heat(xspan,tspan,nu,u0,f)} qui
+  calculera la solution de l'\'equation de la chaleur par le sch\'ema
+  de Crank-Nicolson. Ses param\`etres sont: \texttt{xspan} (le vecteur des $x_j$),
+  \texttt{tspan} (le vecteur des $t_n$), \texttt{nu} (le coefficient de
+  diffusion $\nu$), la condition initiale \texttt{u0} ($u_0$) et le
+  second membre $f$. (remarquons que le nombre d'inconnues en espace, $N$ peut
+  s'obtenir comme \texttt{length(xspan)-2}). ({\bf 3 POINTS})
+\vspace{10cm}
+
+\item Consid\'erons maintenant le cas concret o\`u $(a,b) = (0,\pi)$,
+  $\nu= 1$, $f (x, t) = -\sin(x) \sin(t) + \sin(x)\cos(t)$, condition
+  initiale $u(x, 0) = \sin(x)$. Dans ce cas, la solution exacte est
+  $u(x,t) = \sin(x)\cos(t)$. \'Ecrire un programme qui r\'esout ce probl\`eme sur
+  l'intervalle en temps $[0,1]$ et tracer la solution exacte au temps
+  final sur le m\^eme graphique que celle approch\'ee. ({\bf 3 POINTS})
+\end{enumerate}
+
+\end{document}
+

@@ -1,0 +1,154 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill Lundi 13 Septembre 2021 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 2\\ SOLUTIONS}\end{center}
+
+\bigskip
+
+%\parskip 12pt
+\begin{enumerate}
+\item {\bf a)} On remarque que le sch\'ema peut se r\'e-\'ecrire comme
+\begin{equation}\label{eq:schema}
+u_j^{n+1} = \frac{\nu\Delta t}{\Delta x^2}u^n_{j-1} +
+\left(1-2\frac{\nu\Delta t}{\Delta x^2}\right)u_j^n + \frac{\nu\Delta t}{\Delta x^2}u^n_{j+1}.
+\end{equation}
+Dans le cas o\`u $\sigma = \frac{\nu\Delta t}{\Delta x^2} \le
+\frac{1}{2}$ on voit bien que ceci se transcrit comme une combinaison
+convexe de $u_{j-1}^n$, $u_{j}^n$ et
+$u_{j+1}^n$:
+\begin{equation}\label{eq:conv}
+u_j^{n+1} = \sigma u^n_{j-1} +
+\left(1-2\sigma\right)u_j^n + \sigma u^n_{j+1}.
+\end{equation}
+En raisonnant par r\'eccurence, on suppose que $m\le u_j^N \le
+M,\, \forall j\in\mathbb{Z}, \forall N\le n$. L'\'equation
+\eqref{eq:conv} montre que $m\le u_j^{n+1} \le
+M,\, \forall j\in\mathbb{Z}$, donc ces inegalit\'es restent vraies
+pour tout $n$ et donc le principe du maximum discret est v\'erifi\'e.\\
+{\bf b)} On remplace $u_j^0=(-1)^j$ dans \eqref{eq:schema} et on
+obtient de proche en proche que
+\begin{equation}
+u_j^1 = (-1)^j\left(1-4\frac{\nu\Delta t}{\Delta
+    x^2}\right),\,\hdots,\, u_j^n = (-1)^j\left(1-4\frac{\nu\Delta t}{\Delta
+    x^2}\right)^n = (-1)^j\left(1-4\sigma\right)^n.
+\end{equation}
+Mais comme $\sigma>\frac{1}{2}$, on a que $1-4\sigma<-1$, ce qui
+montre bien la divergence vers infini (en module) de la suite $u_j^n$
+et donc l'instabilit\'e du sch\'ema.\\
+\texttt{Remarque}: Cet \'exercice montre que si la condition de
+stabilit\'e n'est pas respect\'ee, il existe toujours une solution
+initiale pour laquelle il y aura divergence (m\^eme si dans certains
+cas cela peut accidentellement marcher).
+
+\item {\bf a)} On remarque que le sch\'ema peut se r\'e-\'ecrire comme
+\begin{equation}\label{eq:schema2}
+-\frac{\nu\Delta t}{\Delta x^2}u^n_{j-1} +
+\left(1+2\frac{\nu\Delta t}{\Delta x^2}\right)u_j^n - \frac{\nu\Delta
+  t}{\Delta x^2}u^n_{j+1} =u_j^{n-1},\,  j=1,\,\hdots,\, J-1.
+\end{equation}
+En notant comme avant $\sigma = \frac{\nu\Delta t}{\Delta x^2}$, on
+voit que $U^n$ et $U^{n-1}$ v\'erifient la relation 
+$$
+AU^n = U^{n-1}
+$$ 
+avec $A$ la matrice tridiagonale symetrique suivante:
+\begin{equation}
+A = \left(\begin{array}{ccccccc}
+1+2\sigma & -\sigma & 0 & \hdots & \hdots & \hdots & 0\\
+-\sigma & 1+2\sigma & -\sigma & 0 & & & \vdots \\
+0 & -\sigma & \ddots & \ddots & & & \vdots \\
+\vdots & 0 & \ddots & \ddots & \ddots & & \vdots \\
+\vdots & & & \ddots & \ddots & -\sigma & 0 \\
+\vdots & & & 0 & -\sigma & 1+2\sigma & -\sigma \\
+0 & \hdots & \hdots & \hdots & 0& -\sigma & 1+2\sigma
+\end{array}\right)
+\end{equation}
+Le fait que $U^n$ est d\'etermin\'e d'une fa\c{c}on unique d\'ecoule
+de l'inversibilit\'e de la matrice $A$. Cette derni\`ere propri\'et\'e
+est vraie car $A$ est d\'efinie positive. En effet, soit $X\in
+\mathbb{R}^J$ 
+$$
+\begin{array}{rcl}
+X^TAX &= &\displaystyle \sum_{j=1}^{J-1} X_j^2 +\sigma\left(2\sum_{j=1}^{J-1} X_j^2-2
+  \sum_{j=1}^{J-2} X_jX_{j+1}\right) \\[2ex]
+  &=& \displaystyle\sum_{j=1}^{J-1}
+X_j^2+\sigma (X_1^2+X_{J-1}^2)+\sigma\sum_{j=1}^{J-2}(X_j-X_{j+1})^2 \ge 0.
+\end{array}
+$$
+l'\'egalit\'e avec $0$ ayant lieu ssi $X_j=0$ et par cons\'equent $X=0$.\\
+{\bf b)} On va raisonner de nouveau par r\'eccurence. Soit $k$
+t.q. $u_k^n =\max \{u_j^n,\, j = 1,...,J-1\}$. Pour $j=k$ le
+sch\'ema s'\'ecrit
+$$
+(1+2\sigma)u_k^n = u_k^{n-1} + \sigma (u_{k-1}^n+u_{k+1}^n) \le
+u_k^{n-1} +2\sigma u_k^n \Rightarrow u_k^n \le u_k^{n-1} \le \max \{u_j^{n-1},\,j = 1,...,J-1\}.
+$$ 
+Comme le maximum \`a l'instant $n$ sera toujours inferieur au maximum
+de l'instant pr\'ec\'edent on peut ainsi remonter \`a la condition
+initiale et la conclusion suit.
+\item {\bf a)}  On remarque que le sch\'ema peut se r\'e-\'ecrire comme
+\begin{equation}\label{eq:schema3}
+u_j^{n+1} = \left(1-\frac{V\Delta t}{\Delta x}\right)u^n_{j} +\frac{V\Delta t}{\Delta x}u_{j-1}^n.
+\end{equation}
+Dans le cas o\`u $\sigma = \frac{V\Delta t}{\Delta x} \le 1$ on voit bien que $u_j^{n+1}$ s\'ecrit comme une combinaison
+convexe de $u_{j-1}^n$ et $u_{j}^n$ 
+\begin{equation}\label{eq:conv3}
+u_j^{n+1} =\sigma u^n_{j-1} +\left(1-\sigma\right)u_j^n.
+\end{equation}
+En raisonnant par r\'eccurence, on suppose que $m\le u_j^N \le
+M,\, \forall j\in\mathbb{Z}, \forall N\le n$. L'\'equation
+\eqref{eq:conv3} montre que $m\le u_j^{n+1} \le
+M,\, \forall j\in\mathbb{Z}$, donc ces inegalit\'es restent vraies
+pour tout $n$ et donc le principe du maximum discret est
+v\'erifi\'e.\\
+{\bf b)} On remplace $u_j^0=(-1)^j$ dans \eqref{eq:schema3} et on
+obtient de proche en proche que
+\begin{equation}
+u_j^1 = (-1)^j\left(1-2\frac{V\Delta t}{\Delta
+    x}\right),\,\hdots,\, u_j^n = (-1)^j\left(1-2\frac{V\Delta t}{\Delta
+    x}\right)^n = (-1)^j\left(1-2\sigma\right)^n.
+\end{equation}
+Mais comme $\sigma>1$, on a que $1-2\sigma<-1$, ce qui
+montre bien la divergence vers infini (en module) de la suite $u_j^n$
+et donc l'instabilit\'e du sch\'ema.
+\item {\bf a)} On voit facilement par calcul direct des dérivées que la fonction donnée est bien solution du problème de Cauchy.\\
+
+\item {\bf b)} Il est évident que la solution explose exponentiellement quand $x>0$ et $n$ tend vers l'infini à cause de la présence de la fonction $\sinh$. La même chose se passe pour les dérivées partielles,
+$$
+\frac{\partial u}{\partial x} = -n e^{-\sqrt{n}}\sin (ny) \cosh (nx),\, \frac{\partial u}{\partial y} = -ne^{-\sqrt{n}}\cos(ny) \sinh (nx),
+$$
+on en conclut que la solution explose indépendamment des données et donc le problème est mal posé.
+
+\end{enumerate}
+\end{document}

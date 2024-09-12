@@ -1,0 +1,91 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+2 Décembre 2022 \\
+
+\hrule
+
+\vspace{0.5cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Examen \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 1H30}
+\vspace{0.5cm}
+
+
+\hrule
+\vspace{0.7cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos réponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Questions de cours} :
+\begin{itemize}
+\item[--] Donner la définition des espaces de Hilbert $L^2(\Omega)$ et $H^1(\Omega)$, des produits scalaires associés et des normes induites.
+\item[--] Énoncer le théorème de Lax-Milgram. 
+\item[--] Donner un exemple et ensuite expliquer la différence entre les conditions aux limites essentielles et naturelles.
+\end{itemize}
+
+\noindent {\bf Exercice 1}\\
+\noindent Consid\'erons l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}-4\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1.
+\begin{enumerate}
+\item Construire un schéma décentré explicite, stable en norme $L^2$ et en norme $L^{\infty}$ et donner sa condition de stabilité. Avec une petite modification le schéma devient {\it inconditionnellement instable}. Donner ce nouveau schéma et montrer son instabilité. 
+
+\item Calculer l'erreur de troncature dans les deux cas, quel est l'ordre d'approximation?
+
+\item Montrer que le schéma est dissipatif et donner son equation équivalente.
+
+\item  On souhaite améliorer la stabilité, l'ordre d'approximation et la dissipation du schéma.
+
+Construire un schéma (i) inconditionnellement stable sans changer l'ordre d'approximation. (ii) inconditionnellement stable mais avec ordre 2 en temps et espace. (iii) non-dissipatif en utilisant l'équation équivalente.
+
+\end{enumerate}
+
+\noindent {\bf Exercice 2} \\ 
+Considérons le problème aux limites suivant:
+ \begin{equation}\label{eq:bvp2}
+\left\{\begin{array}{rl}
+-((x^2+1)u'(x))' + u(x) &= f(x), \quad x\in (0,1)\\
+ u'(0)+u(0) &= 2,\\
+ u'(1) &= 1,
+ \end{array}\right.
+ \end{equation}
+ où $f$ est une fonction à carré integrable.\\
+En multipliant l'équation (\ref{eq:bvp2}) par une fonction test $v$, en integrant par parties et en prenant en compte les conditions aux limites, écrire la formulation variationnelle du problème (\ref{eq:bvp2}) sous la forme
+$$
+\mbox{Trouver } u\in V_E, \mbox{tel que } a(u,v) = (f,v),\, \forall v\in V_E.
+$$
+Identifier clairement la forme bilinéaire $a$ et l'espace fonctionnel $V_E$.
+
+\end{document}
+

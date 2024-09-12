@@ -1,0 +1,97 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia\\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+25 Octobre 2021 \\
+
+\hrule
+
+\vspace{1cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Contrôle \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 50 minutes}
+\vspace{1cm}
+
+
+\hrule
+\vspace{1cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos reponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Questions théoriques}:
+\begin{itemize}
+\item De quelle classe d'EDP fait partie l'équation d'advection?
+\item Définir la diffusion numérique et donner un exemple de schéma diffusif et un non-diffusif.  Pourquoi cette notion est importante dans l'étude des schémas appliqués à l'equation d'advection?
+\item La plupart des schémas diffusifs sont d'ordre $1$ en espace. Pourriez-vous donner un exemple d'un schéma d'ordre 2 en espace qui est diffusif?
+\item Expliquer quelques différences fondamentales entre le schéma décentré Euler explicite et Lax-Wendroff.
+\end{itemize}
+
+\vspace{1cm}
+\noindent On considère l'\'equation d'advection dans le domaine born\'e $(0,1)$:
+$$
+\begin{cases}
+\displaystyle\frac{\partial u}{\partial t}+V\frac{\partial u}{\partial
+  x}=0,\, \forall (x,t)\in(0,1)\times\mathbb{R}^+_*,
+\end{cases}
+$$
+avec $u(x, 0) = u_0$, $u$ et $u_0$ p\'eriodiques de p\'eriode 1. \\
+
+\noindent Afin de simplifier le raisonnement et fixer les idées on supposera que la vitesse d'advection $V$ est positive. (si $V$ est négatif on pourra faire un raisonnement symétrique).\\
+
+\noindent {\bf Exercice} 
+
+%\begin{enumerate}
+%\item Montrer que le sch\'ema de {\it Lax-Friedrichs} 
+%$$
+%\frac{2u_j^{n+1}-u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta t}+V \frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}=0.
+%$$
+%est stable en norme $L^2$ si $|V|\Delta x \le \Delta x$. \\
+
+%Calculer l'erreur de troncature du sch\'ema.
+%En d\'eduire que si le rapport $\Delta t/\Delta x$ est gard\'e
+%constant quand $\Delta t$ et $\Delta x$ tendent vers $0$, alors le
+%sch\'ema est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $1$
+%et espace et en temps. 
+
+%\item  
+\noindent On va discrétiser l'équation par le schéma de {\it Lax-Wendroff} 
+$$
+\frac{u_j^{n+1}-u_{j}^{n}}{\Delta t}+V
+\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2\Delta x}-\frac{V^2\Delta t}{2}\frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}=0.
+$$
+\begin{itemize}
+\item[a)]
+En utilisant la méthode de von Neumann montrer que ce sch\'ema est $L^2$-stable sous la même condition CFL que le schéma explicite décentré $V\Delta t \le \Delta x$. \\ %(on va distinguer les cas $V>0$ et $V<0$).
+
+\item[b)] En calculant l'erreur de troncature et en éffectuant les développements de Taylor autour des points bien choisis, montrer \'egalement qu'il est consistant avec l'\'equation d'advection et pr\'ecis \`a l'ordre $2$ et espace et en temps. 
+
+\end{itemize}
+%\end{enumerate}
+
+
+\end{document}
+

@@ -1,0 +1,119 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill Lundi 5 Octobre 2021 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles --
+TD 4\\ SOLUTIONS}\end{center}
+
+\bigskip
+
+\begin{itemize}
+\item Schéma explicite: on peut l'écrire comme
+$$
+u_{j,l}^{n+1} =u_{j,l}^n \left(1-\frac{2\nu\Delta t}{\Delta x^2}  - \frac{2\nu\Delta t}{\Delta y^2} \right) +u_{j+1,l}^{n}\frac{\nu\Delta t}{\Delta x^2}  + u_{j-1,l}^{n}\frac{\nu\Delta t}{\Delta x^2}++u_{j,l+1}^{n}\frac{\nu\Delta t}{\Delta y^2}  + u_{j,l-1}^{n}\frac{\nu\Delta t}{\Delta y^2}
+$$
+On en déduit que $u_{j,l}^{n+1}$ est une combinaison convexe de $u_{j,l}^n,u_{j+1,l}^{n}\,u_{j-1,l}^{n},u_{j,l+1}^{n},u_{j,l-1}^{n}$ (et par conséquent le principe du maximum discret est vérifié) si
+$$
+\frac{\nu\Delta t}{\Delta x^2}  + \frac{\nu\Delta t}{\Delta y^2} \le \frac{1}{2}.
+$$
+Ceci sera aussi la condition de stabilité $L^{\infty}$.\\
+Pour montrer la stabilité en norme $L^2$ on applique la méthode de Von Neumann. En remplaçant le mode de Fourier dans le schéma et en simplifiant par $A(k,m)^ne^{2i\pi(kj\Delta x +ml\Delta y)}$ on obtient
+
+$$
+\begin{array}{rcl}
+A(k,m) &=& \displaystyle \left(1-\frac{2\nu\Delta t}{\Delta x^2}  - \frac{2\nu\Delta t}{\Delta y^2} \right) + \frac{\nu\Delta t}{\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})+\frac{\nu\Delta t}{\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y})\\
+&=&\displaystyle 1 - 4 \frac{\nu\Delta t}{\Delta x^2} \sin^2(\pi k\Delta x) - 4 \frac{\nu\Delta t}{\Delta y^2} \sin^2(\pi m\Delta y) 
+\end{array}
+$$
+On voit que $|A(k,m)| \le 1$ pour toutes les valeurs de $k,m \in \mathbb{Z}$ ssi 
+$$
+-1 \le 1 - 4 \frac{\nu\Delta t}{\Delta x^2} \sin^2(\pi k\Delta x) - 4 \frac{\nu\Delta t}{\Delta y^2} \sin^2(\pi m\Delta y)  \le 1
+$$
+ou alors ssi 
+$$
+2 \frac{\nu\Delta t}{\Delta x^2} \sin^2(\pi k\Delta x) +2  \frac{\nu\Delta t}{\Delta y^2} \sin^2(\pi m\Delta y) \le 1. 
+$$
+Ceci est vrai si la condition CFL suivante est vérifiée:
+$$
+\frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{\Delta y^2} \le \frac{1}{2}.
+$$
+\item Schéma implicite. On remarque que le schéma peut se ré-écrire comme:
+$$
+u_{j,l}^{n+1} \left(1+\frac{2\nu\Delta t}{\Delta x^2}  + \frac{2\nu\Delta t}{\Delta y^2} \right) -u_{j+1,l}^{n+1}\frac{\nu\Delta t}{\Delta x^2}  - u_{j-1,l}^{n+1}\frac{\nu\Delta t}{\Delta x^2}-u_{j,l+1}^{n+1}\frac{\nu\Delta t}{\Delta y^2}  - u_{j,l-1}^{n+1}\frac{\nu\Delta t}{\Delta y^2} = u_{j,l}^n
+$$
+Pour montrer la stabilité en norme $L^2$ on applique la méthode de Von Neumann. En remplaçant le mode de Fourier dans le schéma et en simplifiant par $A(k,m)^ne^{2i\pi(kj\Delta x +ml\Delta y)}$ on obtient
+
+$$
+\begin{array}{l}
+\displaystyle A(k,m)  \left(1 + \frac{2\nu\Delta t}{\Delta x^2}  + \frac{2\nu\Delta t}{\Delta y^2} - \frac{\nu\Delta t}{\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})-\frac{\nu\Delta t}{\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y}) \right) =1\\
+\Leftrightarrow \displaystyle A(k,m) = \left(1 + 4 \frac{\nu\Delta t}{\Delta x^2} \sin^2(\pi k\Delta x) + 4 \frac{\nu\Delta t}{\Delta y^2} \sin^2(\pi m\Delta y)\right)^{-1}  \le 1
+\end{array}
+$$
+le schéma implicite est donc inconditionnellement stable.
+\item Schéma de Peaceman-Rashford. En remplaçant $u^n_{j,l}$ dans le schéma par $\hat u^n_{k,m}e^{2i\pi(kj\Delta x +ml\Delta y)}$ et en simplifiant par $e^{2i\pi(kj\Delta x +ml\Delta y)}$ on obtient
+$$
+\begin{array}{l}
+\displaystyle \hat{u}^{n+1/2}_{k,m}   =  \frac{\left(1 -  \frac{\nu\Delta t}{\Delta y^2} +\frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y}) \right)}{\left(1 + \frac{\nu\Delta t}{\Delta x^2}   - \frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})\right) } \hat{u}^{n}_{k,m} \\[3ex]
+\displaystyle \hat{u}^{n+1}_{k,m}  = \frac{ \left(1 -  \frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k\Delta x}+e^{-2i\pi k\Delta x}) \right)}{ \left(1 + \frac{\nu\Delta t}{\Delta y^2}   - \frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m \Delta y}+e^{-2i\pi m\Delta y})\right) } \hat{u}^{n+1/2}_{k,m}
+\end{array}
+$$
+On en déduit que $\hat{u}^{n+1}_{k,m} = A(k,m) \hat{u}^{n}_{k,m}$ avec
+$$
+\begin{array}{rcl}
+A(k,m) &= & \displaystyle \frac{\left(1 -  \frac{\nu\Delta t}{\Delta y^2} +\frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y}) \right)}{\left(1 + \frac{\nu\Delta t}{\Delta x^2}   - \frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})\right) } \cdot   \frac{ \left(1 -  \frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k\Delta x}+e^{-2i\pi k\Delta x}) \right)}{ \left(1 + \frac{\nu\Delta t}{\Delta y^2}   - \frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m \Delta y}+e^{-2i\pi m\Delta y})\right) }\\
+A(k,m) &= & \displaystyle \frac{1 -  2\frac{\nu\Delta t}{\Delta y^2} \sin^2(m\pi\Delta y) }{1 + 2\frac{\nu\Delta t}{\Delta y^2} \sin^2(m\pi\Delta y) } \cdot \frac{1 -  2\frac{\nu\Delta t}{\Delta x^2} \sin^2(k\pi\Delta x) }{1 + 2\frac{\nu\Delta t}{\Delta x^2} \sin^2(k\pi\Delta x) }. 
+\end{array}. 
+$$
+Il est facile de voir que $|A(k,m)|\le 1$ donc le schéma est inconditionnellement stable car pour tout $x$ positif on a que $\left|\frac{1-x}{1+x}\right| \le 1$.
+
+\item Schéma des directions alternées. On procédant de la même façon que dans le cas du schéma de Peacema-Rashford on obtient:
+$$
+\begin{array}{l}
+\displaystyle \hat{u}^{n+1/2}_{k,m}   =  \frac{\left(1 -  \frac{\nu\Delta t}{\Delta y^2} +\frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y}) \right)}{\left(1 + \frac{\nu\Delta t}{\Delta x^2}   - \frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})\right) } \hat{u}^{n}(k,m) \\[3ex]
+\displaystyle \hat{u}^{n+1}(k,m)  = \frac{ \left(1 -  \frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k\Delta x}+e^{-2i\pi k\Delta x}) \right)}{ \left(1 + \frac{\nu\Delta t}{\Delta y^2}   - \frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m \Delta y}+e^{-2i\pi m\Delta y})\right) } \hat{u}^{n+1/2}(k,m)
+\end{array}
+$$
+
+On en déduit que $\hat{u}^{n+1}_{k,m} = A(k,m) \hat{u}^{n+1/2}_{k,m}$ avec
+$$
+\begin{array}{rcl}
+A(k,m) &= & \displaystyle \frac{\left(1 -  \frac{\nu\Delta t}{\Delta y^2} +\frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m\Delta y}+e^{-2i\pi m\Delta y}) \right)}{\left(1 + \frac{\nu\Delta t}{\Delta x^2}   - \frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k \Delta x}+e^{-2i\pi k\Delta x})\right) } \cdot  \frac{ \left(1 -  \frac{\nu\Delta t}{\Delta x^2} +\frac{\nu\Delta t}{2\Delta x^2} (e^{2i\pi k\Delta x}+e^{-2i\pi k\Delta x}) \right)}{ \left(1 + \frac{\nu\Delta t}{\Delta y^2}   - \frac{\nu\Delta t}{2\Delta y^2} (e^{2i\pi m \Delta y}+e^{-2i\pi m\Delta y})\right) } \\
+A(k,m) &= & \displaystyle \frac{1 -  2\frac{\nu\Delta t}{\Delta y^2} \sin^2(m\pi\Delta y) }{1 + 2\frac{\nu\Delta t}{\Delta x^2} \sin^2(k\pi\Delta x) } \cdot \frac{1 -  2\frac{\nu\Delta t}{\Delta x^2} \sin^2(k\pi\Delta x) }{1 + 2\frac{\nu\Delta t}{\Delta y^2} \sin^2(m\pi\Delta y) } .
+\end{array}
+$$
+Il est facile de voir que $|A(k,m)|\le 1$ donc le schéma est inconditionnellement stable car pour tout $x$ positif on a que $\left|\frac{1-x}{1+x}\right| \le 1$.
+
+\end{itemize}
+
+
+
+\end{document}

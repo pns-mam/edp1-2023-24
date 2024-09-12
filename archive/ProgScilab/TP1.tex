@@ -1,0 +1,270 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e de Nice-Sophia Antipolis} \hfill EPU\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4/SI4) \hfill mercredi 17 octobre 2012 \\
+
+\hrule
+
+\bigskip
+\bigskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles -- TP Scilab}\end{center}
+
+\bigskip
+
+%\parskip 12pt
+\noindent Le but de cette s\'eance est d'implementer num\'eriquement \`a l'aide
+du logiciel \texttt{Scilab} quelques sch\'emas numeriques, de tester
+leurs propri\'et\'es de stabilit\'e et repr\'esenter graphiquement
+l'\'evolution de la solution au cours des it\'erations en temps.
+
+\paragraph{Introduction.} On consid\`ere le probl\`eme mod\`ele 
+$$
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial u}{\partial t}(x,t)+a\frac{\partial
+  u}{\partial x}(x,t)=0,x\in\mathbb{R},x\in[0,L], t\ge 0,\\
+\displaystyle u(x,0)=u_0(x),\,x\in [0,L],\\
+u(0,t)=u(L,t),\,t\ge 0.
+\end{array}\right.
+$$
+Pour simplifier on a suppos\'ee que la donn\'ee initale
+est p\'eriodique de p\'eriode $L$, si bien que nous pouvons nous
+restreindre \`a l'intervalle $[0,L]$. On v\'erifie ais\'ement que la
+solution exacte est donn\'ee par $u(x,t)=u_0(x-at)$.\\
+
+\noindent On cherche \`a approcher num\'eriquement la solution par le sch\'ema {\it upwind} suivant:
+$$
+\frac{u_i^{n+1}-u_i^n}{\Delta t}+a\frac{u_i^n-u_{i-1}^n}{\Delta x}=0.
+$$ 
+o\`u $u_i^n\cong u(x_i,t^n),\,1\le i\le N$ et $\Delta x=L/(n-1)$,
+$x_i=(i-1)\Delta x$ et $t^n = n\Delta t$. En r\'earrangeant les termes
+on obtient:
+$$
+u_i^{n+1}=u_i^n-\sigma(u_i^n-u_{i-1}^n)
+$$
+o\`u $\sigma=\displaystyle\frac{a\Delta t}{\Delta x}$ est connu sous le nom de {\it nombre de Courant}.\\
+Pour approcher la condition initiale et la condition limite on \'ecrit:
+$$
+u_i^0=u_0(x_i),\,0\le i\le N,\, u_1^n = u_N^n,\,n\ge 0.
+$$
+\paragraph{Premier script Scilab.} On \'ecrira un script Scilab \texttt{script1.sce} qui comprendra 4 parties:
+\begin{enumerate}
+\item Initialisation des param\`etres physiques: vitesse de propagation, longueur du domaine, temps maximum et condition initiale. La condition initiale sera une fonction en cr\'eneau:
+$$
+u_0(x)=\left\{\begin{array}{l} 1,\,1<x<1.5,\\0,\,\mbox{sinon}.\end{array}\right.
+$$
+\item Initialisation des param\`etres num\'eriques. On prendra $N=201$ et on d\'eduira $\Delta x$, puis on choisira $\sigma$ et on d\'eduira $\Delta t$.
+\item Boucle en temps: initaliser $u_i^0,\, i=1,...,N$, puis \'evaluer
+  $u_i^{n+1},\, i=1,..., N$ en fonction de $u_i^n,\, i=1,...,N$ pour $t^n<T$.
+\item Visualisation graphique des r\'esultats: afficher sur la m\^eme fen\^etre la solution exacte et la solution approch\'ee.
+\end{enumerate}
+\paragraph{Indications.} Initialiser le script par la commande \texttt{clear} qui nettoie
+l'espace m\'emoire occup\'e avant le lancement du script.
+\begin{enumerate}
+\item Param\`etres physiques: 
+\begin{verbatim}
+a = 0.1;   // vitesse d'advection
+Tmax = 10; // temps maximum
+L = 5;     // longueur du domaine
+\end{verbatim}
+\noindent Pour la condition initiale on utilisera la fonction \texttt{bool2s}:
+\begin{verbatim}
+function [v] = condinit(x) 
+  v = bool2s((x>1.) & (x<1.5));
+endfunction
+\end{verbatim}
+\item Param\`etres num\'eriques:
+\begin{verbatim}
+N = 201;      // nb de points de discretisation en espace 
+dx = L/(N-1); // pas d'espace 
+s = 0.8;      // nombre de Courant 
+dt = s*dx/a;  // pas de temps
+\end{verbatim}
+\noindent Initialisation du maillage et de la donn\'ee initiale:
+\begin{verbatim}
+x = linspace(0,L,N)';
+u = condinit(x);
+\end{verbatim}
+\item Boucle en temps: \`a chaque pas de temps on met \`a jour la
+solution de fa\c{c}on vectorielle en tenant compte de la condition de
+p\'eriodicit\'e:
+\begin{verbatim}
+tps = dt:dt:Tmax;
+for t = tps
+   uold = u; 
+   u(2:N) = uold(2:N)-s*(uold(2:N)-uold(1:N-1));
+   u(1)=u(N);
+end
+t = tps($); // $ pointe sur le dernier element du vecteur
+\end{verbatim}
+\item Sortie graphique: on pourra par exemple utiliser les commandes suivantes:
+\begin{verbatim}
+clf()
+plot(x,u,'rx-',x,uexact,'bo-');
+xtitle('Comparaison entre la solution exacte et approchee','x','Solution');
+legend('Sol. approchee','Sol. exacte');
+\end{verbatim}
+\end{enumerate}
+
+\noindent Pour executer le script taper dans la fen\^etre Scilab la
+commande \texttt{ exec script1.sce}. \\ Afin de mesurer le temps
+d'ex\'ecution du programme on ins\'erera la commande \texttt{timer()}
+avant le d\'emarrage de la boucle en temps et en derni\`ere ligne du
+script Scilab.\\
+
+\noindent {\bf Question}: Augmenter progressivement le param\`etre $\sigma$ et
+observer le r\'esultat. Quelle est la valeur critique?
+\newpage
+\paragraph{Deuxi\`eme script Scilab.} On souhaite \'egalement pouvoir consid\'erer la condition initiale suivante:
+$$
+u_0(x) = \sin(8\pi x/L)
+$$ 
+et avoir le choix entre $2$ sch\'emas num\'eriques: le sch\'ema
+{\it upwind} pr\'ec\'edent et le sch\'ema de {\it Lax-Wendroff}:
+$$
+u_i^{n+1}=u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n)+\frac{\sigma^2}{2}(u_{i+1}^n-2u_i^n+u_{i-1}^n)
+$$
+\'Ecrire un script Scilab qu'on appelera \texttt{script2.sce} et qui offre ces $2$ options.
+
+\paragraph{Indications Scilab.} On introduira deux nouvelles variables qu'on pourra appeler
+\texttt{condI} et \texttt{scheme} et on utilisera la commande
+\texttt{select}:
+\begin{verbatim}
+function [v] = condinit(x)
+    select condI
+       case 1
+         v = bool2s((x>1.) & (x<1.5));
+       case 2
+         v = sin(8*%pi*x/L);
+    end
+endfunction
+\end{verbatim}
+\noindent {\bf Question}: Repartir de $\sigma=0.8$ et essayer 4 possibilit\'es
+du couple conditions initiale/sch\'ema num\'erique. Quelles conditions
+tirez-vous?\\ 
+Augmenter progressivement $\sigma$ pour le sch\'ema de
+Lax-Wendroff et observer.
+
+\paragraph{Troisi\`eme script Scilab: animation graphique.} L'objectif
+de cette section est de pouvoir visualiser la solution num\'erique au cours de it\'erations au lieu de visualiser que la
+solution finale. On r\'ealisera un nouveau script appel\'e
+\texttt{script3.sce}
+
+\paragraph{Indications Scilab}
+
+\begin{enumerate}
+\item Avant la boucle en temps on va initialiser/\'effacer la fen\^etre graphique:
+\begin{verbatim}
+clf()
+\end{verbatim}
+
+\item Au sein de la boucle en temps, la fen\^etre graphique est
+rafraichie de la fa\c{c}on suivante: 
+\begin{verbatim}
+uexact =...;
+plot(...); 
+xtitle(...); 
+legend(...)
+halt('Press a key') 
+clf()
+\end{verbatim}
+L commande \texttt{halt('Press a key')} arr\^ete l'ex\'ecution du
+programme jusqu'\`a ce qu'on utilise de nouveau le clavier.\\
+
+\item A la fin on revient \`a la configuration initiale.\\
+
+\noindent {\bf Question}: Reprendre les essais pr\'ec\'edents puis augmenter
+progressivement le param\`etre $\sigma$ et observer (prendre
+$\sigma=1.2,1.5,1.8$ pour le sch\'ema de Lax-Wendroff). Quelles
+conclusions en tirer?
+\end{enumerate}
+\paragraph{Quatri\`eme script Scilab: un sch\'ema implicite.} Nous allons modifier le sch\'ema de Lax-Wendroff en ``implicitant'' le terme de diffusion de la fa\c{c}on suivante:
+$$
+u_i^{n+1}=u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n)+\frac{\sigma^2}{2}(u_{i+1}^{n+1}-2u_i^{n+1}+u_{i-1}^{n+1})
+$$ 
+En introduisant $W^n =
+(u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n))_{0\le i\le N-1}$ et
+$U^{n+1}=(u_i^{n+1})_{0\le i\le N-1}$ ainsi que la matrice $A$ d'ordre
+$N-1$ donn\'ee par:
+$$
+A = \left(\begin{array}{cccccc}
+1+\sigma^2  & -\sigma^2/2 & 0           & \hdots & 0      & -\sigma^2/2 \\
+-\sigma^2/2 & 1+\sigma^2  & -\sigma^2/2 & 0      & \hdots & 0 \\
+0           &             &             &        &        & \vdots \\
+\vdots      &             &             &        &        & 0 \\
+0       & \hdots & 0 &-\sigma^2/2 & 1+\sigma^2 &-\sigma^2/2\\
+-\sigma^2/2 & 0 & \hdots & 0 & -\sigma^2/2 & 1+\sigma^2
+\end{array}\right)
+$$ 
+le sch\'ema s'\'ecrit comme $AU^{n+1}=W^n$. On notera que la
+condition de p\'eriodicit\'e est utilis\'ee directement dans le sch\'ema num\'erique afin d'\'eliminer $u_i^N$. \\ 
+\noindent On constate que le sch\'ema est {\it implicite}: l'\'evaluation de $U^{n+1}$ \`a partir
+de $U^n$ n\'ecessite l'inversion d'un syst\`eme lin\'eaire, le co\^ut
+de l'it\'eration sera donc plus \'el\'ev\'e que dans le cas d'un
+sch\'ema explicite. Cependant le sch\'ema n'est pas limit\'e par la
+valeur du nombre de Courant $\sigma$ ce qui permet l'utilisation des
+pas de temps plus grands et donc r\'ealiser moins d'it\'erations en
+temps.\\
+
+\noindent On va cr\'eer un nouveau script appel\'e \texttt{script4.sce} \`a
+partir du \texttt{script3.sce} dont on enlevera les parties relatives
+au sch\'ema num\'erique.
+
+\paragraph{Indications Scilab.} On proc\'ed\'era de la fa\c{c}on suivante
+\begin{enumerate}
+\item Initialisation de la matrice $A$:
+\begin{verbatim}
+aa = sigma^2;
+dimA = N;                         // dimension de la matrice
+A = diag((1+aa)*ones(1,dimA))-diag(aa/2*ones(1,dimA-1),-1)-...
+    diag(aa/2*ones(1,dimA-1),+1); // on construit la matrice par ses diagonales
+A(1,dimA) = -aa/2;                // on modifie la premiere ligne et la derniere
+A(dimA,1) = -aa/2;                // afin de prendre en compte la periodicite       
+\end{verbatim}
+\item Deux options sont possibles pour la boucle en temps: r\'esoudre
+le syst\`eme lin\'eaire \`a chaque pas de temps:
+\begin{verbatim}
+u = A\Wn;                       // a faire a chaque iteration en temps
+\end{verbatim}
+ ou inverser (factoriser) la matrice $A$ une fois pour toutes avant les it\'erations en temps puis utiliser son
+inverse (ou factorisation):
+\begin{verbatim}
+B = inv(A);//ou [L,U,P]= lu(A); // inversion ou factorisation LU de A 
+tps = dt:dt:Tmax;
+for t = tps  
+...
+u =B*Wn                         // ou u = U\(L\(P*Wn));
+\end{verbatim}
+Il est plut\^ot conseill\'e d'utiliser la factorisation $LU$ au lieu
+de l'inverse de la matrice.
+\end{enumerate}
+
+\noindent {\bf Question}: Comparer les 3 diff\'erentes options pour l'inversion
+du syst\`eme lin\'eaire en calculant le temps d'execution et en
+agrandissant progr\'essivement la taille du syst\`eme \`a r\'esoudre. R\'ealiser des exp\'eriences num\'eriques en
+faisant varier le nombre de Courant. Discuter les performances
+relatives des sch\'emas implicite et explicite.
+\end{document}

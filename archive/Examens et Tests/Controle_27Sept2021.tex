@@ -1,0 +1,103 @@
+\documentclass[12pt,a4paper]{article}
+
+%\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e Côte d'Azur} \hfill Polytech Nice Sophia \\
+\noindent MAM4 - \'Equations aux D\'eriv\'ees Partielles \hfill 
+27 Septembre 2021 \\
+
+\hrule
+
+\vspace{1cm}
+%\bigskip
+%\parskip 6pt
+\centerline {\large \sc Contrôle \'Equations aux D\'eriv\'ees Partielles. Dur\'ee : 50 minutes}
+\vspace{1cm}
+
+
+\hrule
+\vspace{1cm}
+\noindent {\sl  Les documents de cours ne sont pas autorisés. Justifier vos reponses d'une fa\c{c}on concise
+et claire.}\\
+
+\noindent {\bf Questions théoriques}:
+\begin{itemize}
+\item Définir la notion de problème bien posé au sens de Hadamard. Pourquoi cette notion est importante?
+\item Décrire brièvement les différences principales (en terme de propriétés qualitatives) de l'équation de la chaleur et celle d'advection.
+\item Définir la notion de consistance et donner un exemple d'erreur de consistance (appelée aussi erreur de troncature) pour un schéma de votre choix.
+\item Définir la notion de stabilité pour une norme vectorielle générique. 
+\end{itemize}
+
+\noindent On consid\`ere le probl\`eme de la chaleur en une dimension
+d'espace 
+\begin{equation}\label{eq:heat}
+\left\{\begin{array}{lcll}
+\displaystyle\frac{\partial u}{\partial t} - \nu \frac{\partial^2 u}{\partial x^2}&=
+&0,\,
+(x,t)\in (0,1)\times\mathbb{R}_*^+, & \text{Équation à l'intérieur du domaine } \\
+u(0,t)&=&u(1,t) = 0,\, t\in \mathbb{R}_*^+ &\text{CL Dirichlet}\\
+u(x,0)&=&u_0(x),\, x\in (0,1) & \text {Condition initiale}.
+\end{array}\right.
+\end{equation}
+
+%\noindent {\bf Exercice 1}\\% ({\bf Total: 10 points}) \\
+%On admettra (sans demonstration) l'inégalité de Poincaré:  toute fonction $v(x)$ contin\^ument d\'erivable sur
+%$[0,1]$ t.q. $v(0)=0$, v\'erifie $\int_0^1 v^2(x)dx \le \int_0^1\left(\frac{d v}{d
+%    x}\right)^2dx.$
+%Établir l'\'egalit\'e de l'énergie: %({\bf 2.5 points}) :
+%$$
+%\frac{1}{2}\frac{dE(t)}{dt}
+%=-\nu\int_0^1\left(\frac{\partial u}{\partial x}\right)^2 dx, \, \text{où } E(t) = \int_0^1 u^2(x,t)dx,
+%$$
+%et (en appliquant l'inégalité de Poincaré) d\'eduire que l'\'energie {\it d\'ecro\^it exponentiellement en temps} %({\bf 1.5 points}) 
+%\begin{equation} \label{eq:energ}
+%E(t) \le E(0)e^{-2\nu t}.
+%\end{equation}
+
+
+\noindent {\bf Exercice} \\ %({\bf Total: 10 points}) \\
+
+\noindent On discr\'etise le domaine en utilisant un maillage r\'egulier
+$(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. \\
+
+\begin{itemize}
+\item Montrer que le sch\'ema suivant
+\begin{equation}\label{sch:1}
+\frac{u_j^{n+1}-u_j^n}{\Delta t}-\frac{2\nu}{3} \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-\frac{\nu}{3} \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
+\end{equation}
+est consistant, d'ordre 1 en temps et 2 en espace et conditionnellement stable en norme $L_2$ (donner cette condition de stabilité). 
+
+\item En faisant un petit changement on peut améliorer à la fois la stabilité et la précision en temps du schéma. De quel changement s'agit-il? Justifier votre réponse.
+
+\end{itemize}
+
+\noindent \texttt{Indication}: Pour étudier la consistance on va écrire d'abord l'erreur de troncature. On va faire des développements de Taylor en espace et en temps de la solution jusqu'à un ordre suffisant permettant de déterminer la précision et simplifier les termes de l'erreur de troncature (e.g. 4 en espace, 2 ou 3 en temps dépendant du schéma)
+%\noindent \texttt{Indication} Les schémas du type \eqref{sch:1} et \eqref{sch:2} font partie de la même catégorie. De ce fait la consistance et la stabilité de ces derniers peuvent être analysées en même temps.\\
+
+
+
+
+\end{document}
+

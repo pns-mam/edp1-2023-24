@@ -1,0 +1,259 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc} % Pour la bonne cesure du francais
+\usepackage{amsmath} % Pour les symboles complementaire comme les matrices !
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig}
+%\usepackage{/home/cohen/fortran/graphics/GGGraphics/GGGraphics}
+%\usepackage{D:/GGGraphics/GGGraphics}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{example}{Example}
+\newtheorem{rem}{\noindent\textbf{\textit {Remarque\,}}}
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent {\large Universit\'e C\^ote d'Azur} \hfill Polytech' Nice Sophia (PNS)\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4) \hfill vendredi 13 Novembre 2020 \\
+
+\hrule
+
+\medskip
+
+\begin{center}{\bf \'Equations aux d\'eriv\'ees partielles -- séance TP}\end{center}
+
+\medskip
+
+
+%\parskip 12pt
+\noindent Le but de cette s\'eance est d'implementer num\'eriquement \`a l'aide
+du logiciel \texttt{Octave} ou \texttt{Matlab} quelques sch\'emas numeriques pour l'équation d'advection, de tester
+leurs propri\'et\'es de stabilit\'e et repr\'esenter graphiquement
+l'\'evolution de la solution au cours des it\'erations en temps.
+
+\paragraph{Introduction.} On consid\`ere le probl\`eme mod\`ele 
+$$
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial u}{\partial t}(x,t)+V\frac{\partial
+  u}{\partial x}(x,t)=0,x\in\mathbb{R},x\in[0,L], t\ge 0,\\
+\displaystyle u(x,0)=u_0(x),\,x\in [0,L],\\
+u(0,t)=u(L,t),\,t\ge 0.
+\end{array}\right.
+$$
+Pour simplifier on a suppos\'ee que la donn\'ee initale
+est p\'eriodique de p\'eriode $L$, si bien que nous pouvons nous
+restreindre \`a l'intervalle $[0,L]$. On v\'erifie ais\'ement que la
+solution exacte est donn\'ee par $u(x,t)=u_0(x-Vt)$.\\
+
+\noindent On cherche \`a approcher num\'eriquement la solution par le sch\'ema {\it décentré amont} suivant:
+$$
+\frac{u_i^{n+1}-u_i^n}{\Delta t}+V\frac{u_i^n-u_{i-1}^n}{\Delta x}=0.
+$$ 
+o\`u $u_i^n\cong u(x_i,t^n),\,1\le i\le N$ et $\Delta x=L/(n-1)$,
+$x_i=(i-1)\Delta x$ et $t^n = n\Delta t$. En r\'earrangeant les termes
+on obtient:
+$$
+u_i^{n+1}=u_i^n-\sigma(u_i^n-u_{i-1}^n)
+$$
+o\`u $\sigma=\displaystyle\frac{V\Delta t}{\Delta x}$ est connu sous le nom de {\it nombre de Courant}.\\
+Pour approcher la condition initiale et la condition limite on \'ecrit:
+$$
+u_i^0=u_0(x_i),\,1\le i\le N,\, u_1^n = u_N^n,\,n\ge 0.
+$$
+\paragraph{Premier script Matlab ou Octave} On \'ecrira un script \texttt{test1.m} qui comprendra 4 parties:
+\begin{enumerate}
+\item Initialisation des param\`etres physiques: vitesse de propagation, longueur du domaine, temps maximum et condition initiale. La condition initiale sera une fonction en cr\'eneau:
+$$
+u_0(x)=\left\{\begin{array}{l} 1,\,1<x<1.5,\\0,\,\mbox{sinon}.\end{array}\right.
+$$
+\item Initialisation des param\`etres num\'eriques. On prendra $N=201$ et on d\'eduira $\Delta x$, puis on choisira $\sigma$ et on d\'eduira $\Delta t$.
+\item Boucle en temps: initaliser $u_i^0,\, i=1,...,N$, puis \'evaluer
+  $u_i^{n+1},\, i=1,..., N$ en fonction de $u_i^n,\, i=1,...,N$ pour $t^n<T$.
+\item Visualisation graphique des r\'esultats: afficher sur la m\^eme fen\^etre la solution exacte et la solution approch\'ee.
+\end{enumerate}
+\paragraph{Indications.} Initialiser le script par la commande \texttt{clear all, close all, clc} qui nettoie
+l'espace m\'emoire occup\'e avant le lancement du script, ferme toutes les fenêtres graphiques et positionne le curseur tout en haut de l'espace d'execution.
+\begin{enumerate}
+\item Param\`etres physiques: 
+\begin{verbatim}
+V = 0.1;   % vitesse d'advection
+Tmax = 10; %  temps maximum
+L = 5;     % longueur du domaine
+\end{verbatim}
+\noindent La condition initiale sera définie à l'aide d'une function \texttt{inline} (sur une seule ligne)
+\begin{verbatim}
+condinit = @(x) (x>1.) & (x<1.5);
+\end{verbatim}
+\item Param\`etres num\'eriques:
+\begin{verbatim}
+N = 201;      % nb de points de discretisation en espace 
+dx = L/(N-1); % pas d'espace 
+s = 0.8;      % nombre de Courant 
+dt = s*dx/V;  % pas de temps respectant la condition V*dt/dx = nombre de CFL
+\end{verbatim}
+\noindent Initialisation du maillage et de la donn\'ee initiale:
+\begin{verbatim}
+x = linspace(0,L,N)';
+u = double(condinit(x)); % calcul de la solution initale + conversion booleen reel
+\end{verbatim}
+\item Boucle en temps: \`a chaque pas de temps on met \`a jour la
+solution de fa\c{c}on vectorielle en tenant compte de la condition de
+p\'eriodicit\'e:
+\begin{verbatim}
+tps = dt:dt:Tmax;
+for t = tps
+   uold = u; 
+   u(2:N) = uold(2:N)-s*(uold(2:N)-uold(1:N-1));
+   u(1)=u(N); % condition de périodicité
+end
+\end{verbatim}
+\item Sortie graphique: on pourra par exemple utiliser les commandes suivantes:
+\begin{verbatim}
+uexact = condinit(x-V*t); % solution exacte au pas de temps final
+plot(x,u,'rx-',x,uexact,'bo-'), grid on
+title('Comparaison entre la solution exacte et approchee')
+legend('Sol. approchee','Sol. exacte')
+xlabel('x')
+ylabel('Solution')
+\end{verbatim}
+\end{enumerate}
+
+\noindent Afin de mesurer le temps
+d'ex\'ecution du programme on ins\'erera la commande \texttt{tic} 
+avant le d\'emarrage de la boucle en temps et \texttt{toc} en derni\`ere ligne du
+script.\\
+
+\noindent {\bf Question}: Augmenter progressivement le param\`etre $\sigma$ et
+observer le r\'esultat. Quelle est la valeur critique? Constater aussi en augmentant progressivement Tmax que la solution numérique s'aplatit au fil des itérations en temps. Ceci est le phénomène de diffusion numérique.
+
+\paragraph{Deuxi\`eme script} On souhaite \'egalement pouvoir consid\'erer la condition initiale suivante (contrairement a la condition initiale précédente, il s'agit d'une fonction beaucoup plus régulière):
+$$
+u_0(x) = \sin(8\pi x/L)
+$$ 
+et avoir le choix entre $2$ sch\'emas num\'eriques: le sch\'ema
+{\it décentré amont} et le sch\'ema de {\it Lax-Wendroff}:
+$$
+u_i^{n+1}=u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n)+\frac{\sigma^2}{2}(u_{i+1}^n-2u_i^n+u_{i-1}^n)
+$$
+\'Ecrire un nouveau script qu'on appelera \texttt{test2.m} et qui offre ces $2$ options.\\
+
+\noindent \texttt{Indication}: Dans ce nouveau script au tout début, à l'intérieur de la boucle en temps on va fixer la condition à un des bords (condition entrante)
+
+\begin{verbatim}
+uexact = condinit(x-V*t);
+u(N) = uexact(N);
+\end{verbatim}
+
+\noindent {\bf Question}:  Repartir de $\sigma=0.8$ et essayer 4 possibilit\'es
+du couple conditions initiale/sch\'ema num\'erique. 
+\begin{itemize}
+\item Quelles conditions
+tirez-vous?
+\item Augmenter progressivement $\sigma$ pour le sch\'ema de
+Lax-Wendroff et observer. 
+\item Que peut-on dire de la diffusion numérique observée précédemment dans le cas du schéma décentré?
+\item Est-ce que le schéma de Lax-Wendroff est diffusif?
+\end{itemize}
+\paragraph{Troisi\`eme script: animation graphique.} L'objectif
+de cette section est de pouvoir visualiser la solution num\'erique au cours de it\'erations au lieu de visualiser que la
+solution finale. On r\'ealisera un nouveau script appel\'e
+\texttt{test3.m}
+
+\paragraph{Indications}
+
+Au sein de la boucle en temps, la fen\^etre graphique est
+rafraichie de la fa\c{c}on suivante: 
+\begin{verbatim}
+uexact =...;
+plot(...), grid on
+legend(...)
+title(...) 
+pause
+\end{verbatim}
+La commande \texttt{pause} arr\^ete l'ex\'ecution du
+programme jusqu'\`a ce qu'on utilise de nouveau le clavier. Il y a aussi l'option \texttt{pause(n)} ou $n$ est le laps de temps (en secondes) pendant lequel le graphique va rester a l'écran. \\
+
+
+\noindent {\bf Question}: Reprendre les essais pr\'ec\'edents puis augmenter
+progressivement le param\`etre $\sigma$.
+\begin{itemize}
+\item Prendre $\sigma=1.2,1.5,1.8$ pour le sch\'ema de Lax-Wendroff). Quelles
+conclusions en tirer?
+\item Est-ce que le schéma de Lax-Wendroff se comporte différemment en fonction de la régularité de la condition initiale?
+\end{itemize}
+
+\paragraph{Quatri\`eme script: un sch\'ema implicite.} Nous allons modifier le sch\'ema de Lax-Wendroff en ``implicitant'' le terme de diffusion de la fa\c{c}on suivante:
+$$
+u_i^{n+1}=u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n)+\frac{\sigma^2}{2}(u_{i+1}^{n+1}-2u_i^{n+1}+u_{i-1}^{n+1})
+$$ 
+En introduisant $W^n =
+(u_i^n-\frac{\sigma}{2}(u_{i+1}^n-u_{i-1}^n))_{0\le i\le N-1}$ et
+$U^{n+1}=(u_i^{n+1})_{0\le i\le N-1}$ ainsi que la matrice $A$ d'ordre
+$N-1$ donn\'ee par:
+$$
+A = \left(\begin{array}{cccccc}
+1+\sigma^2  & -\sigma^2/2 & 0           & \hdots & 0      & -\sigma^2/2 \\
+-\sigma^2/2 & 1+\sigma^2  & -\sigma^2/2 & 0      & \hdots & 0 \\
+0           &             &             &        &        & \vdots \\
+\vdots      &             &             &        &        & 0 \\
+0       & \hdots & 0 &-\sigma^2/2 & 1+\sigma^2 &-\sigma^2/2\\
+-\sigma^2/2 & 0 & \hdots & 0 & -\sigma^2/2 & 1+\sigma^2
+\end{array}\right)
+$$ 
+le sch\'ema s'\'ecrit comme $AU^{n+1}=W^n$. On notera que la
+condition de p\'eriodicit\'e est utilis\'ee directement dans le sch\'ema num\'erique afin d'\'eliminer $u_i^N$. \\ 
+\noindent On constate que le sch\'ema est {\it implicite}: l'\'evaluation de $U^{n+1}$ \`a partir
+de $U^n$ n\'ecessite l'inversion d'un syst\`eme lin\'eaire, le co\^ut
+de l'it\'eration sera donc plus \'el\'ev\'e que dans le cas d'un
+sch\'ema explicite. Cependant le sch\'ema n'est pas limit\'e par la
+valeur du nombre de Courant $\sigma$ ce qui permet l'utilisation des
+pas de temps plus grands et donc r\'ealiser moins d'it\'erations en
+temps.\\
+
+\noindent On va cr\'eer un nouveau script appel\'e \texttt{test4.sce} \`a
+partir du \texttt{test3.sce} dont on enlevera les parties relatives
+au sch\'ema num\'erique.
+
+\paragraph{Indications} On va proc\'ed\'er de la fa\c{c}on suivante
+\begin{enumerate}
+\item Initialisation de la matrice $A$:
+\begin{verbatim}
+A = diag((1+s^2)*ones(N,1))-diag(s^2/2*ones(N-1,1),-1)-...
+    diag(s^2/2*ones(N-1,1),1); 
+A(1,N) = -s^2/2; % on modifie la premiere ligne et la derniere
+A(N,1) = -s^2/2; % afin de prendre en compte la periodicite    
+\end{verbatim}
+\item Deux options sont possibles pour la boucle en temps: r\'esoudre
+le syst\`eme lin\'eaire \`a chaque pas de temps:
+\begin{verbatim}
+u = A\Wn;                         % a faire a chaque iteration en temps
+\end{verbatim}
+ ou inverser (factoriser) la matrice $A$ une fois pour toutes avant les it\'erations en temps puis utiliser son
+inverse (ou factorisation):
+\begin{verbatim}
+B = inv(A);//ou [L,U,P]= lu(A); // inversion ou factorisation LU de A 
+tps = dt:dt:Tmax;
+for t = tps  
+...
+u =B*Wn                           % ou u = U\(L\(P*Wn));
+\end{verbatim}
+Il est plut\^ot conseill\'e d'utiliser la factorisation $LU$ au lieu
+de l'inverse de la matrice.
+\end{enumerate}
+
+\noindent {\bf Question}: Comparer les 3 diff\'erentes options pour l'inversion
+du syst\`eme lin\'eaire en calculant le temps d'execution et en
+agrandissant progr\'essivement la taille du syst\`eme \`a r\'esoudre. R\'ealiser des exp\'eriences num\'eriques en
+faisant varier le nombre de Courant. Discuter les performances
+relatives des sch\'emas implicite et explicite en terme de temps de calcul (pour mesurer le temps d'un bloc à l'intérieur d'un script on peut utiliser les commandes \texttt{tic} et \texttt{toc})
+\end{document}
