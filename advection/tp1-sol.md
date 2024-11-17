@@ -41,7 +41,7 @@ V = 0.1                                            # advection speed
 J = 1600                                           # space grid size
 x = range(0, 1, length=J+1)                        # space grid
 Δx = x[2] - x[1]                                   # space stepsize
-σ = 1.1                                            # Courant number
+σ = 0.8                                            # Courant number
 Δt = σ * Δx / V                                    # time stepsize
 N = 2400                                           # time grid size     
 tf = N * Δt                                        # final time
