@@ -36,6 +36,7 @@ Augmenter progressivement le paramètre $\sigma$ et observer le résultat. Quell
 using LinearAlgebra, SparseArrays, Plots
   
 # Parameters
+
 V = 0.1                                            # advection speed
 J = 1600                                           # space grid size
 x = range(0, 1, length=J+1)                        # space grid
@@ -50,12 +51,15 @@ function u0(x)
 end
 
 # Explicit scheme
+
 u = u0.(x)
 
 for n ∈ 1:N
     u[2:end] = u[2:end] - σ * (u[2:end] - u[1:end-1])
     u[1] = u[end]
 end
+
+# Plots
 
 uexact = u0.(x .- V * tf)
 err = u - uexact
@@ -86,6 +90,7 @@ Repartir de $\sigma = 0.8$ et tester plusieurs possibilités du couple condition
 
 ```julia
 # Explicit Lax-Wendroff scheme
+
 u = u0.(x)
 
 for n ∈ 1:N
@@ -93,6 +98,8 @@ for n ∈ 1:N
     u[1] = u0(x[1] - V * n * Δt)
     u[end] = u[1]
 end
+
+# Plots
 
 uexact = u0.(x .- V * tf)
 err = u - uexact
@@ -123,6 +130,7 @@ faisant varier le nombre de Courant. Discuter les performances relatives des sch
 
 ```julia
 # Implicit Lax-Wendroff scheme
+
 u = u0.(x)
 
 A = spdiagm(-1 => -σ^2/2*ones(J), 0 => (1+σ^2)*ones(J+1), 1 => -σ^2/2*ones(J))
@@ -139,6 +147,8 @@ for n ∈ 1:N
     w[end] = w[1]
     u = F\w
 end
+
+# Plots
 
 uexact = u0.(x .- V * tf)
 err = u - uexact
