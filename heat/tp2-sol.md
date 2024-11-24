@@ -50,7 +50,6 @@ function laplacian(G; Δx = 1.0, Δy = 1.0)
 end
 
 # Mesh generation
-```
 function meshgrid(x, y)
     n = length(x)
     m = length(y)
@@ -85,9 +84,7 @@ K = length(ij)
 G = zeros(Int, size(X))
 G[ij] = 1:K # columnwise ordering of interior nodes
 spy(G[end:-1:1, :])
-```
 
-```julia
 # Assembly
 
 A = -ν * laplacian(G, Δx = Δx, Δy = Δy) # A ≃ -νΔ
