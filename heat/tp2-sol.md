@@ -9,8 +9,10 @@ On souhaite simuler l'évolution de la température dans une pièce en forme de 
 
 On rappelle que cette température suit l'EDP de la chaleur 2D :
 
-$$ \frac{\partial u}{\partial t}(x,y,t) - \nu\Delta u(x,y,t) = f(x,y),\quad (x,y) \in \Omega,\quad t > 0,\\
-u(x,y,0)=u_0(x,y), $$
+$$ \begin{aligned}
+  & \frac{\partial u}{\partial t}(x,y,t) - \nu\Delta u(x,y,t) = f(x,y),\quad t > 0,\quad (x,y) \in \Omega,\\
+  & u(x,y,0) = u_0(x,y),
+\end{aligned} $$
 
 avec des conditions aux limites appropriées sur le bord du domaine.
 
