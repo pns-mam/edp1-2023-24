@@ -129,10 +129,10 @@ contour(x, y, U, fill=true, aspect_ratio=:equal)
 Calculer l'évolution temporelle de la température à l'aide du schéma de Crank-Nicolson 2D :
 
 $$ \begin{aligned}
-  & u^{n+1}_k &- (\sigma_x/2)(u^{n+1}_{kW}-2u^{n+1}_k+u^{n+1}_{kE})
-             - (\sigma_y/2)(u^{n+1}_{kN}-2u^{n+1}_k+u^{n+1}_{kS})\\
-  & = u^n_k  + (\sigma_x/2)(u^n_{kW}-2u^n_k+u^{n+1}_{kE})
-             + (\sigma_y/2)(u^n_{kN}-2u^n_k+u^n_{kS}) + \Delta t \cdot f_k,
+  & u^{n+1}_k - (\sigma_x/2)(u^{n+1}_{kW}-2u^{n+1}_k+u^{n+1}_{kE})
+              - (\sigma_y/2)(u^{n+1}_{kN}-2u^{n+1}_k+u^{n+1}_{kS})\\
+  & = u^n_k   + (\sigma_x/2)(u^n_{kW}-2u^n_k+u^{n+1}_{kE})
+              + (\sigma_y/2)(u^n_{kN}-2u^n_k+u^n_{kS}) + \Delta t \cdot f_k,
 \end{aligned} $$
 
 où $\sigma_x=\nu\Delta t/\Delta x^2$ et $\sigma_y=\nu\Delta t/\Delta y^2$.
