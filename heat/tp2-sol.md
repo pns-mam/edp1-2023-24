@@ -145,7 +145,7 @@ D = spdiagm(0 => 1.0 * ones(K)) + Δt/2 * A
 E = spdiagm(0 => 1.0 * ones(K)) - Δt/2 * A
 F = lu(D)
 
-for i ∈ 1:Nt
+@gif for i ∈ 1:Nt
     u = F \ (E * u + Δt * b)
     U[ij] = u[G[ij]]
     mod(i, Int(floor(Nt / Nplot))) == 0 && display( contour(x, y, U, fill=true, aspect_ratio=:equal) ) # contour plot
